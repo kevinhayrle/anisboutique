@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasheon - Category</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ <style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    padding: 40px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image,
+  .product-card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+    background-color: #f9f9f9;
+
+  }
+
+  .product-name {
+    font-size: 14px;
+    margin: 10px 0 5px;
+  }
+
+  .product-price {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .add-to-cart {
+    width: 100%;
+    padding: 8px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: auto;
+  }
+
+  .add-to-cart:hover {
+    background-color: #222;
+  }
+@media (max-width: 768px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+
+  .product-card {
+    padding: 8px;
+  }
+}
+</style>
+</head>
+<body>
+
+
+<header class="navbar">
+  <div class="nav-left">
+    <i class="fas fa-bars" id="hamburger-icon"></i>
+  </div>
+
+  <div class="nav-center">
+    <a href="index.html" class="logo">
+      <img src="log.png" alt="Pasheon Logo" class="log-img">
+    </a>
+  </div>
+
+  <div class="nav-right">
+    <a href="cart.html">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+  </div>
+</header>
+
+
+<div id="sidebar" class="sidebar" style="left: -240px;">
+  <div id="close-sidebar-category" class="close-btn">&times;</div>
+  <a href="index.html"><strong>HOME</strong></a>
+  <a href="contact.html"><strong>CONTACT US</strong></a><br>
+  <a href="yourOrders.html"><strong>YOUR ORDERS</strong></a><br>
+  <a href="privacy.html"><STRONG>PRIVACY POLICY</STRONG></a><br>
+  <a><strong>COLLECTIONS</strong></a>
+  <hr/>
+  <div id="category-menu"></div>
+</div>
+
+
+<section class="hero">
+  <h1 class="brand-name"><strong>PASHEON</strong></h1>
+</section>
+
+
+<section id="products-section">
+  <h2 class="section-title" id="category-title">Category</h2>
+  <div id="product-container" class="product-grid">
+    
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const productContainer = document.getElementById('product-container');
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('cat');
+
+
+  fetch('https://pasheon-backend-zgz5.onrender.com/api/products')
+    .then(res => res.json())
+    .then(products => {
+      const filtered = products.filter(p =>
+        p.category.toLowerCase() === category.toLowerCase()
+      );
+
+      if (filtered.length === 0) {
+        productContainer.innerHTML = '<p>No products found in this category.</p>';
+        return;
+      }
+
+      filtered.forEach(product => {
+        const card = document.createElement('div');
+        card.classList.add('product-card');
+        card.innerHTML = `
+          <div class="product-click-area" data-id="${product.id}">
+            <img src="${product.image_url}" alt="${product.name}" class="product-image">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-price">₹${parseFloat(product.price).toLocaleString()}</p>
+          </div>
+          <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+        `;
+        productContainer.appendChild(card);
+
+      
+        card.querySelector('.product-click-area').addEventListener('click', () => {
+          window.location.href = `product.html?id=${product.id}`;
+        });
+
+        
+const addToCartBtn = card.querySelector('.add-to-cart');
+addToCartBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  alert('Please open the product and choose a size before adding to cart.');
+  window.location.href = `product.html?id=${product.id}`;
+});
+      });
+    })
+    .catch(err => {
+      console.error('Error loading products:', err);
+      productContainer.innerHTML = '<p>Failed to load products.</p>';
+    });
+
+
+  const hamburger = document.getElementById('hamburger-icon');
+  const sidebar = document.getElementById('sidebar');
+  const closeSidebar = document.getElementById('close-sidebar-category');
+  const categoryLinksContainer = document.getElementById('category-menu');
+
+  if (hamburger && sidebar) {
+    hamburger.addEventListener('click', () => {
+      sidebar.style.left = '0';
+    });
+  }
+
+  if (closeSidebar && sidebar) {
+    closeSidebar.addEventListener('click', () => {
+      sidebar.style.left = '-250px';
+    });
+  }
+
+  fetch('https://pasheon-backend-zgz5.onrender.com/api/products/categories')
+    .then(res => res.json())
+    .then(categories => {
+      categoryLinksContainer.innerHTML = '';
+      categories.forEach(cat => {
+        const link = document.createElement('a');
+        link.href = `category.html?cat=${encodeURIComponent(cat)}`;
+        link.textContent = cat;
+        categoryLinksContainer.appendChild(link);
+      });
+    })
+    .catch(err => {
+      console.error('Failed to load categories:', err);
+    });
+});
+</script>
+
+</body>
+</html>

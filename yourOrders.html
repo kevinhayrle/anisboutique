@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Orders</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f7f7f7;
+    }
+
+    h1 {
+      text-align: center;
+      color: #01381C;
+      margin-bottom: 30px;
+    }
+
+    #orders {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .order-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .order-card h3 {
+      margin-top: 0;
+      color: #222;
+    }
+
+    .order-items {
+      margin-top: 15px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      gap: 15px;
+    }
+
+    .product-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .item div {
+      font-size: 14px;
+    }
+
+    #phoneInput {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    #phone {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    #searchBtn {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #01381C;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #searchBtn:hover {
+      background-color: #025932;
+    }
+
+    .no-orders {
+      text-align: center;
+      color: #777;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Orders</h1>
+  <h1 style="font-size: 20px; font-weight: lighter;">For order tracking, queries, cancellation, contact us at 9176246653 | pasheonofficial@gmail.com</h1>
+
+  <div id="phoneInput">
+    <input type="text" id="phone" placeholder="Enter your phone number" />
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <div id="orders"></div>
+
+  <script>
+    const ordersDiv = document.getElementById("orders");
+    const phoneInput = document.getElementById("phone");
+    const searchBtn = document.getElementById("searchBtn");
+
+    searchBtn.addEventListener("click", async () => {
+      const phone = phoneInput.value.trim();
+      if (!phone || phone.length < 10) {
+        alert("Please enter a valid phone number");
+        return;
+      }
+
+      ordersDiv.innerHTML = "<p>Loading...</p>";
+
+      try {
+        const res = await fetch(`https://pasheon-backend-zgz5.onrender.com/api/orders/${phone}`);
+        const data = await res.json();
+
+        if (data.length === 0) {
+          ordersDiv.innerHTML = '<p class="no-orders">No orders found for this number.</p>';
+          return;
+        }
+
+        ordersDiv.innerHTML = "";
+
+        data.forEach(order => {
+          const orderCard = document.createElement('div');
+          orderCard.className = 'order-card';
+
+          const formattedDate = new Date(order.created_at).toLocaleDateString();
+
+          let itemsHTML = '';
+          order.items.forEach(item => {
+            itemsHTML += `
+              <div class="item">
+                <img src="${item.image_url}" alt="${item.name}" class="product-img" />
+                <div>
+                  <strong>${item.name}</strong><br/>
+                  Size: ${item.size}<br/>
+                  Price: ₹${item.price}<br/>
+                  Date Purchased: ${formattedDate}
+                </div>
+              </div>
+            `;
+          });
+
+          orderCard.innerHTML = `
+            <div class="order-items">${itemsHTML}</div>
+          `;
+
+          ordersDiv.appendChild(orderCard);
+        });
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+        ordersDiv.innerHTML = '<p class="no-orders">Something went wrong. Please try again later.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

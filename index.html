@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anis Boutique</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    
+  @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+.animate 
+{
+  animation: fadeInUp 0.6s ease forwards;
+    }
+
+.banner {
+  flex: 1;
+  background: url('banner.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 670px;
+  position: relative;
+}
+
+.anis {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-0.6em);
+  font-family: 'Didot', serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: whitesmoke;
+}
+
+.boutique {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(0.3em);
+  font-family: 'Didot';
+  font-size: clamp(50px, 10vw, 90px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #ffffff;
+}
+
+.search-bar {
+  position: absolute;
+  top: 120px;  
+  right: 25px;
+  z-index: 20;
+  font-family: 'arial';
+  color: #ccc;
+}
+
+.search-bar label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: -60px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-row input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.85);
+  color: white;
+  padding: 6px 0;
+  width: 180px;
+  font-family: 'Didot', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  outline: none;
+}
+
+.search-row input {
+  cursor: pointer;
+}
+
+.lens-link {
+  color: white;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: -19px;
+  transition: opacity 0.3s ease;
+}
+
+.lens-link:hover {
+  opacity: 1;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    padding: 40px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+  }
+
+  .product-card img,
+  .product-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+    background-color: #f9f9f9;
+  }
+
+  .product-card h3 {
+    font-size: 1rem;
+    margin: 10px 0 5px;
+    min-height: 38px; 
+  }
+
+  .product-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .product-card button.add-to-cart {
+    margin-top: auto;
+    padding: 10px 16px;
+    background-color: #01381C;
+    color: white;
+    border: 1px solid black;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  .product-card button.add-to-cart:hover {
+    background-color: white;
+    color: black;
+  }
+
+  @media (max-width: 600px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 1rem;
+    }
+
+    .product-card {
+      margin: 0;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="header-left">
+  <div class="left">
+    <i class="fas fa-bars" id="hamburger-icon"></i>
+  </div>
+
+  <div class="header-center">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Pasheon Logo" class="logo">
+    </a>
+  </div>
+
+  <div class="header-right">
+    <a href="cart.html">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+  </div>
+</header>
+
+<div id="sidebar" class="sidebar" style="left: -240px;">
+  <a href="index.html"><STRONG>HOME</STRONG></a>
+  <a href="contact.html"><STRONG>CONTACT US</STRONG></a><br>
+  <a href="yourOrders.html"><STRONG>YOUR ORDERS</STRONG></a><br>
+    <a href="privacy.html"><STRONG>PRIVACY POLICY</STRONG></a><br>
+  <a STRONG>COLLECTIONS</STRONG></h1></a>
+  <hr/>
+  <div id="category-menu"></div>
+</div>
+
+<div class="banner">
+ <div class="search-bar">
+  <label>SEARCH ↑ </label>
+  <div class="search-row">
+    <input type="text" readonly onclick="window.location.href='searchspace.html'" />
+    <a href="lens.html" class="lens-link">
+      <i class="fas fa-camera"></i>
+    </a>
+  </div>
+</div>
+
+  <h1 class="anis">ANIS</h1>
+  <h1 class="boutique">BOUTIQUE</h1>
+</div>
+
+<section id="products-section">
+  <h2 class="section-title">New Arrivals</h2>
+  <div id="product-container" class="product-grid">
+  </div>
+  <p class="cortex">© 2025 cortex²</p><br><br>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger-icon');
+  const categoryMenu = document.getElementById('category-menu');
+  const productContainer = document.getElementById('product-container');
+  hamburger.addEventListener('click', () => {
+    const isVisible = sidebar.style.left === '0px';
+    sidebar.style.left = isVisible ? '-240px' : '0px';
+  });
+
+  fetch('https://anisboutique-backend.onrender.com/api/products/categories')
+    .then(res => res.json())
+    .then(categories => {
+      categoryMenu.innerHTML = '';
+      categories.forEach(cat => {
+        const item = document.createElement('a');
+        item.href = `category.html?cat=${encodeURIComponent(cat)}`;
+        item.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        item.classList.add('category-link');
+        categoryMenu.appendChild(item);
+      });
+    })
+    .catch(err => console.error('Error loading categories:', err));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+ 
+  fetch("https://anisboutique-backend.onrender.com/api/products")
+    .then(res => res.json())
+    .then(products => {
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        productCard.innerHTML = `
+          <div class="product-click-area" data-id="${product.id}">
+            <img src="${product.image_url}" alt="${product.name}" class="product-image">
+            <h3 class="product-name">${product.name}</h3>
+           <p class="product-price">
+  ${
+    product.discounted_price
+      ? `<span class="old-price">₹${parseFloat(product.price).toLocaleString()}</span>
+         <span class="new-price">₹${parseFloat(product.discounted_price).toLocaleString()}</span>`
+      : `<span class="new-price">₹${parseFloat(product.price).toLocaleString()}</span>`
+  }
+</p>
+
+          </div>
+          <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+        `;
+
+        productContainer.appendChild(productCard);
+        observer.observe(productCard); 
+
+        productCard.querySelector('.product-click-area').addEventListener('click', () => {
+          window.location.href = `product.html?id=${product.id}`;
+        });
+      });
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("Please open the product and choose a size before adding to cart.");
+    
+    const productId = e.target.getAttribute('data-id');
+    window.location.href = `product.html?id=${productId}`;
+  });
+});
+    })
+    .catch(error => {
+      console.error('Error fetching products:', error);
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasheon</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  #sizeSelect {
+  font-size: 14px;
+  padding: 6px 10px;
+  min-width: 140px;
+  border-radius: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+</style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-left">
+      <i class="fas fa-bars" id="hamburger-product"></i>
+    </div>
+    <div class="nav-center">
+      <div class="logo">
+        <a href="index.html">
+          <img src="log.png" alt="Pasheon Logo" class="log-img" />
+        </a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+  </header>
+
+  <nav id="sidebar-product" class="sidebar">
+    <ul>
+      <li><a href="index.html"><strong>HOME</strong></a></li>
+      <li><a href="contact.html"><strong>CONTACT US</strong></a></li>
+      <li><a href="yourOrders.html"><strong>YOUR ORDERS</strong></a></li>
+      <a href="privacy.html"><STRONG>PRIVACY POLICY</STRONG></a><br>
+      <hr /><br>
+      <li><a>COLLECTION</a></li>
+    </ul>
+    <ul id="category-list">
+    
+    </ul>
+  </nav>
+
+  <main class="product-detail-container">
+    <div class="left-column">
+      <img id="product-image" class="main-product-image" alt="Product Image" />
+      <div id="extra-images" class="extra-images"></div>
+    </div>
+
+    <div class="right-column">
+      <h1 id="product-name"></h1>
+      <p id="product-price" class="product-detail-price"></p>
+      <p id="product-description"></p>
+      <div class="size-section">
+        <label for="sizeSelect" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Size:</label>
+        <select id="sizeSelect" required>
+          <option value="">Select Size</option>
+        </select>
+      </div>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+
+      fetch(`https://pasheon-backend-zgz5.onrender.com/api/products/${productId}`)
+        .then(res => res.json())
+        .then(product => {
+          document.getElementById('product-image').src = product.image_url;
+          document.getElementById('product-name').textContent = product.name;
+          document.getElementById('product-description').textContent = product.description;
+         const priceEl = document.getElementById('product-price');
+
+if (product.discounted_price) {
+  priceEl.innerHTML = `
+    <span class="old-price">₹${parseFloat(product.price).toLocaleString()}</span>
+    <span class="new-price">₹${parseFloat(product.discounted_price).toLocaleString()}</span>
+  `;
+} else {
+  priceEl.innerHTML = `
+    <span class="new-price">₹${parseFloat(product.price).toLocaleString()}</span>
+  `;
+}
+
+
+          const extraImagesContainer = document.getElementById('extra-images');
+          if (Array.isArray(product.extra_images)) {
+            product.extra_images.forEach(url => {
+              const img = document.createElement('img');
+              img.src = url;
+              img.classList.add('extra-image');
+              img.style.cursor = 'zoom-in';
+              img.addEventListener('click', () => openFullscreenImage(url));
+              extraImagesContainer.appendChild(img);
+            });
+          }
+
+          const sizeSelect = document.getElementById("sizeSelect");
+          (product.sizes || []).forEach(size => {
+            const option = document.createElement("option");
+            option.value = size;
+            option.textContent = size;
+            sizeSelect.appendChild(option);
+          });
+document.querySelector('.add-to-cart').addEventListener('click', () => {
+  const selectedSize = document.getElementById('sizeSelect').value;
+
+  if (!selectedSize) {
+    alert("Please select a size before adding to cart.");
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+const finalPrice = product.discounted_price
+  ? product.discounted_price
+  : product.price;
+
+cart.push({
+  id: product.id, 
+  name: product.name,
+  price: finalPrice, // ✅ FIXED
+  image_url: product.image_url,
+  category: product.category,
+  size: selectedSize,
+  quantity: 1
+});
+
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href = 'cart.html';
+});
+        })
+        .catch(error => {
+          console.error('Error fetching product:', error);
+        });
+
+      fetch("https://pasheon-backend-zgz5.onrender.com/api/products/categories")
+  .then(res => res.json())
+  .then(categories => {
+    const categoryList = document.getElementById("category-list");
+    categoryList.innerHTML = '';
+    categories.forEach(category => {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `category.html?cat=${encodeURIComponent(category)}`;
+      link.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+      li.appendChild(link);
+      categoryList.appendChild(li);
+    });
+  })
+  .catch(err => {
+    console.error("Failed to load categories:", err);
+  });
+      const hamburger = document.getElementById('hamburger-product');
+      const sidebar = document.getElementById('sidebar-product');
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && e.target !== hamburger) {
+          sidebar.classList.remove('active');
+        }
+      });
+    });
+
+    function openFullscreenImage(url) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(0, 0, 0, 0.9)';
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.zIndex = 1000;
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.maxWidth = '90%';
+      img.style.maxHeight = '90%';
+      img.style.border = '2px solid white';
+      img.style.borderRadius = '8px';
+
+      overlay.addEventListener('click', () => {
+        document.body.removeChild(overlay);
+      });
+
+      overlay.appendChild(img);
+      document.body.appendChild(overlay);
+    }
+  
+  </script>
+
+</body>
+</html>

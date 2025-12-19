@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | Anis Boutique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @font-face {
+      font-family: 'copper';
+      src: url('Copperplate Gothic Bold.otf') format('opentype');
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+      font-family: 'copper', Arial, sans-serif;
+    }
+
+    .login-wrapper {
+      display: flex;
+      width: 900px;
+      max-width: 95%;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT – BRAND PANEL */
+    .brand-panel {
+      flex: 1;
+      background: linear-gradient(160deg, #01381C, #000);
+      color: white;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand-panel h1 {
+      font-size: 2.6rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .brand-panel p {
+      font-family: Arial, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      max-width: 300px;
+    }
+
+    /* RIGHT – LOGIN CARD */
+    .login-panel {
+      flex: 1;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-panel h2 {
+      font-size: 2rem;
+      color: #01381C;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 6px;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #01381C;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 1rem;
+      background: #01381C;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(1,56,28,0.3);
+    }
+
+    .error {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: red;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .login-wrapper {
+        flex-direction: column;
+      }
+
+      .brand-panel {
+        text-align: center;
+        align-items: center;
+      }
+
+      .brand-panel p {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+
+    <!-- BRAND SIDE -->
+    <div class="brand-panel">
+      <h1>ANIS</h1>
+      <p>
+        Curated fashion.  
+        Crafted elegance.  
+        Admin access reserved for brand custodians.
+      </p>
+    </div>
+
+    <!-- LOGIN SIDE -->
+    <div class="login-panel">
+      <h2>Admin Login</h2>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label>Admin Email</label>
+          <input type="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" required>
+        </div>
+
+        <button class="login-btn" type="submit">Enter Dashboard</button>
+        <div class="error" id="error-msg"></div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- SAME LOGIC – UNTOUCHED -->
+  <script>
+    document.getElementById('admin-login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('error-msg');
+
+      try {
+        const res = await fetch('https://anisboutique-backend.onrender.com/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem('adminToken', data.token);
+          window.location.href = 'admin.html';
+        } else {
+          errorMsg.textContent = data.message || 'Invalid credentials';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Something went wrong. Please try again.';
+        console.error('Login error:', err);
+      }
+    });
+  </script>
+</body>
+</html>
