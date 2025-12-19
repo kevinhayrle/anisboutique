@@ -215,7 +215,7 @@
       <div class="form-group"><input id="image" placeholder="Image URL"></div>
       <div class="form-group"><input id="sizes" placeholder="Sizes (comma separated)"></div>
       <div class="form-group"><input id="extraImages" placeholder="Extra Image URLs"></div>
-
+<div class="form-group"><input id="colors" placeholder="Colors (comma separated e.g. black, white, beige)"/></div>
       <button class="btn" type="submit">Save Product</button>
     </form>
   </div>
@@ -289,7 +289,8 @@ async function fetchProducts() {
           ${JSON.stringify(p.image_url)},
           ${JSON.stringify(p.description)},
           ${JSON.stringify(p.sizes)},
-          ${JSON.stringify(p.extra_images)}
+          ${JSON.stringify(p.extra_images)},
+          ${JSON.stringify(p.colors)}
         )'>Edit</button>
         <button class="delete-btn" onclick="deleteProduct('${p.id}')">Delete</button>
       </div>
@@ -347,18 +348,26 @@ document.getElementById("productForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const payload = {
-    name: document.getElementById("name").value,
-    price: Number(document.getElementById("price").value),
-    discounted_price: document.getElementById("discounted_price").value || null,
-    sort_order: document.getElementById("sort_order").value || 0,
-    category: document.getElementById("category").value,
-    description: document.getElementById("description").value,
-    image_url: document.getElementById("image").value,
-    sizes: document.getElementById("sizes").value,
-    extra_images: document.getElementById("extraImages").value
-      ? document.getElementById("extraImages").value.split(",").map(s => s.trim())
-      : []
-  };
+  name: document.getElementById("name").value,
+  price: Number(document.getElementById("price").value),
+  discounted_price: document.getElementById("discounted_price").value || null,
+  sort_order: document.getElementById("sort_order").value || 0,
+  category: document.getElementById("category").value,
+  description: document.getElementById("description").value,
+  image_url: document.getElementById("image").value,
+  sizes: document.getElementById("sizes").value,
+
+  colors: document.getElementById("colors").value
+    ? document.getElementById("colors").value
+        .split(",")
+        .map(c => c.trim().toLowerCase())
+    : [],
+
+  extra_images: document.getElementById("extraImages").value
+    ? document.getElementById("extraImages").value.split(",").map(s => s.trim())
+    : []
+};
+
 
   const id = document.getElementById("editingId").value;
   const url = id
@@ -391,7 +400,8 @@ function editProduct(
   imageUrl,
   descriptionVal,
   sizesVal,
-  extraImagesVal
+  extraImagesVal,
+  colorsVal
 ) {
   document.getElementById("editingId").value = id;
   document.getElementById("name").value = nameVal || "";
@@ -405,7 +415,10 @@ function editProduct(
     Array.isArray(sizesVal) ? sizesVal.join(",") : sizesVal || "";
   document.getElementById("extraImages").value =
     Array.isArray(extraImagesVal) ? extraImagesVal.join(",") : "";
-}
+document.getElementById("colors").value =
+  Array.isArray(colorsVal) ? colorsVal.join(", ") : "";
+
+  }
 
 /* COUPONS */
 async function fetchCoupons() {
