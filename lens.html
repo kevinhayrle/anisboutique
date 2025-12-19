@@ -2,184 +2,197 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Anis Boutique | Lens</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
+  <title>Lens Demo</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: Arial, sans-serif;
-      background: #f6f6f6;
-      color: #111;
-      text-align: center;
-      padding: 20px;
-    }
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f4f4f4;
+}
 
-    h2 {
-      font-family: 'Didot', serif;
-      letter-spacing: 4px;
-      margin-bottom: 20px;
-    }
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 15px;
+}
 
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
+.camera-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
 
-    #openCameraBtn {
-      padding: 14px 24px;
-      border-radius: 999px;
-      background: #000;
-      color: #fff;
-      font-size: 15px;
-      margin-bottom: 20px;
-    }
+video {
+  width: 100%;
+  border-radius: 10px;
+  background: black;
+}
+#switchCameraBtn {
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
 
-    /* ===== LENS ===== */
-    .camera-container {
-      display: flex;
-      justify-content: center;
-    }
+.camera-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
 
-    .lens-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 380px;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #000;
-    }
+/* THIS is the lens */
+.lens-wrapper {
+  position: relative;          /* reference for icon */
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  overflow: hidden;            /* CLIPS icon inside lens */
+  background: black;
+}
 
-    video, .lens-wrapper img {
-      width: 100%;
-      display: block;
-    }
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    /* Switch camera */
-    #switchCameraIcon {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 8px;
-      border-radius: 50%;
-      font-size: 14px;
-      cursor: pointer;
-      z-index: 10;
-    }
+/* Switch icon INSIDE lens */
+#switchCameraIcon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+}
+#captureBtn {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;              /* smaller size */
+  height: 52px;
+  border-radius: 50%;
+  background: transparent;  /* no white fill */
+  border: 3px solid white;  /* ONLY white border */
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.9);
+}
 
-    /* Capture */
-    #captureBtn {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: transparent;
-      border: 3px solid rgba(255,255,255,0.9);
-      z-index: 10;
-    }
+/* inner red circle */
+#captureBtn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  background: #e53935;      /* red */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
 
-    #captureBtn::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 26px;
-      height: 26px;
-      background: #e53935;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
+/* press effect */
+#captureBtn:active {
+  transform: translateX(-50%) scale(0.92);
+}
 
-    /* Search */
-    #searchBtn {
-      margin-top: 20px;
-      padding: 14px 24px;
-      border-radius: 999px;
-      background: #000;
-      color: #fff;
-      opacity: 0.5;
-    }
+#searchBtn {
+  margin-top: 20px;
+  padding: 14px 22px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #222;
+  color: white;
+  opacity: 0.5;
+  transition: 0.3s;
+}
 
-    #searchBtn:not(:disabled) {
-      opacity: 1;
-    }
+#searchBtn:not(:disabled) {
+  opacity: 1;
+  background: #000;
+}
 
-    #colorResult {
-      margin-top: 16px;
-      font-size: 14px;
-    }
+#searchBtn:disabled {
+  cursor: not-allowed;
+}
+#productsContainer {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    /* PRODUCTS */
-    #productsContainer {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
 
-    .product-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-    }
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
 
-    .product-card img {
-      width: 100%;
-      border-radius: 8px;
-    }
+.product-card h4 {
+  margin: 8px 0 4px;
+  font-size: 14px;
+}
 
-    .product-card h4 {
-      font-size: 14px;
-      margin-top: 8px;
-    }
+.product-card span {
+  font-size: 12px;
+  color: #666;
+}
 
-    .product-card span {
-      font-size: 12px;
-      color: #666;
-    }
   </style>
 </head>
-
 <body>
 
-<h2>ANIS LENS</h2>
-<button id="openCameraBtn">Open Scan</button>
+  <h2>Lens Color Scan Demo</h2>
 
-<div class="camera-container">
+  <button id="openCameraBtn">Open Scan</button>
+
+ <div class="camera-container">
   <div class="lens-wrapper">
     <video id="video" autoplay playsinline></video>
+
+    <!-- Switch camera icon -->
     <div id="switchCameraIcon">🔄</div>
+
+    <!-- Capture button -->
     <button id="captureBtn"></button>
   </div>
 </div>
 
-<button id="searchBtn" disabled>Search Similar Products</button>
+<!-- Search button -->
+<button id="searchBtn" disabled>
+  🔍 Search Similar Products
+</button>
 <p id="colorResult"></p>
 <div id="productsContainer"></div>
-
 <canvas id="canvas" style="display:none;"></canvas>
-
 <script src="https://unpkg.com/colorthief/dist/color-thief.umd.js"></script>
-
 <script>
-const API = "https://anisboutique-backend.onrender.com/api";
+  document.addEventListener("DOMContentLoaded", () => {
 
+/* ===============================
+   DOM ELEMENTS
+=============================== */
 const openCameraBtn = document.getElementById("openCameraBtn");
 const switchCameraIcon = document.getElementById("switchCameraIcon");
 const captureBtn = document.getElementById("captureBtn");
@@ -194,22 +207,46 @@ const ctx = canvas.getContext("2d");
 let stream = null;
 let currentFacingMode = "environment";
 
-/* CAMERA */
+/* ===============================
+   MOCK PRODUCTS (DEMO)
+=============================== */
+const mockProducts = [
+  { name: "Red T-Shirt", color: "Red" },
+  { name: "Pink Top", color: "Pink" },
+  { name: "Blue Denim", color: "Blue" },
+  { name: "Green Shirt", color: "Green" },
+  { name: "Brown Leather Bag", color: "Brown" },
+  { name: "White Shirt", color: "White" },
+  { name: "Black Jacket", color: "Black" },
+  { name: "Ash Pants", color: "Ash" }
+];
+
+/* ===============================
+   CAMERA START
+=============================== */
 async function startCamera() {
-  if (stream) stream.getTracks().forEach(t => t.stop());
+  try {
+    if (stream) stream.getTracks().forEach(t => t.stop());
 
-  const img = document.querySelector(".lens-wrapper img");
-  if (img) img.remove();
+    const oldImg = document.querySelector(".lens-wrapper img");
+    if (oldImg) oldImg.remove();
 
-  searchBtn.disabled = true;
-  colorResult.textContent = "";
-  productsContainer.innerHTML = "";
+    video.style.display = "block";
+    searchBtn.disabled = true;
+    colorResult.textContent = "";
+    productsContainer.innerHTML = "";
 
-  stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: currentFacingMode }
-  });
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: currentFacingMode }
+    });
 
-  video.srcObject = stream;
+    video.srcObject = stream;
+    await video.play();
+
+  } catch (err) {
+    alert("Camera not available");
+    console.error(err);
+  }
 }
 
 function switchCamera() {
@@ -218,95 +255,267 @@ function switchCamera() {
   startCamera();
 }
 
+/* ===============================
+   CAPTURE IMAGE
+=============================== */
 function captureImage() {
+  if (!video.srcObject) return;
+
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   ctx.drawImage(video, 0, 0);
 
   stream.getTracks().forEach(t => t.stop());
   video.srcObject = null;
+  video.style.display = "none";
 
   const img = document.createElement("img");
   img.src = canvas.toDataURL("image/png");
-  document.querySelector(".lens-wrapper").prepend(img);
+  img.style.width = "100%";
 
+  document.querySelector(".lens-wrapper").prepend(img);
   searchBtn.disabled = false;
 }
 
-/* COLOR */
-function rgbToHsl(r,g,b){
-  r/=255; g/=255; b/=255;
-  const max=Math.max(r,g,b), min=Math.min(r,g,b);
-  let h,s,l=(max+min)/2;
-  if(max===min){h=s=0;}
-  else{
-    const d=max-min;
-    s=l>0.5?d/(2-max-min):d/(max+min);
-    switch(max){
-      case r:h=(g-b)/d+(g<b?6:0);break;
-      case g:h=(b-r)/d+2;break;
-      case b:h=(r-g)/d+4;break;
+/* ===============================
+   CENTER AVERAGE COLOR
+=============================== */
+function getAverageColorFromCenter() {
+  const w = canvas.width;
+  const h = canvas.height;
+
+  const crop = 0.4; // 40% center
+  const sx = w * (0.5 - crop / 2);
+  const sy = h * (0.5 - crop / 2);
+  const cw = w * crop;
+  const ch = h * crop;
+
+  const data = ctx.getImageData(sx, sy, cw, ch).data;
+
+  let r = 0, g = 0, b = 0;
+  const count = data.length / 4;
+
+  for (let i = 0; i < data.length; i += 4) {
+    r += data[i];
+    g += data[i + 1];
+    b += data[i + 2];
+  }
+
+  return [
+    Math.round(r / count),
+    Math.round(g / count),
+    Math.round(b / count)
+  ];
+}
+
+/* ===============================
+   RGB → HSL
+=============================== */
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
     }
-    h*=60;
+    h *= 60;
   }
-  return {h,s,l};
+  return { h, s, l };
 }
 
-function getColorName(r,g,b){
-  const {h,s,l}=rgbToHsl(r,g,b);
-  if(l<0.12) return "black";
-  if(l>0.88 && s<0.15) return "white";
-  if(s<0.1) return "gray";
-  if(h<15||h>=345) return "red";
-  if(h<45) return "orange";
-  if(h<65) return "yellow";
-  if(h<150) return "green";
-  if(h<200) return "cyan";
-  if(h<260) return "blue";
-  if(h<300) return "purple";
-  return "unknown";
+/* ===============================
+   COLOR CLASSIFICATION (STABLE)
+=============================== */
+function samplePixelsFromCenter(ctx, width, height) {
+const crop = 0.4;
+const sx = width * (0.5 - crop / 2);
+const sy = height * (0.5 - crop / 2);
+const cw = width * crop;
+const ch = height * crop;
+
+const data = ctx.getImageData(sx, sy, cw, ch).data;
+const pixels = [];
+
+for (let i = 0; i < data.length; i += 40) {
+  const r = data[i];
+  const g = data[i + 1];
+  const b = data[i + 2];
+
+  // ignore extreme noise
+  if ((r < 20 && g < 20 && b < 20) ||
+      (r > 235 && g > 235 && b > 235)) continue;
+
+  pixels.push([r, g, b]);
 }
 
-function detectColor(){
-  const img=document.querySelector(".lens-wrapper img");
-  const thief=new ColorThief();
-  const [r,g,b]=thief.getColor(img);
-  const color=getColorName(r,g,b);
-
-  colorResult.innerHTML=`Detected color: <b>${color}</b>`;
-  showProducts(color);
+return pixels;
 }
 
-/* FETCH PRODUCTS */
-async function showProducts(color){
-  productsContainer.innerHTML="Loading…";
-  const res=await fetch(`${API}/products?color=${color}`);
-  const products=await res.json();
+function kMeans(pixels, k = 3, iterations = 8) {
+let centroids = pixels
+  .sort(() => 0.5 - Math.random())
+  .slice(0, k);
 
-  productsContainer.innerHTML="";
-  if(!products.length){
-    productsContainer.innerHTML=`No products found`;
-    return;
-  }
+for (let iter = 0; iter < iterations; iter++) {
+  const clusters = Array.from({ length: k }, () => []);
 
-  products.forEach(p=>{
-    const card=document.createElement("div");
-    card.className="product-card";
-    card.innerHTML=`
-      <img src="${p.image_url}">
-      <h4>${p.name}</h4>
-      <span>${color}</span>
-    `;
-    productsContainer.appendChild(card);
+  pixels.forEach(p => {
+    let minDist = Infinity;
+    let idx = 0;
+
+    centroids.forEach((c, i) => {
+      const dist =
+        (p[0] - c[0]) ** 2 +
+        (p[1] - c[1]) ** 2 +
+        (p[2] - c[2]) ** 2;
+      if (dist < minDist) {
+        minDist = dist;
+        idx = i;
+      }
+    });
+
+    clusters[idx].push(p);
+  });
+
+  centroids = clusters.map(cluster => {
+    if (cluster.length === 0) return [0, 0, 0];
+    const sum = cluster.reduce(
+      (a, p) => [a[0] + p[0], a[1] + p[1], a[2] + p[2]],
+      [0, 0, 0]
+    );
+    return sum.map(v => Math.round(v / cluster.length));
   });
 }
 
-/* EVENTS */
-openCameraBtn.onclick=startCamera;
-switchCameraIcon.onclick=switchCamera;
-captureBtn.onclick=captureImage;
-searchBtn.onclick=detectColor;
-</script>
+return centroids;
+}
 
+function getDominantCluster(pixels) {
+const centroids = kMeans(pixels, 3);
+
+let best = centroids[0];
+let bestScore = -Infinity;
+
+centroids.forEach(c => {
+  const brightness = (c[0] + c[1] + c[2]) / 3;
+  const score = 255 - Math.abs(brightness - 140);
+  if (score > bestScore) {
+    bestScore = score;
+    best = c;
+  }
+});
+
+return best;
+}
+
+function getColorName(r, g, b) {
+const { h, s, l } = rgbToHsl(r, g, b);
+
+// 1️⃣ NEUTRAL / LIGHT (torch, white, ash)
+if (l > 0.9 && s < 0.2) return "White";
+if (s < 0.12 && l > 0.2 && l < 0.85) return "White";
+
+// 2️⃣ BLACK
+if (l < 0.15) return "Black";
+
+// 3️⃣ BROWN (dark orange / dark red zone)
+// MUST come BEFORE red
+if ((h >= 10 && h <= 45) && l < 0.55) {
+  return "Brown";
+}
+
+// 4️⃣ RED / PINK family
+if ((h >= 330 && h <= 360) || (h >= 0 && h <= 30)) {
+  if (l >= 0.55) return "Pink";
+  return "Red";
+}
+
+// 5️⃣ OTHER COLORS
+if (h > 45 && h <= 75) return "Yellow";
+if (h > 75 && h <= 160) return "Green";
+if (h > 160 && h <= 250) return "Blue";
+// 🟣 PURPLE (protected)
+if (h > 250 && h <= 330 && l > 0.18) {
+return "Purple";
+}
+
+// 6️⃣ SAFE FALLBACK
+return "White";
+}
+
+
+/* ===============================
+   SEARCH → DETECT → SHOW
+=============================== */
+function detectColor() {
+const pixels = samplePixelsFromCenter(
+  ctx,
+  canvas.width,
+  canvas.height
+);
+
+if (pixels.length === 0) {
+  alert("Scan closer to the object");
+  return;
+}
+
+const [r, g, b] = getDominantCluster(pixels);
+const color = getColorName(r, g, b);
+
+colorResult.innerHTML = `
+  <strong>Detected Color:</strong> ${color}
+  <span style="
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background: rgb(${r},${g},${b});
+    border-radius:50%;
+    margin-left:8px;
+    vertical-align:middle;
+  "></span>
+`;
+
+showProducts(color);
+}
+
+function showProducts(color) {
+  productsContainer.innerHTML = "";
+
+  const matches = mockProducts.filter(
+    p => p.color.toLowerCase() === color.toLowerCase()
+  );
+
+  if (matches.length === 0) {
+    productsContainer.innerHTML = `<p>No products for ${color}</p>`;
+    return;
+  }
+
+  matches.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product-card";
+    div.textContent = p.name;
+    productsContainer.appendChild(div);
+  });
+}
+
+/* ===============================
+   EVENTS
+=============================== */
+openCameraBtn.addEventListener("click", startCamera);
+switchCameraIcon.addEventListener("click", switchCamera);
+captureBtn.addEventListener("click", captureImage);
+searchBtn.addEventListener("click", detectColor);
+
+});
+
+</script>
 </body>
-</html>
