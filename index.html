@@ -121,6 +121,23 @@
   opacity: 1;
 }
 
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  background: lightgrey; 
+}
+
+.product {
+  background: lightgrey; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -191,7 +208,22 @@
       margin: 0;
     }
   }
-
+  
+.product-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeUp 0.6s ease forwards;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  align-items:stretch;
+  gap: 20px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-left: 1px;
+}
 </style>
 </head>
 <body>
@@ -252,12 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger-icon');
   const categoryMenu = document.getElementById('category-menu');
   const productContainer = document.getElementById('product-container');
+
+
   hamburger.addEventListener('click', () => {
     const isVisible = sidebar.style.left === '0px';
     sidebar.style.left = isVisible ? '-240px' : '0px';
   });
 
-  fetch('https://anisboutique-backend.onrender.com/api/products/categories')
+  fetch('https://anisboutique.onrender.com/api/products/categories')
     .then(res => res.json())
     .then(categories => {
       categoryMenu.innerHTML = '';
@@ -270,6 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })
     .catch(err => console.error('Error loading categories:', err));
+
+ 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -282,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
  
-  fetch("https://anisboutique-backend.onrender.com/api/products")
+  fetch("https://anisboutique.onrender.com/api/products")
     .then(res => res.json())
     .then(products => {
       products.forEach(product => {

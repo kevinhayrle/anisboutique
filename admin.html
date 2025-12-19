@@ -1,278 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pasheon Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <title>Admin Login | Pasheon</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     @font-face {
       font-family: 'copper';
       src: url('Copperplate Gothic Bold.otf') format('opentype');
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: lightgrey;
+      font-family: 'copper', Arial, sans-serif;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    .sidebar {
-      width: 200px;
-      background-color: #01381C;
-      color: white;
-      height: 100vh;
-      position: fixed;
-      display: flex;
-      flex-direction: column;
-      padding: 1rem;
-    }
-
-    .sidebar h2 {
-      font-family: 'copper', serif;
+    .login-container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
       text-align: center;
-    }
-
-    .logout-btn {
-      padding: 10px;
-      background-color: #c0392b;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .main {
-      margin-left: 200px;
-      width: calc(100% - 200px);
-      padding: 2rem;
     }
 
     h1 {
-      font-family: 'copper', serif;
-      text-align: center;
+      font-family: 'copper';
+      margin-bottom: 1.5rem;
       color: #01381C;
+      font-size: 2rem;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 1rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group input,
-    .form-group select {
+    input {
       width: 100%;
-      padding: 0.7rem;
+      padding: 0.8rem;
+      margin: 0.6rem 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
     }
 
-    .btn {
-      padding: 0.6rem 1.2rem;
-      background-color: #01381C;
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      background: #01381C;
       color: white;
+      font-size: 1rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
+      transition: background 0.3s;
     }
 
-    .product {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ddd;
-      padding: 1rem 0;
-      cursor: grab;
+    button:hover {
+      background: #02572d;
     }
 
-    .product.dragging {
-      opacity: 0.5;
-    }
-
-    .delete-btn {
-      background: #c0392b;
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    .edit-btn {
-      background: #2980b9;
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-right: 5px;
+    .error {
+      color: red;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
-
 <body>
-
-<div class="sidebar">
-  <h2>ADMIN</h2>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
-
-<div class="main">
-  <h1>Pasheon Admin Dashboard</h1>
-
-  <!-- PRODUCT FORM -->
-  <div class="container">
-    <form id="productForm">
-      <h2>Add / Edit Product</h2>
-      <input type="hidden" id="editingId">
-
-      <div class="form-group"><input id="name" placeholder="Product Name"></div>
-      <div class="form-group"><input id="price" type="number" placeholder="Price"></div>
-      <div class="form-group"><input id="discounted_price" type="number" placeholder="Discounted Price"></div>
-      <div class="form-group"><input id="sort_order" type="number" placeholder="Sort Order"></div>
-      <div class="form-group"><input id="category" placeholder="Category"></div>
-      <div class="form-group"><input id="description" placeholder="Description"></div>
-      <div class="form-group"><input id="image" placeholder="Image URL"></div>
-      <div class="form-group"><input id="sizes" placeholder="Sizes (comma separated)"></div>
-      <div class="form-group"><input id="extraImages" placeholder="Extra Image URLs"></div>
-
-      <button class="btn" type="submit">Save Product</button>
+  <div class="login-container">
+    <h1>Admin Login</h1>
+    <form id="admin-login-form">
+      <input type="email" id="email" placeholder="Admin Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <div class="error" id="error-msg"></div>
     </form>
   </div>
 
-  <!-- PRODUCTS LIST -->
-  <div class="container">
-    <h2>All Products (Drag to Reorder)</h2>
-    <div id="productList"></div>
-  </div>
+  <script>
+    document.getElementById('admin-login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-  <!-- COUPONS -->
-  <div class="container">
-    <h2>Coupon Management</h2>
-    <form id="couponForm">
-      <div class="form-group"><input id="coupon_code" placeholder="Coupon Code"></div>
-      <div class="form-group">
-        <select id="discount_type">
-          <option value="percentage">Percentage</option>
-          <option value="flat">Flat</option>
-        </select>
-      </div>
-      <div class="form-group"><input id="discount_value" type="number" placeholder="Discount Value"></div>
-      <div class="form-group"><input id="min_cart_value" type="number" placeholder="Minimum Cart Value"></div>
-      <div class="form-group"><input id="max_discount" type="number" placeholder="Max Discount"></div>
-      <div class="form-group"><input id="expiry_date" type="date"></div>
-      <button class="btn" type="submit">Add Coupon</button>
-    </form>
-  </div>
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('error-msg');
 
-  <div class="container">
-    <h2>All Coupons</h2>
-    <div id="couponList"></div>
-  </div>
-</div>
+      try {
+        const res = await fetch('https://pasheon-backend-zgz5.onrender.com/api/admin/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
 
-<script>
-const API = "https://pasheon-backend-zgz5.onrender.com/api";
-const token = localStorage.getItem("adminToken");
+        const data = await res.json();
 
-let draggedItem = null;
-
-/* PRODUCTS */
-async function fetchProducts() {
-  const res = await fetch(`${API}/admin/products`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await res.json();
-
-  const list = document.getElementById("productList");
-  list.innerHTML = "";
-
-  data.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.draggable = true;
-    div.dataset.id = p.id;
-
-    div.innerHTML = `
-      <div>
-        <b>${p.name}</b><br>
-        ${p.discounted_price ? `<s>₹${p.price}</s> ₹${p.discounted_price}` : `₹${p.price}`}
-      </div>
-      <div>
-        <button class="edit-btn" onclick='editProduct(
-          ${JSON.stringify(p.id)},
-          ${JSON.stringify(p.name)},
-          ${JSON.stringify(p.price)},
-          ${JSON.stringify(p.discounted_price)},
-          ${JSON.stringify(p.category)},
-          ${JSON.stringify(p.sort_order)},
-          ${JSON.stringify(p.image_url)},
-          ${JSON.stringify(p.description)},
-          ${JSON.stringify(p.sizes)},
-          ${JSON.stringify(p.extra_images)}
-        )'>Edit</button>
-        <button class="delete-btn" onclick="deleteProduct('${p.id}')">Delete</button>
-      </div>
-    `;
-
-    list.appendChild(div);
-  });
-}
-
-/* DRAG & DROP */
-document.addEventListener("dragstart", e => {
-  if (e.target.classList.contains("product")) {
-    draggedItem = e.target;
-    e.target.classList.add("dragging");
-  }
-});
-
-document.addEventListener("dragend", e => {
-  if (e.target.classList.contains("product")) {
-    e.target.classList.remove("dragging");
-    saveOrder();
-  }
-});
-
-document.addEventListener("dragover", e => {
-  e.preventDefault();
-  const target = e.target.closest(".product");
-  if (target && target !== draggedItem) {
-    const list = document.getElementById("productList");
-    list.insertBefore(draggedItem, target);
-  }
-});
-
-/* SAVE ORDER */
-async function saveOrder() {
-  const items = [...document.querySelectorAll(".product")];
-
-  const payload = items.map((item, index) => ({
-    id: item.dataset.id,
-    sort_order: index + 1
-  }));
-
-  await fetch(`${API}/admin/products/reorder`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  });
-}
-
-/* EXISTING CALLS */
-fetchProducts();
-fetchCoupons();
-</script>
-
+        if (res.ok) {
+          localStorage.setItem('adminToken', data.token);
+          window.location.href = 'admin.html'; 
+        } else {
+          errorMsg.textContent = data.message || 'Invalid credentials';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Something went wrong. Please try again.';
+        console.error('Login error:', err);
+      }
+    });
+  </script>
 </body>
 </html>
