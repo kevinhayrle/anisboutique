@@ -19,6 +19,7 @@ header.header-left {
   padding: 0 24px;
   background: white;
   z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .header-left .left {
@@ -26,6 +27,7 @@ header.header-left {
   display: flex;
   align-items: center;
   color: black;
+  
 }
 
 .header-center {
@@ -34,6 +36,7 @@ header.header-left {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
+  
 }
 
 .logo {
