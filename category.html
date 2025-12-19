@@ -3,230 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pasheon - Category</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>Anis Boutique | Collection</title>
+
+  <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
- <style>
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  .animate {
-    animation: fadeInUp 0.6s ease forwards;
-  }
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px;
-    padding: 40px 16px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .product-card {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .product-image,
-  .product-card img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    display: block;
-    background-color: #f9f9f9;
-
-  }
-
-  .product-name {
-    font-size: 14px;
-    margin: 10px 0 5px;
-  }
-
-  .product-price {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  .add-to-cart {
-    width: 100%;
-    padding: 8px;
-    background-color: black;
-    color: white;
-    border: none;
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: auto;
-  }
-
-  .add-to-cart:hover {
-    background-color: #222;
-  }
-@media (max-width: 768px) {
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 16px;
-    padding-right: 16px;
-    width: 100%;
-    max-width: 600px;
-    box-sizing: border-box;
-  }
-
-  .product-card {
-    padding: 8px;
-  }
+  <style>
+   .search-wrapper {
+  max-width: 480px;
+  margin: 120px auto 40px; /* header-safe */
+  padding: 0 20px;
 }
-</style>
+
+.search-label {
+  display: block;
+  font-family: 'Didot', serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #000;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.search-wrapper input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #000; /* ✨ elegant line */
+  padding: 12px 4px;
+  font-size: 15px;
+  font-family: 'arial';
+  letter-spacing: 1px;
+  background: transparent;
+  outline: none;
+  text-align: center;
+}
+
+.search-wrapper input::placeholder {
+  color: #999;
+  letter-spacing: 1px;
+}
+
+.search-wrapper input:focus {
+  border-bottom-width: 2px;
+}
+
+.category-section {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.category-title {
+  font-family: 'arial';
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-align: left;          /* ✅ LEFT */
+  padding-left: 7px;         /* subtle luxury offset */
+}
+
+
+   .product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* desktop */
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+    .product-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    .product-name {
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+
+    .product-price {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-
-<header class="navbar">
-  <div class="nav-left">
+<header class="header-left">
+  <div class="left">
     <i class="fas fa-bars" id="hamburger-icon"></i>
   </div>
 
-  <div class="nav-center">
-    <a href="index.html" class="logo">
-      <img src="log.png" alt="Pasheon Logo" class="log-img">
+  <div class="header-center">
+    <a href="index.html">
+      <img src="logo.png" class="logo">
     </a>
   </div>
 
-  <div class="nav-right">
-    <a href="cart.html">
-      <i class="fas fa-shopping-cart"></i>
-    </a>
+  <div class="header-right">
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
   </div>
 </header>
 
-
-<div id="sidebar" class="sidebar" style="left: -240px;">
-  <div id="close-sidebar-category" class="close-btn">&times;</div>
+<div id="sidebar" class="sidebar" style="left:-240px;">
   <a href="index.html"><strong>HOME</strong></a>
-  <a href="contact.html"><strong>CONTACT US</strong></a><br>
-  <a href="yourOrders.html"><strong>YOUR ORDERS</strong></a><br>
-  <a href="privacy.html"><STRONG>PRIVACY POLICY</STRONG></a><br>
-  <a><strong>COLLECTIONS</strong></a>
-  <hr/>
+  <a href="contact.html"><strong>CONTACT US</strong></a>
+  <a href="yourOrders.html"><strong>YOUR ORDERS</strong></a>
+  <a href="privacy.html"><strong>PRIVACY POLICY</strong></a>
+  <strong>COLLECTIONS</strong>
+  <hr>
   <div id="category-menu"></div>
 </div>
 
+<div class="search-wrapper">
+  <input id="searchInput" placeholder="Search">
+</div>
 
-<section class="hero">
-  <h1 class="brand-name"><strong>PASHEON</strong></h1>
-</section>
-
-
-<section id="products-section">
-  <h2 class="section-title" id="category-title">Category</h2>
-  <div id="product-container" class="product-grid">
-    
-  </div>
-</section>
+<div id="collections"></div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const productContainer = document.getElementById('product-container');
-  const urlParams = new URLSearchParams(window.location.search);
-  const category = urlParams.get('cat');
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const activeCategory = params.get("cat");
+  const focus = params.get("focus");
 
+  const collections = document.getElementById("collections");
+  const searchInput = document.getElementById("searchInput");
+  const categoryMenu = document.getElementById("category-menu");
 
-  fetch('https://pasheon-backend-zgz5.onrender.com/api/products')
+  let allProducts = [];
+
+  if (focus) setTimeout(() => searchInput.focus(), 300);
+
+  fetch("https://anisboutique-backend.onrender.com/api/products")
     .then(res => res.json())
     .then(products => {
-      const filtered = products.filter(p =>
-        p.category.toLowerCase() === category.toLowerCase()
-      );
+      allProducts = products;
+      render(products);
+    });
 
-      if (filtered.length === 0) {
-        productContainer.innerHTML = '<p>No products found in this category.</p>';
-        return;
-      }
+  function render(products) {
+    collections.innerHTML = "";
 
-      filtered.forEach(product => {
-        const card = document.createElement('div');
-        card.classList.add('product-card');
+    const grouped = {};
+
+    products.forEach(p => {
+      const cat = p.category || "Others";
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(p);
+    });
+
+    Object.keys(grouped).forEach(cat => {
+      if (activeCategory && cat.toLowerCase() !== activeCategory.toLowerCase()) return;
+
+      const section = document.createElement("div");
+      section.className = "category-section";
+
+      section.innerHTML = `
+        <h2 class="category-title">${cat}</h2>
+        <div class="product-grid"></div>
+      `;
+
+      const grid = section.querySelector(".product-grid");
+
+      grouped[cat].forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
         card.innerHTML = `
-          <div class="product-click-area" data-id="${product.id}">
-            <img src="${product.image_url}" alt="${product.name}" class="product-image">
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">₹${parseFloat(product.price).toLocaleString()}</p>
+          <div class="product-click-area">
+            <img src="${p.image_url}">
+            <h3 class="product-name">${p.name}</h3>
+            <p class="product-price">₹${p.discounted_price || p.price}</p>
           </div>
-          <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+          <button class="add-to-cart">Add to Cart</button>
         `;
-        productContainer.appendChild(card);
 
-      
-        card.querySelector('.product-click-area').addEventListener('click', () => {
-          window.location.href = `product.html?id=${product.id}`;
-        });
+        card.querySelector(".product-click-area").onclick = () =>
+          window.location.href = `product.html?id=${p.id}`;
 
-        
-const addToCartBtn = card.querySelector('.add-to-cart');
-addToCartBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  alert('Please open the product and choose a size before adding to cart.');
-  window.location.href = `product.html?id=${product.id}`;
-});
+        card.querySelector(".add-to-cart").onclick = () => {
+          alert("Please open product and choose size.");
+          window.location.href = `product.html?id=${p.id}`;
+        };
+
+        grid.appendChild(card);
       });
-    })
-    .catch(err => {
-      console.error('Error loading products:', err);
-      productContainer.innerHTML = '<p>Failed to load products.</p>';
-    });
 
-
-  const hamburger = document.getElementById('hamburger-icon');
-  const sidebar = document.getElementById('sidebar');
-  const closeSidebar = document.getElementById('close-sidebar-category');
-  const categoryLinksContainer = document.getElementById('category-menu');
-
-  if (hamburger && sidebar) {
-    hamburger.addEventListener('click', () => {
-      sidebar.style.left = '0';
+      collections.appendChild(section);
     });
   }
 
-  if (closeSidebar && sidebar) {
-    closeSidebar.addEventListener('click', () => {
-      sidebar.style.left = '-250px';
-    });
-  }
+  searchInput.addEventListener("input", () => {
+    const term = searchInput.value.toLowerCase();
+    render(allProducts.filter(p => p.name.toLowerCase().includes(term)));
+  });
 
-  fetch('https://pasheon-backend-zgz5.onrender.com/api/products/categories')
+  // Sidebar
+  document.getElementById("hamburger-icon").onclick = () => {
+    sidebar.style.left = "0";
+  };
+
+  fetch("https://anisboutique-backend.onrender.com/api/products/categories")
     .then(res => res.json())
-    .then(categories => {
-      categoryLinksContainer.innerHTML = '';
-      categories.forEach(cat => {
-        const link = document.createElement('a');
-        link.href = `category.html?cat=${encodeURIComponent(cat)}`;
-        link.textContent = cat;
-        categoryLinksContainer.appendChild(link);
+    .then(cats => {
+      categoryMenu.innerHTML = "";
+      cats.forEach(c => {
+        const a = document.createElement("a");
+        a.href = `category.html?cat=${encodeURIComponent(c)}`;
+        a.textContent = c;
+        categoryMenu.appendChild(a);
       });
-    })
-    .catch(err => {
-      console.error('Failed to load categories:', err);
     });
 });
 </script>
