@@ -228,8 +228,8 @@ body, html {
 }
 
 .product-card button.add-to-cart:hover {
-  background-color: white;
-  color: black;
+  background-color: purple;
+  color: purple;
 }
 
 .product-card h3 {
@@ -318,9 +318,9 @@ body, html {
 
 .add-to-cart-btn {
   padding: 12px 20px;
-  background-color: grey;
-  color: white;
-  border: 1px solid black;
+  background-color: purple;
+  color: purple;
+  border: 1px solid purple;
   font-size: 16px;
   font-family: 'Helvetica';
   letter-spacing: 0.5px;
@@ -331,8 +331,8 @@ body, html {
 }
 
 .add-to-cart-btn:hover {
-  background-color: white;
-  color: black;
+  background-color: purple;
+  color: purple;
   
 }
 
@@ -418,8 +418,8 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 .add-to-cart {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: grey;
-  color: white;
+  background-color: purple;
+  color: purple;
   margin-top: 30px;
   padding: 12px 30px;
   font-size: 16px;
@@ -430,7 +430,7 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .add-to-cart:hover {
-  background-color: #333;
+  background-color: purple;
 }
 
 

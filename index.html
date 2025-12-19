@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.style.left = isVisible ? '-240px' : '0px';
   });
 
-  fetch('https://anisboutique.onrender.com/api/products/categories')
+  fetch('https://anisboutique-backend.onrender.com/api/products/categories')
     .then(res => res.json())
     .then(categories => {
       categoryMenu.innerHTML = '';
