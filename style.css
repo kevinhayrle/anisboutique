@@ -203,9 +203,9 @@ body, html {
 .product-card button.add-to-cart {
   margin-top: 20px;
   padding: 10px 16px;
-  background-color: navy;
+  background-color: purple;
   color: white;
-  border: 1px solid navy;
+  border: 1px solid purple;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
   letter-spacing: 0.5px;
