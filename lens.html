@@ -2,420 +2,311 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lens Demo</title>
-  <link rel="stylesheet" href="style.css" />
-<style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anis Boutique | Lens</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background: #f4f4f4;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-button {
-  padding: 12px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 15px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f6;
+      color: #111;
+      text-align: center;
+      padding: 20px;
+    }
 
-.camera-container {
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-}
+    h2 {
+      font-family: 'Didot', serif;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
 
-video {
-  width: 100%;
-  border-radius: 10px;
-  background: black;
-}
-#switchCameraBtn {
-  background: #222;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
+    button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
 
-.camera-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-}
+    #openCameraBtn {
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: #000;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
 
-/* THIS is the lens */
-.lens-wrapper {
-  position: relative;          /* reference for icon */
-  width: 100%;
-  max-width: 400px;
-  border-radius: 16px;
-  overflow: hidden;            /* CLIPS icon inside lens */
-  background: black;
-}
+    /* ===== LENS ===== */
+    .camera-container {
+      display: flex;
+      justify-content: center;
+    }
 
-video {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+    .lens-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #000;
+    }
 
-/* Switch icon INSIDE lens */
-#switchCameraIcon {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: rgba(0, 0, 0, 0.65);
-  color: white;
-  padding: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 10;
-}
-#captureBtn {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 52px;              /* smaller size */
-  height: 52px;
-  border-radius: 50%;
-  background: transparent;  /* no white fill */
-  border: 3px solid white;  /* ONLY white border */
-  cursor: pointer;
-  z-index: 10;
-  padding: 0;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.9);
-}
+    video, .lens-wrapper img {
+      width: 100%;
+      display: block;
+    }
 
-/* inner red circle */
-#captureBtn::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  background: #e53935;      /* red */
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
+    /* Switch camera */
+    #switchCameraIcon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 10;
+    }
 
-/* press effect */
-#captureBtn:active {
-  transform: translateX(-50%) scale(0.92);
-}
+    /* Capture */
+    #captureBtn {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: transparent;
+      border: 3px solid rgba(255,255,255,0.9);
+      z-index: 10;
+    }
 
-#searchBtn {
-  margin-top: 20px;
-  padding: 14px 22px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: #222;
-  color: white;
-  opacity: 0.5;
-  transition: 0.3s;
-}
+    #captureBtn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 26px;
+      height: 26px;
+      background: #e53935;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-#searchBtn:not(:disabled) {
-  opacity: 1;
-  background: #000;
-}
+    /* Search */
+    #searchBtn {
+      margin-top: 20px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: #000;
+      color: #fff;
+      opacity: 0.5;
+    }
 
-#searchBtn:disabled {
-  cursor: not-allowed;
-}
-#productsContainer {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
+    #searchBtn:not(:disabled) {
+      opacity: 1;
+    }
 
-.product-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
-}
+    #colorResult {
+      margin-top: 16px;
+      font-size: 14px;
+    }
 
-.product-card img {
-  width: 100%;
-  border-radius: 8px;
-}
+    /* PRODUCTS */
+    #productsContainer {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-.product-card h4 {
-  margin: 8px 0 4px;
-  font-size: 14px;
-}
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
 
-.product-card span {
-  font-size: 12px;
-  color: #666;
-}
-</style>
+    .product-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .product-card h4 {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .product-card span {
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
 </head>
+
 <body>
 
-  <h2>Lens Color Scan Demo</h2>
+<h2>ANIS LENS</h2>
+<button id="openCameraBtn">Open Scan</button>
 
-  <button id="openCameraBtn">Open Scan</button>
-
- <div class="camera-container">
+<div class="camera-container">
   <div class="lens-wrapper">
     <video id="video" autoplay playsinline></video>
-
-    <!-- Switch camera icon -->
     <div id="switchCameraIcon">🔄</div>
-
-    <!-- Capture button -->
     <button id="captureBtn"></button>
   </div>
 </div>
 
-<!-- Search button -->
-<button id="searchBtn" disabled>
-  🔍 Search Similar Products
-</button>
+<button id="searchBtn" disabled>Search Similar Products</button>
 <p id="colorResult"></p>
 <div id="productsContainer"></div>
+
 <canvas id="canvas" style="display:none;"></canvas>
+
 <script src="https://unpkg.com/colorthief/dist/color-thief.umd.js"></script>
-<script src="script.js"></script>
-<script> 
-  document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     DOM ELEMENTS
-  =============================== */
-  const openCameraBtn = document.getElementById("openCameraBtn");
-  const switchCameraIcon = document.getElementById("switchCameraIcon");
-  const captureBtn = document.getElementById("captureBtn");
-  const searchBtn = document.getElementById("searchBtn");
-  const colorResult = document.getElementById("colorResult");
-  const productsContainer = document.getElementById("productsContainer");
+<script>
+const API = "https://anisboutique-backend.onrender.com/api";
 
-  const video = document.getElementById("video");
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+const openCameraBtn = document.getElementById("openCameraBtn");
+const switchCameraIcon = document.getElementById("switchCameraIcon");
+const captureBtn = document.getElementById("captureBtn");
+const searchBtn = document.getElementById("searchBtn");
+const colorResult = document.getElementById("colorResult");
+const productsContainer = document.getElementById("productsContainer");
 
-  let stream = null;
-  let currentFacingMode = "environment";
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-  /* ===============================
-     MOCK PRODUCTS (DEMO DATA)
-  =============================== */
-  const mockProducts = [
-    { name: "Red T-Shirt", color: "Red", image: "https://via.placeholder.com/150/ff4444" },
-    { name: "Orange Hoodie", color: "Orange", image: "https://via.placeholder.com/150/ff9900" },
-    { name: "Yellow Kurti", color: "Yellow", image: "https://via.placeholder.com/150/ffeb3b" },
-    { name: "Green Shirt", color: "Green", image: "https://via.placeholder.com/150/4caf50" },
-    { name: "Blue Denim", color: "Blue", image: "https://via.placeholder.com/150/2196f3" },
-    { name: "Purple Dress", color: "Purple", image: "https://via.placeholder.com/150/9c27b0" },
-    { name: "Pink Top", color: "Pink", image: "https://via.placeholder.com/150/e91e63" },
-    { name: "Brown Leather Bag", color: "Brown", image: "https://via.placeholder.com/150/795548" },
-    { name: "Cyan Shirt", color: "Cyan", image: "https://via.placeholder.com/150/00bcd4" },
-    { name: "Magenta Skirt", color: "Magenta", image: "https://via.placeholder.com/150/d81b60" },
-    { name: "Black Jacket", color: "Black", image: "https://via.placeholder.com/150/000000" },
-    { name: "White Shirt", color: "White", image: "https://via.placeholder.com/150/f5f5f5" },
-    { name: "Gray Pants", color: "Gray", image: "https://via.placeholder.com/150/9e9e9e" }
-  ];
+let stream = null;
+let currentFacingMode = "environment";
 
-  /* ===============================
-     START CAMERA
-  =============================== */
-  async function startCamera() {
-    try {
-      if (stream) {
-        stream.getTracks().forEach(t => t.stop());
-      }
+/* CAMERA */
+async function startCamera() {
+  if (stream) stream.getTracks().forEach(t => t.stop());
 
-      const existingImg = document.querySelector(".lens-wrapper img");
-      if (existingImg) existingImg.remove();
+  const img = document.querySelector(".lens-wrapper img");
+  if (img) img.remove();
 
-      video.style.display = "block";
-      searchBtn.disabled = true;
-      colorResult.textContent = "";
-      productsContainer.innerHTML = "";
+  searchBtn.disabled = true;
+  colorResult.textContent = "";
+  productsContainer.innerHTML = "";
 
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: currentFacingMode }
-      });
+  stream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: currentFacingMode }
+  });
 
-      video.srcObject = stream;
-      await video.play();
+  video.srcObject = stream;
+}
 
-    } catch (err) {
-      alert("Camera access not available");
-      console.error(err);
+function switchCamera() {
+  currentFacingMode =
+    currentFacingMode === "environment" ? "user" : "environment";
+  startCamera();
+}
+
+function captureImage() {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx.drawImage(video, 0, 0);
+
+  stream.getTracks().forEach(t => t.stop());
+  video.srcObject = null;
+
+  const img = document.createElement("img");
+  img.src = canvas.toDataURL("image/png");
+  document.querySelector(".lens-wrapper").prepend(img);
+
+  searchBtn.disabled = false;
+}
+
+/* COLOR */
+function rgbToHsl(r,g,b){
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}
+  else{
+    const d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){
+      case r:h=(g-b)/d+(g<b?6:0);break;
+      case g:h=(b-r)/d+2;break;
+      case b:h=(r-g)/d+4;break;
     }
+    h*=60;
+  }
+  return {h,s,l};
+}
+
+function getColorName(r,g,b){
+  const {h,s,l}=rgbToHsl(r,g,b);
+  if(l<0.12) return "black";
+  if(l>0.88 && s<0.15) return "white";
+  if(s<0.1) return "gray";
+  if(h<15||h>=345) return "red";
+  if(h<45) return "orange";
+  if(h<65) return "yellow";
+  if(h<150) return "green";
+  if(h<200) return "cyan";
+  if(h<260) return "blue";
+  if(h<300) return "purple";
+  return "unknown";
+}
+
+function detectColor(){
+  const img=document.querySelector(".lens-wrapper img");
+  const thief=new ColorThief();
+  const [r,g,b]=thief.getColor(img);
+  const color=getColorName(r,g,b);
+
+  colorResult.innerHTML=`Detected color: <b>${color}</b>`;
+  showProducts(color);
+}
+
+/* FETCH PRODUCTS */
+async function showProducts(color){
+  productsContainer.innerHTML="Loading…";
+  const res=await fetch(`${API}/products?color=${color}`);
+  const products=await res.json();
+
+  productsContainer.innerHTML="";
+  if(!products.length){
+    productsContainer.innerHTML=`No products found`;
+    return;
   }
 
-  /* ===============================
-     SWITCH CAMERA
-  =============================== */
-  function switchCamera() {
-    currentFacingMode =
-      currentFacingMode === "environment" ? "user" : "environment";
-    startCamera();
-  }
-
-  /* ===============================
-     CAPTURE IMAGE
-  =============================== */
-  function captureImage() {
-    if (!video.srcObject) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    ctx.drawImage(video, 0, 0);
-
-    stream.getTracks().forEach(t => t.stop());
-    video.srcObject = null;
-    video.style.display = "none";
-
-    const img = document.createElement("img");
-    img.src = canvas.toDataURL("image/png");
-    img.style.width = "100%";
-
-    document.querySelector(".lens-wrapper").prepend(img);
-    searchBtn.disabled = false;
-  }
-
-  /* ===============================
-     SEARCH → DETECT COLOR
-  =============================== */
-  function detectColor() {
-    const img = document.querySelector(".lens-wrapper img");
-    if (!img) {
-      alert("Capture an image first");
-      return;
-    }
-
-    const colorThief = new ColorThief();
-
-    if (img.complete) {
-      const [r, g, b] = colorThief.getColor(img);
-      handleColorResult(r, g, b);
-    } else {
-      img.onload = () => {
-        const [r, g, b] = colorThief.getColor(img);
-        handleColorResult(r, g, b);
-      };
-    }
-  }
-
-  /* ===============================
-     RGB → HSL
-  =============================== */
-  function rgbToHsl(r, g, b) {
-    r /= 255; g /= 255; b /= 255;
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0;
-    } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
-      }
-      h *= 60;
-    }
-    return { h, s, l };
-  }
-
-  /* ===============================
-     HSL → COLOR NAME
-  =============================== */
-  function getColorName(r, g, b) {
-    const { h, s, l } = rgbToHsl(r, g, b);
-
-    if (l < 0.12) return "Black";
-    if (l > 0.88 && s < 0.15) return "White";
-    if (s < 0.10) return "Gray";
-
-    if (h >= 20 && h < 50 && l < 0.45) return "Brown";
-    if ((h < 15 || h >= 345) && l > 0.6) return "Pink";
-    if (h >= 300 && h < 345) return "Magenta";
-
-    if (h < 15 || h >= 345) return "Red";
-    if (h < 45) return "Orange";
-    if (h < 65) return "Yellow";
-    if (h < 150) return "Green";
-    if (h < 200) return "Cyan";
-    if (h < 260) return "Blue";
-    if (h < 300) return "Purple";
-
-    return "Unknown";
-  }
-
-  /* ===============================
-     SHOW COLOR + PRODUCTS
-  =============================== */
-  function handleColorResult(r, g, b) {
-    const detectedColor = getColorName(r, g, b);
-
-    colorResult.innerHTML = `
-      <strong>Detected Color:</strong> ${detectedColor}
-      <span style="
-        display:inline-block;
-        width:16px;
-        height:16px;
-        background: rgb(${r},${g},${b});
-        border-radius:50%;
-        margin-left:8px;
-        vertical-align:middle;
-      "></span>
+  products.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="product-card";
+    card.innerHTML=`
+      <img src="${p.image_url}">
+      <h4>${p.name}</h4>
+      <span>${color}</span>
     `;
+    productsContainer.appendChild(card);
+  });
+}
 
-    showProducts(detectedColor);
-  }
-
-  function showProducts(color) {
-    productsContainer.innerHTML = "";
-
-    const matches = mockProducts.filter(
-      p => p.color.toLowerCase() === color.toLowerCase()
-    );
-
-    if (matches.length === 0) {
-      productsContainer.innerHTML = `<p>No products found for ${color}</p>`;
-      return;
-    }
-
-    matches.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "product-card";
-      card.innerHTML = `
-        <img src="${p.image}">
-        <h4>${p.name}</h4>
-        <span>${p.color}</span>
-      `;
-      productsContainer.appendChild(card);
-    });
-  }
-
-  /* ===============================
-     EVENT LISTENERS
-  =============================== */
-  openCameraBtn.addEventListener("click", startCamera);
-  switchCameraIcon.addEventListener("click", switchCamera);
-  captureBtn.addEventListener("click", captureImage);
-  searchBtn.addEventListener("click", detectColor);
-
-});
-
+/* EVENTS */
+openCameraBtn.onclick=startCamera;
+switchCameraIcon.onclick=switchCamera;
+captureBtn.onclick=captureImage;
+searchBtn.onclick=detectColor;
 </script>
+
 </body>
+</html>
