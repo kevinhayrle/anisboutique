@@ -3,89 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us - Pasheon</title>
+  <title>Contact | Anis Boutique</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e6f2f0, #ffffff);
-      margin: 0;
-      padding: 0;
+    @font-face {
+      font-family: 'Didot';
+      src: url('didot.otf') format('opentype');
     }
 
-    .container {
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 40px;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f7f7;
+      color: #111;
+    }
+
+    /* HEADER SHADOW CONSISTENCY */
+    .header-spacer {
+      height: 80px;
+    }
+
+    .contact-wrapper {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    .contact-card {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 18px;
+      padding: 60px 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
       text-align: center;
     }
 
-    h1 {
-      color: #01381C;
-      font-size: 32px;
-      margin-bottom: 20px;
+    .contact-card h1 {
+      font-family: 'Didot', serif;
+      font-size: 42px;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
     }
 
-    p {
-      font-size: 18px;
-      margin: 10px 0;
+    .contact-card .subtitle {
+      font-size: 15px;
+      color: #555;
+      letter-spacing: 1px;
+      margin-bottom: 50px;
     }
 
-    a {
-      color: #01381C;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .contact-box {
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 30px 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .contact-box h3 {
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .contact-box p,
+    .contact-box a {
+      font-size: 16px;
+      color: #333;
       text-decoration: none;
-      font-weight: 600;
+      word-break: break-word;
     }
 
-    a:hover {
+    .contact-box a:hover {
       text-decoration: underline;
     }
 
-    .info-box {
-      background-color: #f0f8f7;
-      padding: 25px;
-      border-radius: 10px;
-      margin-top: 30px;
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: #000;
+      margin: 40px auto;
+      opacity: 0.3;
     }
 
-    .info-box p {
-      font-size: 20px;
-    }
-
-    .btn-home {
+    .back-home {
       display: inline-block;
-      margin-top: 30px;
-      background-color: #01381C;
-      color: #fff;
-      padding: 12px 25px;
-      border-radius: 6px;
+      padding: 14px 36px;
+      border: 1px solid #000;
+      border-radius: 999px;
       text-decoration: none;
-      font-size: 16px;
-      transition: background 0.3s;
+      color: #000;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
     }
 
-    .btn-home:hover {
-      background-color: #025736;
+    .back-home:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .contact-card {
+        padding: 40px 20px;
+      }
+
+      .contact-card h1 {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Contact Us</h1>
-    <p>If you have any queries, feedback, or business inquiries, feel free to reach out to us.</p>
 
-    <div class="info-box">
-      <p><strong>Email:</strong>
-        <a href="mailto:pasheonofficial@gmail.com">pasheonofficial@gmail.com</a>
-      </p>
+<div class="header-spacer"></div>
 
-      <p><strong>Phone:</strong> <span>+91-9176246653</span></p>
+<section class="contact-wrapper">
+  <div class="contact-card">
+    <h1>CONTACT</h1>
+    <p class="subtitle">We’d love to hear from you</p>
+
+    <div class="contact-grid">
+      <div class="contact-box">
+        <h3>EMAIL</h3>
+        <p>
+          <a href="mailto:anisboutiqueofficial@gmail.com">
+            xxx@gmail.com
+          </a>
+        </p>
+      </div>
+
+      <div class="contact-box">
+        <h3>PHONE</h3>
+        <p>+91 91762 46xxx</p>
+      </div>
     </div>
 
-    <a class="btn-home" href="index.html">Go to Home</a>
+    <div class="divider"></div>
+
+    <a href="index.html" class="back-home">BACK TO HOME</a>
   </div>
+</section>
+
 </body>
 </html>

@@ -3,65 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart - Pasheon</title>
+  <title>Your Cart - Anis Boutique</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css" />
+
   <style>
+    body {
+      background: #f7f7f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
     .cart-container {
       max-width: 900px;
-      margin: 10px auto 40px;
+      margin: 80px auto 40px;
       padding: 20px;
     }
 
     .cart-item {
       display: flex;
       align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0;
-      gap: 15px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      gap: 20px;
+      background: #fff;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
 
     .cart-item img {
-      width: 80px;
-      height: 100px;
+      width: 90px;
+      height: 120px;
       object-fit: cover;
+      border-radius: 10px;
     }
 
     .cart-details {
       flex-grow: 1;
     }
 
+    .cart-details h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .cart-details p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
     .remove-btn {
-      padding: 3px 12px;
-      background-color: #dc3545;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid #111;
+      border-radius: 999px;
       cursor: pointer;
+      font-size: 13px;
+      transition: all 0.25s ease;
     }
 
-    #checkout-btn {
-      display: block;
-      margin: 20px auto 0;
-      padding: 10px 20px;
-      background-color: #dc3545;
+    .remove-btn:hover {
+      background: purple;
       color: #fff;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .grand-total {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
     }
 
     .coupon-box {
       max-width: 900px;
-      margin: 20px auto;
+      margin: 30px auto 10px;
       display: flex;
       gap: 10px;
       padding: 0 20px;
@@ -69,18 +81,69 @@
 
     .coupon-box input {
       flex: 1;
-      padding: 8px;
+      padding: 14px;
+      border: 1px solid #000;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
     }
 
     .coupon-box button {
-      padding: 8px 16px;
+      padding: 14px 26px;
+      background: purple;
+      color: #fff;
+      border: none;
       cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .coupon-box button:hover {
+      background: #222;
     }
 
     .coupon-message {
       text-align: center;
-      margin-top: 10px;
-      font-weight: bold;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .grand-total {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 30px;
+      letter-spacing: 1px;
+    }
+
+    #checkout-btn {
+      display: block;
+      margin: 30px auto 60px;
+      padding: 16px 40px;
+      background: purple;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #checkout-btn:hover {
+      background: #222;
+    }
+
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-item img {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -120,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     originalTotal = 0;
 
     if (cart.length === 0) {
-      container.innerHTML = '<p>Your cart is empty.</p>';
+      container.innerHTML = '<p style="text-align:center">Your cart is empty.</p>';
       grandTotalEl.textContent = '';
       checkoutBtn.style.display = 'none';
       return;
@@ -149,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateCartUI();
 
-  /* ✅ RESTORED REMOVE BUTTON LOGIC (NO OTHER CHANGE) */
   container.addEventListener('click', (e) => {
     if (e.target.classList.contains('remove-btn')) {
       const index = [...container.children].indexOf(
@@ -162,14 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ✅ APPLY COUPON (UNCHANGED) */
   applyCouponBtn.addEventListener('click', async () => {
     const code = couponInput.value.trim();
     if (!code) return;
 
     try {
       const res = await fetch(
-        'https://pasheon-backend-zgz5.onrender.com/api/coupons/apply',
+        'https://anisboutique-backend.onrender.com/api/coupons/apply',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -199,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ✅ CHECKOUT (UNCHANGED) */
   checkoutBtn.addEventListener('click', () => {
     localStorage.setItem('finalAmount', finalTotal);
     window.location.href = 'checkout.html';

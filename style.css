@@ -82,8 +82,8 @@ margin-top: 50px;
   margin: 10px 0;
   color: black;
   text-decoration: none;
-  font-size: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-family: 'arial';
 }
 
 /*-----------Page---------------*/
@@ -114,7 +114,8 @@ body, html {
   width: 100%;
   text-align: center;
   margin-top: 45px;
-  font-size: 2rem;
+  font-size: 1.7rem;
+   letter-spacing: 0.2em;
 }
 
 .products {
