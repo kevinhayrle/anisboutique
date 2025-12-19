@@ -108,8 +108,9 @@ body, html {
 }
 
 .section-title {
-  font-family: 'copper';
-  color: grey;
+  font-weight: lighter;
+  color: black;
+  font-family: 'Times New Roman';
   width: 100%;
   text-align: center;
   margin-top: 45px;
