@@ -1,120 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Login | Pasheon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anis Boutique | Admin</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+
   <style>
+    @font-face {
+      font-family: 'didot';
+      src: url('didot.otf') format('opentype');
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    @font-face {
-      font-family: 'copper';
-      src: url('Copperplate Gothic Bold.otf') format('opentype');
-    }
-
     body {
-      background: lightgrey;
-      font-family: 'copper', Arial, sans-serif;
+      font-family: Arial;
+      background: #f6f6f6;
+      color: #111;
       display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
     }
 
-    .login-container {
-      background: white;
-      padding: 2rem 3rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 220px;
+      background: purple;
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+      padding: 2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar h2 {
+      font-family: 'times new roman';
+      font-weight: lighter;
+      letter-spacing: 4px;
       text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logout-btn {
+      padding: 12px;
+      border-radius: 999px;
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ===== MAIN ===== */
+    .main {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+      padding: 2rem;
     }
 
     h1 {
-      font-family: 'copper';
+      font-family: 'didot';
+      letter-spacing: 4px;
+      text-align: center;
+      color:black;
+      font-size: 40px;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== CARDS ===== */
+    .container {
+      background: #fff;
+      border-radius: 18px;
+      padding: 2rem;
+      margin: 1.5rem auto;
+      max-width: 1000px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .container h2 {
+      font-family: 'arial';
+      font-size: 20px;
+      text-align: center;
+      color: purple;
       margin-bottom: 1.5rem;
-      color: #01381C;
-      font-size: 2rem;
     }
 
-    input {
+    /* ===== FORM ===== */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    input, select {
       width: 100%;
-      padding: 0.8rem;
-      margin: 0.6rem 0;
+      padding: 14px;
+      border-radius: 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
+      font-size: 14px;
+      outline: none;
     }
 
-    button {
-      width: 100%;
-      padding: 0.8rem;
+    input:focus, select:focus {
+      border-color: #000;
+    }
+
+    .btn {
       margin-top: 1rem;
-      background: #01381C;
-      color: white;
-      font-size: 1rem;
+      padding: 14px 32px;
+      background: #000;
+      color: #fff;
       border: none;
-      border-radius: 6px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
-    button:hover {
-      background: #02572d;
+    /* ===== PRODUCT LIST ===== */
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+      cursor: grab;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .error {
-      color: red;
-      margin-top: 0.5rem;
+    .product.dragging {
+      opacity: 0.4;
+    }
+
+    .edit-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: 1px solid #000;
+      color: #000;
+      padding: 6px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.2rem;
+      }
+
+      .sidebar h2 {
+        margin-bottom: 0;
+        font-size: 18px;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 1.2rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="login-container">
-    <h1>Admin Login</h1>
-    <form id="admin-login-form">
-      <input type="email" id="email" placeholder="Admin Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-      <div class="error" id="error-msg"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>ADMIN</h2>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <h1>ANIS BOUTIQUE</h1>
+
+  <!-- PRODUCT FORM -->
+  <div class="container">
+    <form id="productForm">
+      <h2>Add/Edit Product</h2>
+      <input type="hidden" id="editingId">
+
+      <div class="form-group"><input id="name" placeholder="Product Name"></div>
+      <div class="form-group"><input id="price" type="number" placeholder="Price"></div>
+      <div class="form-group"><input id="discounted_price" type="number" placeholder="Discounted Price"></div>
+      <div class="form-group"><input id="sort_order" type="number" placeholder="Sort Order (not mandatory to fill)"></div>
+      <div class="form-group"><input id="category" placeholder="Category"></div>
+      <div class="form-group"><input id="description" placeholder="Description"></div>
+      <div class="form-group"><input id="image" placeholder="Image URL"></div>
+      <div class="form-group"><input id="sizes" placeholder="Sizes (comma separated)"></div>
+      <div class="form-group"><input id="extraImages" placeholder="Extra Image URLs"></div>
+
+      <button class="btn" type="submit">Save Product</button>
     </form>
   </div>
 
-  <script>
-    document.getElementById('admin-login-form').addEventListener('submit', async function (e) {
-      e.preventDefault();
+  <!-- PRODUCTS -->
+  <div class="container">
+    <h2>All Products</h2>
+    <div id="productList"></div>
+  </div>
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorMsg = document.getElementById('error-msg');
+  <!-- COUPONS -->
+  <div class="container">
+    <h2>Coupon Management</h2>
+    <form id="couponForm">
+      <div class="form-group"><input id="coupon_code" placeholder="Coupon Code"></div>
+      <div class="form-group">
+        <select id="discount_type">
+          <option value="percentage">Percentage</option>
+          <option value="flat">Flat</option>
+        </select>
+      </div>
+      <div class="form-group"><input id="discount_value" type="number" placeholder="Discount Value"></div>
+      <div class="form-group"><input id="min_cart_value" type="number" placeholder="Minimum Cart Value"></div>
+      <div class="form-group"><input id="max_discount" type="number" placeholder="Max Discount"></div>
+      <div class="form-group"><input id="expiry_date" type="date"></div>
+      <button class="btn" type="submit">Add Coupon</button>
+    </form>
+  </div>
 
-      try {
-        const res = await fetch('https://anisboutique.onrender.com/api/admin/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, password })
-        });
+  <div class="container">
+    <h2>All Coupons</h2>
+    <div id="couponList"></div>
+  </div>
+</div>
 
-        const data = await res.json();
+<script>
+const API = "https://anisboutique-backend.onrender.com/api";
+const token = localStorage.getItem("adminToken");
 
-        if (res.ok) {
-          localStorage.setItem('adminToken', data.token);
-          window.location.href = 'admin.html'; 
-        } else {
-          errorMsg.textContent = data.message || 'Invalid credentials';
-        }
-      } catch (err) {
-        errorMsg.textContent = 'Something went wrong. Please try again.';
-        console.error('Login error:', err);
-      }
-    });
-  </script>
+let draggedItem = null;
+
+/* PRODUCTS */
+async function fetchProducts() {
+  const res = await fetch(`${API}/admin/products`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
+
+  data.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product";
+    div.draggable = true;
+    div.dataset.id = p.id;
+
+    div.innerHTML = `
+      <div>
+        <b>${p.name}</b><br>
+        ${p.discounted_price ? `<s>₹${p.price}</s> ₹${p.discounted_price}` : `₹${p.price}`}
+      </div>
+      <div>
+        <button class="edit-btn" onclick='editProduct(
+          ${JSON.stringify(p.id)},
+          ${JSON.stringify(p.name)},
+          ${JSON.stringify(p.price)},
+          ${JSON.stringify(p.discounted_price)},
+          ${JSON.stringify(p.category)},
+          ${JSON.stringify(p.sort_order)},
+          ${JSON.stringify(p.image_url)},
+          ${JSON.stringify(p.description)},
+          ${JSON.stringify(p.sizes)},
+          ${JSON.stringify(p.extra_images)}
+        )'>Edit</button>
+        <button class="delete-btn" onclick="deleteProduct('${p.id}')">Delete</button>
+      </div>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+/* DRAG & DROP */
+document.addEventListener("dragstart", e => {
+  if (e.target.classList.contains("product")) {
+    draggedItem = e.target;
+    e.target.classList.add("dragging");
+  }
+});
+
+document.addEventListener("dragend", e => {
+  if (e.target.classList.contains("product")) {
+    e.target.classList.remove("dragging");
+    saveOrder();
+  }
+});
+
+document.addEventListener("dragover", e => {
+  e.preventDefault();
+  const target = e.target.closest(".product");
+  if (target && target !== draggedItem) {
+    const list = document.getElementById("productList");
+    list.insertBefore(draggedItem, target);
+  }
+});
+
+/* SAVE ORDER */
+async function saveOrder() {
+  const items = [...document.querySelectorAll(".product")];
+
+  const payload = items.map((item, index) => ({
+    id: item.dataset.id,
+    sort_order: index + 1
+  }));
+
+  await fetch(`${API}/admin/products/reorder`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+}
+
+/* ADD / UPDATE PRODUCT */
+document.getElementById("productForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const payload = {
+    name: document.getElementById("name").value,
+    price: Number(document.getElementById("price").value),
+    discounted_price: document.getElementById("discounted_price").value || null,
+    sort_order: document.getElementById("sort_order").value || 0,
+    category: document.getElementById("category").value,
+    description: document.getElementById("description").value,
+    image_url: document.getElementById("image").value,
+    sizes: document.getElementById("sizes").value,
+    extra_images: document.getElementById("extraImages").value
+      ? document.getElementById("extraImages").value.split(",").map(s => s.trim())
+      : []
+  };
+
+  const id = document.getElementById("editingId").value;
+  const url = id
+    ? `${API}/admin/products/${id}`
+    : `${API}/admin/products`;
+
+  const method = id ? "PUT" : "POST";
+
+  await fetch(url, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  document.getElementById("productForm").reset();
+  document.getElementById("editingId").value = "";
+  fetchProducts();
+});
+
+function editProduct(
+  id,
+  nameVal,
+  priceVal,
+  discountedPrice,
+  categoryVal,
+  sortOrder,
+  imageUrl,
+  descriptionVal,
+  sizesVal,
+  extraImagesVal
+) {
+  document.getElementById("editingId").value = id;
+  document.getElementById("name").value = nameVal || "";
+  document.getElementById("price").value = priceVal || "";
+  document.getElementById("discounted_price").value = discountedPrice || "";
+  document.getElementById("sort_order").value = sortOrder || 0;
+  document.getElementById("category").value = categoryVal || "";
+  document.getElementById("description").value = descriptionVal || "";
+  document.getElementById("image").value = imageUrl || "";
+  document.getElementById("sizes").value =
+    Array.isArray(sizesVal) ? sizesVal.join(",") : sizesVal || "";
+  document.getElementById("extraImages").value =
+    Array.isArray(extraImagesVal) ? extraImagesVal.join(",") : "";
+}
+
+/* COUPONS */
+async function fetchCoupons() {
+  const res = await fetch(`${API}/admin/coupons`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const data = await res.json();
+  const list = document.getElementById("couponList");
+  list.innerHTML = "";
+
+  data.forEach(c => {
+    list.innerHTML += `
+      <div style="margin-bottom:8px">
+        <b>${c.coupon_code}</b>
+        <button onclick="deleteCoupon(${c.id})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function deleteCoupon(id) {
+  await fetch(`${API}/admin/coupons/delete/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  fetchCoupons();
+}
+
+document.getElementById("couponForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  await fetch(`${API}/admin/coupons/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      coupon_code: coupon_code.value,
+      discount_type: discount_type.value,
+      discount_value: Number(discount_value.value),
+      min_cart_value: Number(min_cart_value.value),
+      max_discount: Number(max_discount.value),
+      expiry_date: expiry_date.value
+    })
+  });
+
+  couponForm.reset();
+  fetchCoupons();
+});
+async function deleteProduct(id) {
+  if (!confirm("Delete this product?")) return;
+
+  await fetch(`${API}/admin/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  fetchProducts();
+}
+
+function logout() {
+  localStorage.removeItem("adminToken");
+  window.location.href = "admin-login.html"; // change if your login page name differs
+}
+
+/* EXISTING CALLS */
+fetchProducts();
+fetchCoupons();
+</script>
+
 </body>
 </html>
