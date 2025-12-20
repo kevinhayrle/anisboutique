@@ -30,7 +30,8 @@
 <!-- HEADER (matches index.html) -->
 <header class="header-left">
   <div class="left">
-    <i class="fas fa-bars" id="hamburger-product"></i>
+   <i class="fas fa-bars" id="hamburger-icon"></i>
+
   </div>
 
   <div class="header-center">
@@ -47,14 +48,15 @@
 </header>
 
 <!-- SIDEBAR -->
-<div id="sidebar-product" class="sidebar">
+<div id="sidebar" class="sidebar" style="left:-240px;">
   <a href="index.html"><strong>HOME</strong></a>
   <a href="contact.html"><strong>CONTACT US</strong></a>
   <a href="yourOrders.html"><strong>YOUR ORDERS</strong></a>
   <a href="privacy.html"><strong>PRIVACY POLICY</strong></a>
   <hr>
   <strong>COLLECTIONS</strong>
-  <div id="category-list"></div>
+  <div id="category-menu"></div>
+
 </div>
 
 <!-- PRODUCT DETAIL -->
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch("https://anisboutique-backend.onrender.com/api/products/categories")
     .then(res => res.json())
     .then(categories => {
-      const categoryList = document.getElementById("category-list");
+      const categoryList = document.getElementById("category-menu");
       categoryList.innerHTML = '';
       categories.forEach(cat => {
         const a = document.createElement("a");
@@ -175,10 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-  const hamburger = document.getElementById('hamburger-product');
-  const sidebar = document.getElementById('sidebar-product');
+const hamburger = document.getElementById('hamburger-icon');
+const sidebar = document.getElementById('sidebar');
 
-  hamburger.onclick = () => sidebar.classList.toggle('active');
+hamburger.addEventListener('click', () => {
+  const isVisible = sidebar.style.left === '0px';
+  sidebar.style.left = isVisible ? '-240px' : '0px';
+});
+
 });
 
 function openFullscreenImage(url) {
