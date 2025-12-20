@@ -288,18 +288,29 @@ function rgbToHsl(r, g, b) {
   return {h,s,l};
 }
 
-function getColorName(r,g,b){
-  const {h,s,l}=rgbToHsl(r,g,b);
-  if(l<0.15) return "black";
-  if(l>0.85 && s<0.15) return "white";
-  if(s<0.12) return "white";
-  if(h<20||h>340) return l>0.55?"pink":"red";
-  if(h<45) return "orange";
-  if(h<70) return "yellow";
-  if(h<160) return "green";
-  if(h<250) return "blue";
-  return "purple";
+function getColorName(r, g, b) {
+  const { h, s, l } = rgbToHsl(r, g, b);
+
+  // Black / White / Grey
+  if (l < 0.18) return "black";
+  if (l > 0.85 && s < 0.15) return "white";
+  if (s < 0.12) return "white";
+
+  // Brown & Beige (IMPORTANT)
+  if (h >= 20 && h <= 45 && l < 0.55) return "brown";
+  if (h >= 20 && h <= 50 && l >= 0.55) return "beige";
+
+  // Core colors (match DB)
+  if (h < 15 || h >= 345) return "red";
+  if (h >= 15 && h < 40) return "orange"; // will be normalized later
+  if (h >= 40 && h < 70) return "yellow";
+  if (h >= 70 && h < 160) return "green";
+  if (h >= 160 && h < 250) return "blue";
+  if (h >= 250 && h < 320) return "purple";
+
+  return "red"; // fallback
 }
+
 
 /* ===== SEARCH ===== */
 async function detectColor() {
