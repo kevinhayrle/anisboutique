@@ -110,6 +110,22 @@
       border-color: #000;
     }
 
+    .product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  margin-bottom: 12px;
+
+  background: #fff;          /* ✅ THIS fixes it */
+  border-radius: 12px;       /* optional but premium */
+  border: 1px solid #eee;    /* subtle separation */
+
+  cursor: grab;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
     .btn {
       margin-top: 1rem;
       padding: 14px 32px;
