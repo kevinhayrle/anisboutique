@@ -4,61 +4,86 @@
   <meta charset="UTF-8" />
   <title>Anis Boutique | Lens</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css" />
 
   <style>
+    :root {
+      --purple: #5b2d8b;
+      --purple-dark: #4a2373;
+      --light-bg: #faf9fc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #ffffff;
-      color: #111;
-      text-align: center;
+      min-height: 100vh;
+      background: var(--light-bg);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lens-page {
+      width: 100%;
+      max-width: 460px;
+      padding: 28px 18px 36px;
+      text-align: center;
     }
 
     h2 {
-      margin: 26px 0 6px;
-      font-size: 14px;
-      letter-spacing: 3px;
+      font-size: 15px;
+      letter-spacing: 4px;
       font-weight: 600;
+      margin-bottom: 6px;
     }
 
     .subtitle {
       font-size: 12px;
       letter-spacing: 1.5px;
       color: #666;
-      margin-bottom: 16px;
+      margin-bottom: 22px;
     }
 
     button {
-      padding: 12px 26px;
+      padding: 13px 30px;
       font-size: 12px;
       letter-spacing: 2px;
       cursor: pointer;
-      margin: 12px;
       border-radius: 999px;
-      border: 1px solid #000;
-      background: #000;
+      border: none;
+      background: var(--purple);
       color: #fff;
+      transition: all 0.25s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: var(--purple-dark);
+      transform: translateY(-1px);
     }
 
     button:disabled {
-      opacity: 0.4;
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
     .camera-container {
       display: flex;
       justify-content: center;
-      margin: 22px auto;
+      margin: 26px 0;
     }
 
     .lens-wrapper {
       position: relative;
       width: 100%;
-      max-width: 380px;
-      border-radius: 22px;
+      max-width: 360px;
+      border-radius: 24px;
       overflow: hidden;
       background: #000;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.15);
     }
 
     video,
@@ -71,12 +96,13 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.55);
       color: #fff;
       padding: 8px;
       border-radius: 50%;
       cursor: pointer;
       z-index: 10;
+      font-size: 14px;
     }
 
     #captureBtn {
@@ -84,8 +110,8 @@
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       border: 3px solid #fff;
       background: transparent;
@@ -95,7 +121,7 @@
       content: "";
       width: 26px;
       height: 26px;
-      background: #e53935;
+      background: var(--purple);
       border-radius: 50%;
       position: absolute;
       top: 50%;
@@ -103,67 +129,82 @@
       transform: translate(-50%, -50%);
     }
 
-    #colorResult {
-      margin-top: 18px;
-      font-size: 13px;
-      letter-spacing: 1px;
-    }
-
     #productsContainer {
-      margin: 36px auto;
+      margin: 34px auto 10px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 18px;
-      max-width: 440px;
-      padding: 0 16px;
+      max-width: 420px;
     }
 
     .product-card {
-      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 14px;
       padding: 10px;
       cursor: pointer;
-      background: #fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
     }
 
     .product-card img {
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
+      border-radius: 10px;
       margin-bottom: 6px;
     }
 
+    .product-card h4 {
+      font-size: 13px;
+      font-weight: 500;
+      margin: 4px 0 2px;
+    }
+
+    .product-card span {
+      font-size: 12px;
+      color: #555;
+    }
+
     footer {
+      margin-top: 26px;
       font-size: 11px;
       letter-spacing: 2px;
       color: #999;
-      margin-bottom: 24px;
     }
   </style>
 </head>
 
 <body>
 
-<h2>LENS</h2>
-<div class="subtitle">Scan & discover matching styles</div>
+  <div class="lens-page">
 
-<button id="openCameraBtn">OPEN SCAN</button>
+    <h2>LENS</h2>
+    <div class="subtitle">Scan & discover matching styles</div>
 
-<div class="camera-container">
-  <div class="lens-wrapper">
-    <video id="video" autoplay playsinline></video>
-    <div id="switchCameraIcon">🔄</div>
-    <button id="captureBtn"></button>
+    <button id="openCameraBtn">OPEN SCAN</button>
+
+    <div class="camera-container">
+      <div class="lens-wrapper">
+        <video id="video" autoplay playsinline></video>
+        <div id="switchCameraIcon">🔄</div>
+        <button id="captureBtn"></button>
+      </div>
+    </div>
+
+    <button id="searchBtn" disabled>SEARCH SIMILAR PRODUCTS</button>
+
+    <div id="productsContainer"></div>
+
+    <footer>© 2025 ANIS BOUTIQUE</footer>
+
   </div>
-</div>
 
-<button id="searchBtn" disabled>SEARCH SIMILAR PRODUCTS</button>
+  <canvas id="canvas" style="display:none;"></canvas>
 
-<p id="colorResult"></p>
-<div id="productsContainer"></div>
-
-<footer>© 2025 ANIS BOUTIQUE</footer>
-
-<canvas id="canvas" style="display:none;"></canvas>
 
 <script>
 const API = "https://anisboutique-backend.onrender.com/api/products";
