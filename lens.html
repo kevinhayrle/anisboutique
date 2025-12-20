@@ -259,26 +259,30 @@ function getColorName(r, g, b) {
     return "white";
   }
 
-  /* YELLOW (WIDE) */
-  if (h >= 35 && h <= 75) return "yellow";
+  /* 🔵 BLUE (PRIORITY CHECK using RGB dominance) */
+  if (b > r * 1.1 && b > g * 1.05) return "blue";
 
-  /* GREEN (WIDE) */
-  if (h > 75 && h <= 170) return "green";
+  /* 🟡 YELLOW (KEEP WIDE BUT SAFE) */
+  if (h >= 35 && h <= 65) return "yellow";
 
-  /* BLUE (WIDE incl denim) */
-  if (h > 170 && h <= 260) return "blue";
+  /* 🟢 GREEN */
+  if (h > 65 && h <= 160) return "green";
 
-  /* PURPLE */
+  /* 🔵 BLUE (HUE FALLBACK incl denim) */
+  if (h > 160 && h <= 260) return "blue";
+
+  /* 🟣 PURPLE */
   if (h > 260 && h <= 320) return "purple";
 
-  /* PINK (LIGHT RED RANGE) */
+  /* 🌸 PINK */
   if ((h < 20 || h > 340) && v > 0.65) return "pink";
 
-  /* RED (REST) */
+  /* 🔴 RED */
   if (h < 20 || h > 340) return "red";
 
   return "brown";
 }
+
 
 /* DETECT COLOR */
 function detectColor() {
@@ -302,10 +306,13 @@ function detectColor() {
   b = Math.round(b / c);
 
   const color = getColorName(r, g, b);
-  colorResult.innerHTML = `<b>Detected:</b> ${color}`;
+
+  /* ❌ NO TEXT DISPLAY */
+  colorResult.innerHTML = "";
 
   fetchProducts(color);
 }
+
 
 /* FETCH PRODUCTS */
 async function fetchProducts(color) {
