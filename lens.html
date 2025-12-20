@@ -1,3 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anis Boutique | Lens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #111;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+      margin: 26px 0 6px;
+      font-size: 14px;
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    button {
+      padding: 12px 26px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin: 12px;
+      border-radius: 999px;
+      border: 1px solid #000;
+      background: #000;
+      color: #fff;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .camera-container {
+      display: flex;
+      justify-content: center;
+      margin: 22px auto;
+    }
+
+    .lens-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    video,
+    .lens-wrapper img {
+      width: 100%;
+      display: block;
+    }
+
+    #switchCameraIcon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    #captureBtn {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: transparent;
+    }
+
+    #captureBtn::after {
+      content: "";
+      width: 26px;
+      height: 26px;
+      background: #e53935;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #colorResult {
+      margin-top: 18px;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    #productsContainer {
+      margin: 36px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 18px;
+      max-width: 440px;
+      padding: 0 16px;
+    }
+
+    .product-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      margin-bottom: 6px;
+    }
+
+    footer {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #999;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>LENS</h2>
+<div class="subtitle">Scan & discover matching styles</div>
+
+<button id="openCameraBtn">OPEN SCAN</button>
+
+<div class="camera-container">
+  <div class="lens-wrapper">
+    <video id="video" autoplay playsinline></video>
+    <div id="switchCameraIcon">🔄</div>
+    <button id="captureBtn"></button>
+  </div>
+</div>
+
+<button id="searchBtn" disabled>SEARCH SIMILAR PRODUCTS</button>
+
+<p id="colorResult"></p>
+<div id="productsContainer"></div>
+
+<footer>© 2025 ANIS BOUTIQUE</footer>
+
+<canvas id="canvas" style="display:none;"></canvas>
+
 <script>
 const API = "https://anisboutique-backend.onrender.com/api/products";
 
@@ -170,5 +337,7 @@ switchCameraIcon.onclick = switchCamera;
 captureBtn.onclick = captureImage;
 searchBtn.onclick = detectColor;
 </script>
+
+
 </body>
 </html>
