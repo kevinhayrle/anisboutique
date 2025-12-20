@@ -7,6 +7,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+
+    
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loader-text {
+  font-family: 'times new roman';
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111;
+  display: flex;
+  gap: 5px;
+}
+
+.loader-text span {
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+}
+
+.loader-text span:nth-child(2) {
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
     * {
       margin: 0;
       padding: 0;
