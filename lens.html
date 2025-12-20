@@ -169,6 +169,12 @@
 </head>
 
 <body>
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
 
 <h2>LENS</h2>
 <div class="subtitle">Scan & discover matching styles</div>
@@ -193,6 +199,17 @@
 <canvas id="canvas" style="display:none;"></canvas>
 
 <script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
 const API = "https://anisboutique-backend.onrender.com/api/products";
 
 const video = document.getElementById("video");

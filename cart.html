@@ -149,6 +149,12 @@
 </head>
 
 <body>
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
 
 <div id="cart-container" class="cart-container"></div>
 
@@ -164,6 +170,17 @@
 <button id="checkout-btn">Pay Now</button>
 
 <script>
+    window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
 document.addEventListener('DOMContentLoaded', () => {
 
   const container = document.getElementById('cart-container');

@@ -115,6 +115,12 @@
 </head>
 
 <body>
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
 
 <header class="header-left">
   <div class="left">
@@ -150,6 +156,17 @@
 <div id="collections"></div>
 
 <script>
+    window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const activeCategory = params.get("cat");

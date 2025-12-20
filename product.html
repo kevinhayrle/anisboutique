@@ -20,6 +20,19 @@
   </style>
 </head>
 <body>
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
+
+  <div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
 
 <!-- HEADER (matches index.html) -->
 <header class="header-left">
@@ -75,6 +88,18 @@
 </main>
 
 <script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
+
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id');

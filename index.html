@@ -218,6 +218,14 @@
 </head>
 <body>
 
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
+
+
 <header class="header-left">
   <div class="left">
     <i class="fas fa-bars" id="hamburger-icon"></i>
@@ -269,6 +277,18 @@
 </section>
 
 <script>
+
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('sidebar');
   const hamburger = document.getElementById('hamburger-icon');
