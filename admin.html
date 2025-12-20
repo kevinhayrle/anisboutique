@@ -215,7 +215,22 @@
       <div class="form-group"><input id="image" placeholder="Image URL"></div>
       <div class="form-group"><input id="sizes" placeholder="Sizes (comma separated)"></div>
       <div class="form-group"><input id="extraImages" placeholder="Extra Image URLs"></div>
-<div class="form-group"><input id="colors" placeholder="Colors (comma separated e.g. black, white, beige)"/></div>
+<div class="form-group">
+  <input id="colors" placeholder="Color (choose from allowed list)" />
+  <small style="
+    display:block;
+    margin-top:6px;
+    font-size:12px;
+    color:#666;
+    line-height:1.5;
+  ">
+    ⚠ Use only these colors for lens matching:<br>
+    <b>black, white, red, pink, orange, yellow, green, blue, purple, brown</b><br>
+    (Example: maroon → red, beige → white, olive → green)<br>
+    <b>multiple colors are allowed separated by comma. (Example: red, green, blue)<b>
+  </small>
+</div>
+
       <button class="btn" type="submit">Save Product</button>
     </form>
   </div>
