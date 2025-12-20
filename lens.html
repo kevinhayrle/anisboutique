@@ -39,11 +39,6 @@
       border: 1px solid #000;
       background: #000;
       color: #fff;
-      transition: all 0.3s ease;
-    }
-
-    button:hover:not(:disabled) {
-      background: #222;
     }
 
     button:disabled {
@@ -51,7 +46,6 @@
       cursor: not-allowed;
     }
 
-    /* ===== LENS ===== */
     .camera-container {
       display: flex;
       justify-content: center;
@@ -65,7 +59,6 @@
       border-radius: 22px;
       overflow: hidden;
       background: #000;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
     }
 
     video,
@@ -78,12 +71,11 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.6);
       color: #fff;
       padding: 8px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 14px;
       z-index: 10;
     }
 
@@ -97,7 +89,6 @@
       border-radius: 50%;
       border: 3px solid #fff;
       background: transparent;
-      cursor: pointer;
     }
 
     #captureBtn::after {
@@ -112,7 +103,6 @@
       transform: translate(-50%, -50%);
     }
 
-    /* ===== RESULTS ===== */
     #colorResult {
       margin-top: 18px;
       font-size: 13px;
@@ -132,13 +122,7 @@
       border: 1px solid #ddd;
       padding: 10px;
       cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
       background: #fff;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
     }
 
     .product-card img {
@@ -146,18 +130,6 @@
       aspect-ratio: 4 / 5;
       object-fit: cover;
       margin-bottom: 6px;
-    }
-
-    .product-card h4 {
-      font-size: 13px;
-      margin: 6px 0 2px;
-      font-weight: 500;
-    }
-
-    .product-card span {
-      font-size: 12px;
-      color: #555;
-      letter-spacing: 0.5px;
     }
 
     footer {
@@ -170,12 +142,6 @@
 </head>
 
 <body>
-<div id="preloader">
-  <div class="loader-text">
-    <span>ANIS</span>
-    <span>BOUTIQUE</span>
-  </div>
-</div>
 
 <h2>LENS</h2>
 <div class="subtitle">Scan & discover matching styles</div>
@@ -198,15 +164,8 @@
 <footer>© 2025 ANIS BOUTIQUE</footer>
 
 <canvas id="canvas" style="display:none;"></canvas>
-<script>
-window.addEventListener("load", () => {
-  const loader = document.getElementById("preloader");
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => loader.style.display = "none", 600);
-  }, 1000);
-});
 
+<script>
 const API = "https://anisboutique-backend.onrender.com/api/products";
 
 const video = document.getElementById("video");
@@ -223,7 +182,7 @@ const productsContainer = document.getElementById("productsContainer");
 let stream = null;
 let facingMode = "environment";
 
-/* ===== CAMERA ===== */
+/* CAMERA */
 async function startCamera() {
   if (stream) stream.getTracks().forEach(t => t.stop());
 
@@ -235,7 +194,6 @@ async function startCamera() {
   });
 
   video.srcObject = stream;
-  video.style.display = "block";
   await video.play();
 
   searchBtn.disabled = true;
@@ -248,7 +206,7 @@ function switchCamera() {
   startCamera();
 }
 
-/* ===== CAPTURE ===== */
+/* CAPTURE */
 function captureImage() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -256,7 +214,6 @@ function captureImage() {
 
   stream.getTracks().forEach(t => t.stop());
   video.srcObject = null;
-  video.style.display = "none";
 
   const img = document.createElement("img");
   img.src = canvas.toDataURL("image/png");
@@ -265,114 +222,96 @@ function captureImage() {
   searchBtn.disabled = false;
 }
 
-/* ===== COLOR SCIENCE ===== */
-function rgbToHsl(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r,g,b), min = Math.min(r,g,b);
-  let h, s, l = (max + min) / 2;
-
-  if (max === min) {
-    h = s = 0;
-  } else {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
+/* COLOR LOGIC (FINAL, LOCKED) */
+function rgbToHsl(r,g,b){
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}
+  else{
+    const d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){
+      case r:h=(g-b)/d+(g<b?6:0);break;
+      case g:h=(b-r)/d+2;break;
+      case b:h=(r-g)/d+4;break;
     }
-    h *= 60;
+    h*=60;
   }
-  return { h, s, l };
+  return {h,s,l};
 }
-function getColorName(r, g, b) {
-  const { h, s, l } = rgbToHsl(r, g, b);
 
-  // 1️⃣ Absolute Black & White (first priority)
+function getColorName(r,g,b){
+  const {h,s,l} = rgbToHsl(r,g,b);
+
   if (l < 0.18) return "black";
-  if (l > 0.88 && s < 0.15) return "white";
-  if (s < 0.1 && l > 0.75) return "white";
+  if (l > 0.9 && s < 0.12) return "white";
 
-  // 2️⃣ Brown = ONLY dark orange
-  // (never steal yellow)
-  if (h >= 20 && h < 35 && l < 0.45) return "brown";
+  if ((h < 15 || h > 345)) return l > 0.65 ? "pink" : "red";
 
-  // 3️⃣ Core hue-based colors (NO lightness bias)
-  if (h < 15 || h >= 345) return "red";
-  if (h >= 15 && h < 35) return "orange";
+  if (h >= 15 && h < 35 && s > 0.4 && l > 0.35) return "orange";
+  if (h >= 35 && h < 65 && s > 0.45 && l > 0.55) return "yellow";
+  if (h >= 20 && h < 40 && l < 0.45 && s > 0.25) return "brown";
+  if (h >= 70 && h < 160 && s > 0.25) return "green";
+  if (h >= 160 && h < 250 && s > 0.25) return "blue";
+  if (h >= 250 && h < 320 && s > 0.3) return "purple";
 
-  // ✅ FULL YELLOW RANGE (your request)
-  if (h >= 35 && h < 75) return "yellow";
-
-  if (h >= 75 && h < 160) return "green";
-  if (h >= 160 && h < 250) return "blue";
-
-  // ✅ FULL PURPLE RANGE (no red stealing)
-  if (h >= 250 && h < 320) return "purple";
-
-  // 4️⃣ Fallback (safe)
   return "red";
 }
 
-/* ===== DETECT ===== */
-async function detectColor() {
+/* DETECT */
+function detectColor(){
   const data = ctx.getImageData(
-    canvas.width * 0.35,
-    canvas.height * 0.35,
-    canvas.width * 0.3,
-    canvas.height * 0.3
+    canvas.width*0.3,
+    canvas.height*0.3,
+    canvas.width*0.4,
+    canvas.height*0.4
   ).data;
 
-  let r = 0, g = 0, b = 0, count = 0;
-  for (let i = 0; i < data.length; i += 4) {
-    r += data[i];
-    g += data[i + 1];
-    b += data[i + 2];
-    count++;
+  let r=0,g=0,b=0,c=0;
+  for(let i=0;i<data.length;i+=4){
+    r+=data[i]; g+=data[i+1]; b+=data[i+2]; c++;
   }
+  r=Math.round(r/c);
+  g=Math.round(g/c);
+  b=Math.round(b/c);
 
-  r = Math.round(r / count);
-  g = Math.round(g / count);
-  b = Math.round(b / count);
-
-  const color = getColorName(r, g, b);
+  const color = getColorName(r,g,b);
   colorResult.innerHTML = `<b>Detected:</b> ${color}`;
 
   fetchProducts(color);
 }
 
-/* ===== FETCH PRODUCTS ===== */
-async function fetchProducts(color) {
-  productsContainer.innerHTML = "";
-
+/* FETCH PRODUCTS */
+async function fetchProducts(color){
+  productsContainer.innerHTML="";
   const res = await fetch(`${API}?color=${color}`);
   const products = await res.json();
 
-  if (!products.length) {
-    productsContainer.innerHTML = `<p>No products found</p>`;
+  if (!products.length){
+    productsContainer.innerHTML="<p>No products found</p>";
     return;
   }
 
-  products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
+  products.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="product-card";
+    card.innerHTML=`
       <img src="${p.image_url}">
       <h4>${p.name}</h4>
-      <span>₹${p.discounted_price || p.price}</span>
+      <span>₹${p.discounted_price||p.price}</span>
     `;
-    card.onclick = () => {
-      window.location.href = `product.html?id=${p.id}`;
-    };
+    card.onclick=()=>location.href=`product.html?id=${p.id}`;
     productsContainer.appendChild(card);
   });
 }
 
-/* ===== EVENTS ===== */
+/* EVENTS */
 openCameraBtn.onclick = startCamera;
 switchCameraIcon.onclick = switchCamera;
 captureBtn.onclick = captureImage;
 searchBtn.onclick = detectColor;
 </script>
+
 </body>
 </html>
