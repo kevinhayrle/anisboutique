@@ -285,39 +285,33 @@ function rgbToHsl(r, g, b) {
   }
   return { h, s, l };
 }
-
-/* ===== SAFE COLOR LABELS (DB MATCHED) ===== */
 function getColorName(r, g, b) {
   const { h, s, l } = rgbToHsl(r, g, b);
 
-  // Very dark / very light
-  if (l < 0.15) return "black";
-  if (l > 0.9 && s < 0.12) return "white";
+  // 1️⃣ Absolute Black & White (first priority)
+  if (l < 0.18) return "black";
+  if (l > 0.88 && s < 0.15) return "white";
+  if (s < 0.1 && l > 0.75) return "white";
 
-  // Low saturation fabrics (shadows protection)
-  if (s < 0.18) {
-    if (l < 0.6) return "beige";
-    return "white";
-  }
+  // 2️⃣ Brown = ONLY dark orange
+  // (never steal yellow)
+  if (h >= 20 && h < 35 && l < 0.45) return "brown";
 
-  // Brown vs Yellow vs Beige (FIXED)
-  if (h >= 20 && h <= 45) {
-    if (l < 0.5) return "brown";
-    return "yellow";
-  }
+  // 3️⃣ Core hue-based colors (NO lightness bias)
+  if (h < 15 || h >= 345) return "red";
+  if (h >= 15 && h < 35) return "orange";
 
-  // Reds & Pinks
-  if (h < 12 || h >= 348) {
-    return l > 0.55 ? "pink" : "red";
-  }
+  // ✅ FULL YELLOW RANGE (your request)
+  if (h >= 35 && h < 75) return "yellow";
 
-  if (h >= 12 && h < 28) return "orange";
-  if (h >= 28 && h < 65) return "yellow";
-  if (h >= 65 && h < 160) return "green";
+  if (h >= 75 && h < 160) return "green";
   if (h >= 160 && h < 250) return "blue";
-  if (h >= 250 && h < 330) return "purple";
 
-  return "red"; // safe fallback
+  // ✅ FULL PURPLE RANGE (no red stealing)
+  if (h >= 250 && h < 320) return "purple";
+
+  // 4️⃣ Fallback (safe)
+  return "red";
 }
 
 /* ===== DETECT ===== */
