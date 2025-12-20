@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const couponMessage = document.getElementById('coupon-message');
   const applyCouponBtn = document.getElementById('apply-coupon-btn');
 
-   async function loadAvailableCoupons() {
+  async function loadAvailableCoupons() {
   try {
     const res = await fetch(
       'https://anisboutique-backend.onrender.com/api/admin/coupons'
@@ -245,20 +245,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const coupons = await res.json();
     const wrapper = document.getElementById('available-coupons');
+    wrapper.innerHTML = '';
 
     if (!Array.isArray(coupons) || coupons.length === 0) return;
 
+    const today = new Date();
+
     coupons.forEach(c => {
-      // show only active & non-expired coupons
+      // ❌ skip inactive
       if (c.is_active === 0) return;
+
+      // ❌ skip expired
+      if (c.expiry_date && new Date(c.expiry_date) < today) return;
 
       const chip = document.createElement('div');
       chip.className = 'coupon-chip';
       chip.textContent = c.coupon_code;
 
-      // UX bonus: click to auto-fill
-      chip.addEventListener('click', () => {
+      // ✅ AUTO APPLY on click
+      chip.addEventListener('click', async () => {
         couponInput.value = c.coupon_code;
+        applyCouponBtn.click(); // 🔥 auto apply
       });
 
       wrapper.appendChild(chip);
@@ -267,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Failed to load coupons');
   }
 }
+
 
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   let originalTotal = 0;
