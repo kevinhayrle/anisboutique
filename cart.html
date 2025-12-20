@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadAvailableCoupons() {
   try {
     const res = await fetch(
-      'https://anisboutique-backend.onrender.com/api/admin/coupons'
+      'https://anisboutique-backend.onrender.com/api/coupons'
     );
 
     const coupons = await res.json();
