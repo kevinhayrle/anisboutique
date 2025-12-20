@@ -70,6 +70,31 @@
       font-size: 14px;
       color: #555;
     }
+.available-coupons {
+  max-width: 900px;
+  margin: 20px auto 10px;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.coupon-chip {
+  padding: 8px 14px;
+  border: 1px dashed purple;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.25s ease;
+}
+
+.coupon-chip:hover {
+  background: purple;
+  color: #fff;
+}
 
     .remove-btn {
       padding: 6px 14px;
@@ -176,6 +201,8 @@
 <h1 class="cart-title">Your Cart</h1>
 
 <div id="cart-container" class="cart-container"></div>
+<!-- AVAILABLE COUPONS -->
+<div class="available-coupons" id="available-coupons"></div>
 
 <div class="coupon-box">
   <input type="text" id="coupon-input" placeholder="Enter coupon code" />
@@ -209,6 +236,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const couponInput = document.getElementById('coupon-input');
   const couponMessage = document.getElementById('coupon-message');
   const applyCouponBtn = document.getElementById('apply-coupon-btn');
+
+   async function loadAvailableCoupons() {
+  try {
+    const res = await fetch(
+      'https://anisboutique-backend.onrender.com/api/admin/coupons'
+    );
+
+    const coupons = await res.json();
+    const wrapper = document.getElementById('available-coupons');
+
+    if (!Array.isArray(coupons) || coupons.length === 0) return;
+
+    coupons.forEach(c => {
+      // show only active & non-expired coupons
+      if (c.is_active === 0) return;
+
+      const chip = document.createElement('div');
+      chip.className = 'coupon-chip';
+      chip.textContent = c.coupon_code;
+
+      // UX bonus: click to auto-fill
+      chip.addEventListener('click', () => {
+        couponInput.value = c.coupon_code;
+      });
+
+      wrapper.appendChild(chip);
+    });
+  } catch (err) {
+    console.error('Failed to load coupons');
+  }
+}
 
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   let originalTotal = 0;
@@ -247,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateCartUI();
+  loadAvailableCoupons();
 
   container.addEventListener('click', (e) => {
     if (e.target.classList.contains('remove-btn')) {
