@@ -198,19 +198,15 @@
 <footer>© 2025 ANIS BOUTIQUE</footer>
 
 <canvas id="canvas" style="display:none;"></canvas>
-
 <script>
-  window.addEventListener("load", () => {
-    const loader = document.getElementById("preloader");
+window.addEventListener("load", () => {
+  const loader = document.getElementById("preloader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => loader.style.display = "none", 600);
+  }, 1000);
+});
 
-    setTimeout(() => {
-      loader.style.opacity = "0";
-
-      setTimeout(() => {
-        loader.style.display = "none";
-      }, 600);
-    }, 1000); // 👈 loader stays for 1.2s
-  });
 const API = "https://anisboutique-backend.onrender.com/api/products";
 
 const video = document.getElementById("video");
@@ -269,67 +265,83 @@ function captureImage() {
   searchBtn.disabled = false;
 }
 
-/* ===== COLOR DETECTION ===== */
+/* ===== COLOR SCIENCE ===== */
 function rgbToHsl(r, g, b) {
-  r/=255; g/=255; b/=255;
-  const max=Math.max(r,g,b), min=Math.min(r,g,b);
-  let h,s,l=(max+min)/2;
-  if(max===min){h=s=0;}
-  else{
-    const d=max-min;
-    s=l>0.5?d/(2-max-min):d/(max+min);
-    switch(max){
-      case r:h=(g-b)/d+(g<b?6:0);break;
-      case g:h=(b-r)/d+2;break;
-      case b:h=(r-g)/d+4;break;
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
     }
-    h*=60;
+    h *= 60;
   }
-  return {h,s,l};
+  return { h, s, l };
 }
 
+/* ===== SAFE COLOR LABELS (DB MATCHED) ===== */
 function getColorName(r, g, b) {
   const { h, s, l } = rgbToHsl(r, g, b);
 
-  // Black / White / Grey
-  if (l < 0.18) return "black";
-  if (l > 0.85 && s < 0.15) return "white";
-  if (s < 0.12) return "white";
+  // Very dark / very light
+  if (l < 0.15) return "black";
+  if (l > 0.9 && s < 0.12) return "white";
 
-  // Brown & Beige (IMPORTANT)
-  if (h >= 20 && h <= 45 && l < 0.55) return "brown";
-  if (h >= 20 && h <= 50 && l >= 0.55) return "beige";
+  // Low saturation fabrics (shadows protection)
+  if (s < 0.18) {
+    if (l < 0.6) return "beige";
+    return "white";
+  }
 
-  // Core colors (match DB)
-  if (h < 15 || h >= 345) return "red";
-  if (h >= 15 && h < 40) return "orange"; // will be normalized later
-  if (h >= 40 && h < 70) return "yellow";
-  if (h >= 70 && h < 160) return "green";
+  // Brown vs Yellow vs Beige (FIXED)
+  if (h >= 20 && h <= 45) {
+    if (l < 0.5) return "brown";
+    return "yellow";
+  }
+
+  // Reds & Pinks
+  if (h < 12 || h >= 348) {
+    return l > 0.55 ? "pink" : "red";
+  }
+
+  if (h >= 12 && h < 28) return "orange";
+  if (h >= 28 && h < 65) return "yellow";
+  if (h >= 65 && h < 160) return "green";
   if (h >= 160 && h < 250) return "blue";
-  if (h >= 250 && h < 320) return "purple";
+  if (h >= 250 && h < 330) return "purple";
 
-  return "red"; // fallback
+  return "red"; // safe fallback
 }
 
-
-/* ===== SEARCH ===== */
+/* ===== DETECT ===== */
 async function detectColor() {
   const data = ctx.getImageData(
-    canvas.width*0.3,
-    canvas.height*0.3,
-    canvas.width*0.4,
-    canvas.height*0.4
+    canvas.width * 0.35,
+    canvas.height * 0.35,
+    canvas.width * 0.3,
+    canvas.height * 0.3
   ).data;
 
-  let r=0,g=0,b=0,count=0;
-  for(let i=0;i<data.length;i+=4){
-    r+=data[i]; g+=data[i+1]; b+=data[i+2]; count++;
+  let r = 0, g = 0, b = 0, count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    r += data[i];
+    g += data[i + 1];
+    b += data[i + 2];
+    count++;
   }
-  r=Math.round(r/count);
-  g=Math.round(g/count);
-  b=Math.round(b/count);
 
-  const color = getColorName(r,g,b);
+  r = Math.round(r / count);
+  g = Math.round(g / count);
+  b = Math.round(b / count);
+
+  const color = getColorName(r, g, b);
   colorResult.innerHTML = `<b>Detected:</b> ${color}`;
 
   fetchProducts(color);
@@ -342,7 +354,7 @@ async function fetchProducts(color) {
   const res = await fetch(`${API}?color=${color}`);
   const products = await res.json();
 
-  if (products.length === 0) {
+  if (!products.length) {
     productsContainer.innerHTML = `<p>No products found</p>`;
     return;
   }
@@ -368,6 +380,5 @@ switchCameraIcon.onclick = switchCamera;
 captureBtn.onclick = captureImage;
 searchBtn.onclick = detectColor;
 </script>
-
 </body>
 </html>
