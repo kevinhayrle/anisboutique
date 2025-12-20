@@ -175,8 +175,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const collections = document.getElementById("collections");
   const searchInput = document.getElementById("searchInput");
   const categoryMenu = document.getElementById("category-menu");
+const sidebar = document.getElementById("sidebar");
 
   let allProducts = [];
+  let isSearching = false;
+
 
   if (focus) setTimeout(() => searchInput.focus(), 300);
 
@@ -199,7 +202,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     Object.keys(grouped).forEach(cat => {
-      if (activeCategory && cat.toLowerCase() !== activeCategory.toLowerCase()) return;
+     if (!isSearching && activeCategory && cat.toLowerCase() !== activeCategory.toLowerCase()) return;
+
 
       const section = document.createElement("div");
       section.className = "category-section";
@@ -239,10 +243,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  searchInput.addEventListener("input", () => {
-    const term = searchInput.value.toLowerCase();
-    render(allProducts.filter(p => p.name.toLowerCase().includes(term)));
-  });
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase();
+  isSearching = term.length > 0;
+
+  render(
+    allProducts.filter(p =>
+      p.name.toLowerCase().includes(term)
+    )
+  );
+});
+
 
   // Sidebar
   document.getElementById("hamburger-icon").onclick = () => {
