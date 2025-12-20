@@ -240,44 +240,44 @@ function rgbToHsv(r, g, b) {
   const s = max === 0 ? 0 : d / max;
   const v = max;
 
-  return { h, s: s * 100, v: v * 100 };
+  return { h, s, v };
 }
 
-/* PERFECT COLOR CLASSIFIER */
+/* ✅ WIDE, REAL-WORLD COLOR LOGIC */
 function getColorName(r, g, b) {
   const { h, s, v } = rgbToHsv(r, g, b);
 
-  /* BLACK */
-  if (v < 20) return "black";
+  /* DARK → BLACK */
+  if (v < 0.2) return "black";
 
-  /* WHITE */
-  if (s < 15 && v > 85) return "white";
+  /* VERY LIGHT → WHITE */
+  if (v > 0.9 && s < 0.25) return "white";
 
-  /* PINK (light red only) */
-  if (h >= 330 && h < 350 && s < 60 && v > 70) return "pink";
+  /* LOW SATURATION FABRICS */
+  if (s < 0.25) {
+    if (v < 0.6) return "brown";
+    return "white";
+  }
 
-  /* RED (strict) */
-  if ((h <= 10 || h >= 350) && s > 60 && v > 50) return "red";
+  /* YELLOW (WIDE) */
+  if (h >= 35 && h <= 75) return "yellow";
 
-  /* ORANGE */
-  if (h > 15 && h <= 30 && s > 50 && v > 60) return "orange";
+  /* GREEN (WIDE) */
+  if (h > 75 && h <= 170) return "green";
 
-  /* YELLOW (real yellow only) */
-  if (h > 40 && h <= 65 && s > 50 && v > 60) return "yellow";
-
-  /* BROWN */
-  if (h >= 20 && h <= 40 && s > 40 && v < 60) return "brown";
-
-  /* GREEN */
-  if (h >= 70 && h <= 160 && s > 30 && v > 35) return "green";
-
-  /* BLUE (includes denim & dark blue) */
-  if (h >= 190 && h <= 245 && s > 25 && v > 30) return "blue";
+  /* BLUE (WIDE incl denim) */
+  if (h > 170 && h <= 260) return "blue";
 
   /* PURPLE */
-  if (h > 245 && h <= 320 && s > 30) return "purple";
+  if (h > 260 && h <= 320) return "purple";
 
-  return "red";
+  /* PINK (LIGHT RED RANGE) */
+  if ((h < 20 || h > 340) && v > 0.65) return "pink";
+
+  /* RED (REST) */
+  if (h < 20 || h > 340) return "red";
+
+  return "brown";
 }
 
 /* DETECT COLOR */
@@ -337,6 +337,7 @@ switchCameraIcon.onclick = switchCamera;
 captureBtn.onclick = captureImage;
 searchBtn.onclick = detectColor;
 </script>
+
 
 
 </body>
