@@ -1,0 +1,195 @@
+/* ================= FONTS ================= */
+
+@font-face {
+  font-family: 'sf';
+  src: url('/fonts/sf.otf') format('opentype');
+}
+
+/* ================= PC =============== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'sf';
+  background: white;
+  color: #111;
+  padding-top: 90px; 
+}
+
+/* -------------------- HEADER -------------------- */
+
+header.header-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background: whitesmoke;
+  padding: 0 24px;
+  z-index: 1000;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* -------------------- LEFT -------------------- */
+
+.header-left .left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-left .left i {
+  font-size: 20px;
+  cursor: pointer;
+  color: #4169E1;
+}
+
+/* -------------------- CENTER -------------------- */
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-center img {
+  height: 45px;
+  width: auto;
+  margin-top: 2px;
+  object-fit: contain;
+}
+
+/* -------------------- RIGHT -------------------- */
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-right i {
+  font-size: 20px;
+  cursor: pointer;
+  color: #4169E1;
+}
+
+/* -------------------- SIDEBAR -------------------- */
+
+.sidebar {
+  position: fixed;
+  top: 80px;                 
+  left: -260px;
+  width: 260px;
+  height: calc(100vh - 80px);
+  background: #f5f5f5;
+  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.08);
+  transition: left 0.25s ease;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 24px 16px;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #111;
+  text-decoration: none;
+  text-align: center; 
+}
+
+.sidebar a:hover {
+  opacity: 0.7;
+}
+
+.sidebar .section-title,
+.sidebar p {
+  margin: -10px 0 -10px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #555;
+  text-align: center;
+}
+
+.sidebar hr {
+  width: 100%;
+  margin: 14px auto;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+
+#category-menu a {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  margin: 6px 0;
+}
+
+/* ================= PHONE ================= */
+
+@media (max-width: 600px) {
+
+  body {
+    padding-top: 70px; 
+  }
+
+  header.header-left {
+    height: 70px;
+    padding: 0 16px;
+  }
+
+  .header-left .left i,
+  .header-right i {
+    font-size: 18px;
+  }
+
+  .header-center img {
+    height: 38px;
+    margin-top: 0;
+  }
+
+  .header-right {
+    gap: 16px;
+  }
+
+  .sidebar {
+    top: 70px;
+    height: calc(100vh - 70px);
+    width: 220px;
+  }
+
+  .sidebar a {
+    padding: 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .sidebar .section-title,
+  .sidebar p {
+    font-size: 12px;
+    letter-spacing: 4px;
+  }
+
+  #category-menu a {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin: 8px 0;
+  }
+}

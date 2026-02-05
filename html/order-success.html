@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Successful | Anis Boutique</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Didot';
+      src: url('didot.otf') format('opentype');
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to right, #f4f6f5, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #111;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 60px 50px;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+      max-width: 520px;
+      width: 100%;
+    }
+
+    h1 {
+      font-family: 'Didot', serif;
+      font-size: 42px;
+      letter-spacing: 4px;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: #555;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .checkmark {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid purple;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 34px;
+      color: purple;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: purple;
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 15px;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: grey;
+      transform: translateY(-1px);
+    }
+
+    .footer-note {
+      margin-top: 35px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 34px;
+      }
+
+      .container {
+        padding: 45px 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="preloader">
+  <div class="loader-text">
+    <span>ANIS</span>
+    <span>BOUTIQUE</span>
+  </div>
+</div>
+
+  <div class="container">
+    <div class="checkmark">✓</div>
+
+    <h1>ORDER PLACED</h1>
+
+    <p class="subtitle">
+      Thank you for shopping with <strong>Anis Boutique</strong>.<br>
+      Your order has been placed successfully.
+    </p>
+
+    <a href="index.html" class="button">Return to Home</a>
+
+    <div class="footer-note">
+      © 2025 Anis Boutique
+    </div>
+  </div>
+
+</body>
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 600);
+    }, 1000); // 👈 loader stays for 1.2s
+  });
+</script>
+
+</html>

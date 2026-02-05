@@ -1,0 +1,149 @@
+/* ================= FONTS ================= */
+
+@font-face {
+  font-family: 'sf';
+  src: url('/fonts/sf.otf') format('opentype');
+}
+
+/* ================= PC ================= */
+
+.site-footer {
+  background: whitesmoke;
+  color: #111;
+  padding: 60px 20px 90px;
+  text-align: center;
+  font-family: 'sf';
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  margin-bottom: 28px;
+}
+
+.footer-logo-img {
+  width: 64px;
+  margin-bottom: 15px;
+}
+
+.footer-brand-name {
+  font-size: 25px;
+  font-family: 'Times New Roman';
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.footer-tagline {
+  font-size: 10px;
+  letter-spacing: 2.9px;
+  text-transform: uppercase;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.footer-address {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 35px 0 35px;
+}
+
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #111;
+  transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+  opacity: 0.6;
+}
+
+.footer-bottom {
+  margin-top: 25px;
+  text-transform: uppercase;
+}
+
+.footer-copy {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #777;
+}
+
+/* ================= PHONE ================= */
+
+@media (max-width: 600px) {
+
+
+  .site-footer {
+    background: whitesmoke;
+    color: #111;
+    padding: 60px 20px 90px;
+    text-align: center;
+  }
+
+  .footer-logo-img {
+    width: 56px;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand-name {
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #111;
+    margin-bottom: 8px;
+  }
+
+  .footer-tagline {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #444;
+    margin-bottom: 18px;
+  }
+
+  .footer-address {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    gap: 26px;
+    margin-bottom: 34px;
+  }
+
+  .footer-links a {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #111;
+  }
+
+  .footer-bottom {
+    margin-top: 10px;
+  }
+
+  .footer-copy {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #777;
+  }
+}
+
+
+

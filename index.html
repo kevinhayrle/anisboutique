@@ -1,438 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anis Boutique</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    
-  @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-.animate 
-{
-  animation: fadeInUp 0.6s ease forwards;
-    }
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/preloader.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-.banner {
-  flex: 1;
-  background: url('banner.jpg') no-repeat center center/cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 670px;
-  position: relative;
-}
-
-.anis {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-0.6em);
-  font-family: 'Didot', serif;
-  font-size: clamp(42px, 6vw, 72px);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  color: whitesmoke;
-}
-
-.boutique {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(0.3em);
-  font-family: 'Didot';
-  font-size: clamp(50px, 10vw, 90px);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  color: #ffffff;
-}
-
-.search-bar {
-  position: absolute;
-  top: 120px;  
-  right: 25px;
-  z-index: 20;
-  font-family: 'arial';
-  color: #ccc;
-}
-
-.search-bar label {
-  display: block;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.95);
-  margin-bottom: -60px;
-  text-transform: uppercase;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-}
-
-.search-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.search-row input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.85);
-  color: white;
-  padding: 6px 0;
-  width: 180px;
-  font-family: 'Didot', serif;
-  font-size: 14px;
-  letter-spacing: 1px;
-  outline: none;
-}
-
-.search-row input {
-  cursor: pointer;
-}
-
-.lens-link {
-  color: white;
-  font-size: 14px;
-  opacity: 0.85;
-  margin-bottom: -19px;
-  transition: opacity 0.3s ease;
-}
-
-.lens-link:hover {
-  opacity: 1;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 1rem;
-  background: lightgrey; 
-}
-
-.product {
-  background: lightgrey; 
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  text-align: center;
-  padding: 1rem;
-  transition: transform 0.2s ease;
-}
-
-  .product-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: white;
-    border: 1px solid #ccc;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 10px;
-  }
-
-  .product-card img,
-  .product-image {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    display: block;
-    background-color: #f9f9f9;
-  }
-
-  .product-card h3 {
-    font-size: 1rem;
-    margin: 10px 0 5px;
-    min-height: 38px; 
-  }
-
-  .product-card p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 10px;
-  }
-
-  .product-card button.add-to-cart {
-    margin-top: auto;
-    padding: 10px 16px;
-    background-color: purple;
-    color: white;
-    border: 1px solid black;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  }
-
-  .product-card button.add-to-cart:hover {
-    background-color: white;
-    color: black;
-  }
-
-  @media (max-width: 600px) {
-    .product-grid {
-      grid-template-columns: repeat(2, 1fr);
-      padding: 1rem;
-    }
-
-    .product-card {
-      margin: 0;
-    }
-  }
-  
-.product-card.animate {
-  opacity: 1;
-  transform: translateY(0);
-  animation: fadeUp 0.6s ease forwards;
-}
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  align-items:stretch;
-  gap: 20px;
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-</style>
 </head>
+
 <body>
 
-<div id="preloader">
-  <div class="loader-text">
-    <span>ANIS</span>
-    <span>BOUTIQUE</span>
-  </div>
-</div>
+  <!---------------------------------------------------->
 
+  <!-- PRELOADER -->
 
-<header class="header-left">
-  <div class="left">
-    <i class="fas fa-bars" id="hamburger-icon"></i>
+  <div id="preloader">
+    <img src="/assets/bluelogo.png" alt="Anis Boutique" class="preloader-logo">
   </div>
 
-  <div class="header-center">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Pasheon Logo" class="logo">
-    </a>
-  </div>
+  <!-- HEADER -->
 
-  <div class="header-right">
-    <a href="cart.html">
-      <i class="fas fa-shopping-cart"></i>
-    </a>
-  </div>
-</header>
+  <div id="header-placeholder"></div>
 
-<div id="sidebar" class="sidebar" style="left:-240px;">
-  <a href="index.html"><strong>HOME</strong></a>
-  <a href="contact.html"><strong>CONTACT US</strong></a>
-  <a href="yourOrders.html"><strong>YOUR ORDERS</strong></a>
-  <a href="privacy.html"><strong>PRIVACY POLICY</strong></a><br>
-  <a STRONG>COLLECTIONS</STRONG></h1></a>
-  <hr/>
-  <div id="category-menu"></div>
-</div>
+  <!---------------------------------------------------->
 
-<div class="banner">
- <div class="search-bar">
-  <label>SEARCH ↑ </label>
-  <div class="search-row">
-    <input type="text" readonly onclick="window.location.href='category.html?focus=1'" />
-    <a href="lens.html" class="lens-link">
-      <i class="fas fa-camera"></i>
-    </a>
-  </div>
-</div>
+  <!-- INDEX -->
 
-  <h1 class="anis">ANIS</h1>
-  <h1 class="boutique">BOUTIQUE</h1>
-</div>
+  <!-- SEARCH BAR -->
 
-<section id="products-section">
-  <h2 class="section-title">NEW ARRIVALS</h2>
-  <div id="product-container" class="product-grid">
-  </div>
-  <p class="cortex">© 2025 cortex²</p><br><br>
-</section>
+  <section class="search-section">
+    <div class="search-box">
+  <input type="text" id="homeSearch" placeholder="SEARCH FOR PRODUCTS">
+      <span class="search-icon"></span>
+    </div>
+  </section>
 
-<script>
-window.addEventListener("load", () => {
-  const loader = document.getElementById("preloader");
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 600);
-  }, 1000);
-});
+  <!-- SLIDER -->
 
-document.addEventListener('DOMContentLoaded', () => {
+  <section class="stack banner-slider">
 
-  const sidebar = document.getElementById('sidebar');
-  const hamburger = document.getElementById('hamburger-icon');
-  const categoryMenu = document.getElementById('category-menu');
-  const productContainer = document.getElementById('product-container');
-  const searchInput = document.querySelector('.search-row input');
+      <div class="banner-title">ANIS BOUTIQUE</div>
 
-  /* ===============================
-     SIDEBAR TOGGLE (UNCHANGED)
-  =============================== */
-  hamburger.addEventListener('click', () => {
-    const isVisible = sidebar.style.left === '0px';
-    sidebar.style.left = isVisible ? '-240px' : '0px';
-  });
+    <div class="slides">
 
-  /* ===============================
-     LOAD CATEGORIES (UNCHANGED)
-  =============================== */
-  fetch('https://anisboutique-backend.onrender.com/api/products/categories')
-    .then(res => res.json())
-    .then(categories => {
-      categoryMenu.innerHTML = '';
-      categories.forEach(cat => {
-        const item = document.createElement('a');
-        item.href = `category.html?cat=${encodeURIComponent(cat)}`;
-        item.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-        item.classList.add('category-link');
-        categoryMenu.appendChild(item);
-      });
-    })
-    .catch(err => console.error('Error loading categories:', err));
+      <div class="slide active">
 
-  /* ===============================
-     ANIMATION OBSERVER (UNCHANGED)
-  =============================== */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+        <img src="/assets/stack1.jpg" alt="">
+        <div class="slide-content">
+          <h2 class="slide-slogan">Where Fabric Meets Elegance</h2>
+          <a href="/html/search.html" class="lux-btn">DISCOVER</a>
+        </div>
+      </div>
 
-  /* ===============================
-     PRODUCT STATE (ADDED)
-  =============================== */
-  let ALL_PRODUCTS = [];
-  let CURRENT_PRODUCTS = [];
+      <div class="slide">
+        <img src="/assets/stack2.jpg" alt="">
+        <div class="slide-content">
+          <h2 class="slide-slogan">For the Love of Fine Fabrics</h2>
+          <a href="/html/search.html" class="lux-btn">SHOP NOW</a>
+        </div>
+      </div>
 
-  /* ===============================
-     FETCH PRODUCTS (MINIMAL CHANGE)
-  =============================== */
-  fetch("https://anisboutique-backend.onrender.com/api/products")
-    .then(res => res.json())
-    .then(products => {
 
-      ALL_PRODUCTS = products;      // 🔥 master copy
-      CURRENT_PRODUCTS = products;  // 🔥 working copy
+      <div class="slide">
+        <img src="/assets/stack3.jpg" alt="">
+        <div class="slide-content">
+          <h2 class="slide-slogan">Curated Fabrics for Inspired Creations</h2>
+          <a href="/html/search.html" class="lux-btn">EXPLORE</a>
+        </div>
+      </div>
 
-      products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
+      
+      <div class="slide">
+        <img src="/assets/stack4.jpg" alt="">
+        <div class="slide-content">
+          <h2 class="slide-slogan">Threads That Tell a Story</h2>
+          <a href="/html/search.html" class="lux-btn">SHOP NOW</a>
+        </div>
+      </div>
 
-        productCard.innerHTML = `
-          <div class="product-click-area" data-id="${product.id}">
-            <img src="${product.image_url}" alt="${product.name}" class="product-image">
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">
-              ${
-                product.discounted_price
-                  ? `<span class="old-price">₹${parseFloat(product.price).toLocaleString()}</span>
-                     <span class="new-price">₹${parseFloat(product.discounted_price).toLocaleString()}</span>`
-                  : `<span class="new-price">₹${parseFloat(product.price).toLocaleString()}</span>`
-              }
-            </p>
-          </div>
-          <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-        `;
+    </div>
 
-        productContainer.appendChild(productCard);
-        observer.observe(productCard);
+    <button class="nav prev">‹</button>
+    <button class="nav next">›</button>
+  </section>
 
-        productCard.querySelector('.product-click-area').addEventListener('click', () => {
-          window.location.href = `product.html?id=${product.id}`;
-        });
-      });
+  <!-- MATERIALS -->
 
-      document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          alert("Please open the product and choose a size before adding to cart.");
-          const productId = button.getAttribute('data-id');
-          window.location.href = `product.html?id=${productId}`;
-        });
-      });
+  <section class="materials-section">
+    <h2 class="section-title">Materials</h2>
 
-    })
-    .catch(error => {
-      console.error('Error fetching products:', error);
-    });
+    <div class="materials-grid" id="materialsGrid"></div>
+  </section>
 
-  /* ===============================
-     GLOBAL SEARCH FIX (ONLY ADDITION)
-  =============================== */
-  if (searchInput) {
-    searchInput.removeAttribute('readonly');
+  <hr /><br><br><br>
+    <!-- OTHER MATERIALS -->
 
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase();
+  <section class="other-materials">
+    <h2 class="section-title">Other Materials</h2>
 
-      productContainer.innerHTML = '';
+    <div class="materials-grid" id="otherMaterials"></div><br>
+  </section>
+  
+  <!---------------------------------------------------->
 
-      const results = ALL_PRODUCTS.filter(p =>
-        p.name.toLowerCase().includes(query)
-      );
+  <!-- FOOTER -->
 
-      results.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
+  <div id="footer-placeholder"></div>
 
-        productCard.innerHTML = `
-          <div class="product-click-area" data-id="${product.id}">
-            <img src="${product.image_url}" alt="${product.name}" class="product-image">
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">
-              ${
-                product.discounted_price
-                  ? `<span class="old-price">₹${parseFloat(product.price).toLocaleString()}</span>
-                     <span class="new-price">₹${parseFloat(product.discounted_price).toLocaleString()}</span>`
-                  : `<span class="new-price">₹${parseFloat(product.price).toLocaleString()}</span>`
-              }
-            </p>
-          </div>
-          <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-        `;
+  <!---------------------------------------------------->
 
-        productContainer.appendChild(productCard);
-        observer.observe(productCard);
-      });
-    });
-  }
+  <!-- SCRIPTS -->
 
-});
-</script>
+  <script src="/js/config.js"></script>
+  <script src="/js/index.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/preloader.js"></script>
 
 </body>
 </html>

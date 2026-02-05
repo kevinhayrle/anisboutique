@@ -1,0 +1,158 @@
+/* ================= FONTS ================= */
+
+@font-face {
+  font-family: 'sf';
+  src: url('/fonts/sf.otf') format('opentype');
+}
+
+/* ================= PC ================= */
+
+body {
+  background: #f7f7f7;
+  font-family: 'sf';
+}
+
+.cart-title {
+  max-width: 300px;
+  margin: 30px auto 0;
+  padding: 30px 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.cart-container {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 20px;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.cart-item img {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-details h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.cart-details p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.remove-btn {
+  padding: 6px 14px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #4169E1;
+  color: #fff;
+}
+
+.coupon-title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.available-coupons {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.coupon-chip {
+  padding: 8px 14px;
+  border: 1px dashed #4169E1;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.coupon-chip:hover {
+  background: #4169E1;
+  color: #fff;
+}
+
+.coupon-box {
+  max-width: 900px;
+  margin: 30px auto;
+  display: flex;
+  gap: 10px;
+  padding: 0 20px;
+}
+
+.coupon-box input {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #000;
+}
+
+.coupon-box button {
+  padding: 14px 26px;
+  background: #4169E1;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.coupon-message,
+.grand-total {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+#checkout-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 16px 40px;
+  background: #4169E1;
+  color: #fff;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+
+#checkout-btn:hover {
+  background: #222;
+}
+
+/* ---------- PHONE ---------- */
+
+@media (max-width: 600px) {
+  .cart-item {
+    flex-direction: column;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: auto;
+  }
+}
