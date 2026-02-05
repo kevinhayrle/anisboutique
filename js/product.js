@@ -84,12 +84,6 @@ fetch("/html/header.html")
     if (h) h.innerHTML = html;
   });
 
-fetch("/html/footer.html")
-  .then(res => res.text())
-  .then(html => {
-    document.body.insertAdjacentHTML("beforeend", html);
-  });
-
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 

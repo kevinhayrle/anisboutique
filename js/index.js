@@ -78,12 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCategories();
 
-  const homeSearch = document.getElementById("homeSearch");
-  if (homeSearch) {
-    homeSearch.addEventListener("focus", () => {
-      window.location.href = "/html/search.html";
-    });
-  }
+const homeSearch = document.getElementById("homeSearch");
+
+if (homeSearch) {
+  homeSearch.addEventListener("mousedown", e => {
+    e.preventDefault();
+    window.location.href = "/html/search.html";
+  });
+
+  homeSearch.addEventListener("touchstart", e => {
+    e.preventDefault();
+    window.location.href = "/html/search.html";
+  });
+}
 
   const slides = document.querySelectorAll(".slide");
   const prevBtn = document.querySelector(".nav.prev");

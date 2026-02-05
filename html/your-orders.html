@@ -4,12 +4,12 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order Successful | Anis Boutique</title>
+  <title>Your Orders | Anis Boutique</title>
 
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/css/order-success.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/your-orders.css">
   <link rel="stylesheet" href="/css/preloader.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
@@ -31,32 +31,50 @@
 
   <!---------------------------------------------------->
 
-<!-- CONTENT -->
-<div class="success-container">
+  <!-- CONTENT -->
+<div class="orders-container">
 
-  <div class="checkmark">✓</div>
+  <h1>YOUR ORDERS</h1>
 
-  <h1>ORDER PLACED</h1>
-
-  <p class="subtitle">
-    Thank you for shopping with <strong>Anis Boutique</strong>.<br>
-    Your order has been placed successfully.
+  <p class="subtext">
+    Track your orders, check purchase details, or request support
+    <span>📞 +91 91762 4XXX | ✉️ anisboutiqueofficial@gmail.com</span>
   </p>
 
-  <a href="/index.html" class="home-btn">Return to Home</a>
+  <!-- SEARCH -->
+  <div class="search-box">
+    <input
+      type="text"
+      id="phone"
+      placeholder="Enter your phone number"
+    />
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <!-- ORDERS -->
+  <div id="orders"></div>
 
   <div class="footer-note">
-    © 2025 Anis Boutique
+    © 2025 Anis Boutique. All rights reserved.
   </div>
 
 </div>
 
   <!---------------------------------------------------->
 
+  <!-- FOOTER -->
+
+  <div id="footer-placeholder"></div>
+
+  <!---------------------------------------------------->
+
   <!-- SCRIPTS -->
 
-<script src="/js/header.js"></script>
-<script src="/js/preloader.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/your-orders.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/preloader.js"></script>
 
 </body>
 </html>

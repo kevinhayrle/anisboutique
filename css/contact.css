@@ -1,0 +1,126 @@
+/* ================= FONTS ================= */
+
+@font-face {
+  font-family: 'sf';
+  src: url('/fonts/sf.otf') format('opentype');
+}
+
+/* ================= PC ================= */
+
+body {
+  margin: 0;
+  background: #f7f7f7;
+  color: #111;
+  font-family: 'sf';
+}
+
+.header-spacer {
+  height: 80px;
+}
+
+.contact-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 60px 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.contact-card h1 {
+  font-family: 'Didot', serif;
+  font-size: 42px;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #555;
+  letter-spacing: 1px;
+  margin-bottom: 50px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.contact-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 30px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.contact-box h3 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.contact-box p,
+.contact-box a {
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: #000;
+  opacity: 0.3;
+  margin: 40px auto;
+}
+
+.back-home {
+  display: inline-block;
+  padding: 14px 36px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.back-home:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ================= PC ================= */
+
+@media (max-width: 600px) {
+  .contact-card {
+    padding: 40px 20px;
+  }
+
+  .contact-card h1 {
+    font-size: 34px;
+  }
+
+  .subtitle {
+    margin-bottom: 36px;
+  }
+}
