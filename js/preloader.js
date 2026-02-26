@@ -1,9 +1,10 @@
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("preloader");
+
   setTimeout(() => {
     loader.style.opacity = "0";
     setTimeout(() => {
       loader.style.display = "none";
     }, 600);
-  }, 1000);
+  }, 800);
 });
