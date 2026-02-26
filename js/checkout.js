@@ -1,5 +1,3 @@
-/* ================= PRELOADER ================= */
-
 window.addEventListener("load", () => {
   const loader = document.getElementById("preloader");
   setTimeout(() => {
@@ -8,16 +6,12 @@ window.addEventListener("load", () => {
   }, 1000);
 });
 
-/* ================= CART DATA ================= */
-
 const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 const finalAmount = localStorage.getItem("finalAmount");
 
 const cartItemsEl = document.getElementById("cart-items");
 const totalAmountEl = document.getElementById("total-amount");
 const form = document.getElementById("checkout-form");
-
-/* ================= RENDER CART ================= */
 
 cartItemsEl.innerHTML = "";
 
@@ -43,15 +37,11 @@ cart.forEach(item => {
   cartItemsEl.appendChild(li);
 });
 
-/* ================= TOTAL ================= */
-
 let total = finalAmount
   ? Number(finalAmount)
   : cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
 totalAmountEl.textContent = total;
-
-/* ================= PAYMENT ================= */
 
 form.addEventListener("submit", async e => {
   e.preventDefault();
@@ -68,7 +58,6 @@ form.addEventListener("submit", async e => {
 
   const totalInPaisa = Math.max(100, Math.round(total * 100));
 
-  /* CREATE ORDER (USING BASE_API) */
   const orderRes = await fetch(
     `${window.BASE_API}/checkout/create-order`,
     {

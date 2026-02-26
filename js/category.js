@@ -14,6 +14,39 @@ document.addEventListener("DOMContentLoaded", () => {
     ? rawCategory.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
     : null;
 
+if (selectedCategory) {
+
+  const newTitle = `${selectedCategory} Collection | Anis Boutique Chennai`;
+
+  const newDescription =
+    `Shop premium ${selectedCategory} materials at Anis Boutique Chennai. Explore our latest ${selectedCategory} collection.`;
+
+  document.title = newTitle;
+
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute("content", newDescription);
+  }
+
+  const ogTitle = document.getElementById("ogTitle");
+  const ogDescription = document.getElementById("ogDescription");
+  const twitterTitle = document.getElementById("twitterTitle");
+  const twitterDescription = document.getElementById("twitterDescription");
+  const canonicalTag = document.getElementById("canonicalTag");
+
+  if (ogTitle) ogTitle.setAttribute("content", newTitle);
+  if (ogDescription) ogDescription.setAttribute("content", newDescription);
+  if (twitterTitle) twitterTitle.setAttribute("content", newTitle);
+  if (twitterDescription) twitterDescription.setAttribute("content", newDescription);
+
+  if (canonicalTag) {
+    canonicalTag.setAttribute(
+      "href",
+      `https://anisboutique.in/html/category.html?cat=${encodeURIComponent(selectedCategory)}`
+    );
+  }
+}
+
   const titleEl = document.getElementById("categoryTitle");
   const gridEl = document.getElementById("productsGrid");
   const searchInput = document.getElementById("searchInput");

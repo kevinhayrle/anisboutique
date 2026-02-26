@@ -83,10 +83,50 @@ const productId = params.get("id");
 fetch(`${window.BASE_API}/products/${productId}`)
   .then(res => res.json())
   .then(product => renderProduct(product));
-
 function renderProduct(product) {
+
   document.getElementById("productName").textContent = product.name;
-  document.getElementById("productDescription").textContent = product.description || "";
+
+  const productTitle = `${product.name} | Anis Boutique Chennai`;
+
+  const productDescription =
+    product.description
+      ? `${product.description} Available at Anis Boutique Chennai.`
+      : `Buy ${product.name} at Anis Boutique Chennai. Premium quality fabrics available now.`;
+
+  document.title = productTitle;
+
+  document.querySelector('meta[name="description"]')
+    ?.setAttribute("content", productDescription);
+
+  document.getElementById("ogTitle")
+    ?.setAttribute("content", productTitle);
+
+  document.getElementById("ogDescription")
+    ?.setAttribute("content", productDescription);
+
+  document.getElementById("twitterTitle")
+    ?.setAttribute("content", productTitle);
+
+  document.getElementById("twitterDescription")
+    ?.setAttribute("content", productDescription);
+
+  document.getElementById("canonicalTag")
+    ?.setAttribute(
+      "href",
+      `https://anisboutique.in/html/product.html?id=${product.id}`
+    );
+
+  if (product.image_url) {
+    document.getElementById("ogImage")
+      ?.setAttribute("content", product.image_url);
+
+    document.getElementById("twitterImage")
+      ?.setAttribute("content", product.image_url);
+  }
+
+  document.getElementById("productDescription").textContent =
+    product.description || "";
 
   currentPrice = product.price;
   discountedPrice = product.discounted_price || null;
@@ -96,18 +136,18 @@ function renderProduct(product) {
   const mainImage = document.getElementById("mainImage");
   mainImage.src = product.image_url;
 
-mainImage.onclick = () => {
-  const overlay = document.createElement("div");
-  overlay.className = "image-zoom-overlay";
+  mainImage.onclick = () => {
+    const overlay = document.createElement("div");
+    overlay.className = "image-zoom-overlay";
 
-  const zoomedImg = document.createElement("img");
-  zoomedImg.src = mainImage.src;
+    const zoomedImg = document.createElement("img");
+    zoomedImg.src = mainImage.src;
 
-  overlay.appendChild(zoomedImg);
-  document.body.appendChild(overlay);
+    overlay.appendChild(zoomedImg);
+    document.body.appendChild(overlay);
 
-  overlay.onclick = () => overlay.remove();
-};
+    overlay.onclick = () => overlay.remove();
+  };
 
   const extraImages = document.getElementById("extraImages");
   extraImages.innerHTML = "";
@@ -133,7 +173,8 @@ mainImage.onclick = () => {
 
   renderQuantity(product.quantity_unit);
 
-  document.getElementById("addToCartBtn").onclick = () => addToCart(product);
+  document.getElementById("addToCartBtn").onclick =
+    () => addToCart(product);
 }
 
 function updatePriceUI(price, discounted) {

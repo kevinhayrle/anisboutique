@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block sensitive pages
+Disallow: /html/cart.html
+Disallow: /html/checkout.html
+Disallow: /html/lens.html
+Disallow: /html/order-success.html
+Disallow: /html/admin-login.html
+Disallow: /html/admin-dashboard.html
+
+Sitemap: https://anisboutique.in/sitemap.xml
