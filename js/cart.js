@@ -111,14 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
     checkoutBtn.style.display = "block";
   }
 
-  container.addEventListener("click", e => {
-    if (e.target.classList.contains("remove-btn")) {
-      const index = e.target.dataset.index;
-      cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartUI();
-    }
-  });
+container.addEventListener("click", e => {
+  if (e.target.classList.contains("remove-btn")) {
+    const index = e.target.dataset.index;
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartUI();
+    updateCartCount(); 
+  }
+});
 
   applyCouponBtn.addEventListener("click", async () => {
     const code = couponInput.value.trim();

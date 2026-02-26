@@ -1,5 +1,24 @@
 const API = window.API_ENDPOINTS;
 
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const totalQuantity = cart.reduce((total, item) => {
+    return total + (item.quantity || 1);
+  }, 0);
+
+  const badge = document.getElementById("cart-count");
+
+  if (!badge) return;
+
+  if (totalQuantity > 0) {
+    badge.style.display = "inline-block";
+    badge.textContent = totalQuantity;
+  } else {
+    badge.style.display = "none";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   fetch("/html/header.html")
@@ -11,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!headerPlaceholder) return;
 
       headerPlaceholder.innerHTML = html;
+
+      updateCartCount();
 
       const sidebar = document.getElementById("sidebar");
       const hamburger = document.getElementById("hamburger-icon");

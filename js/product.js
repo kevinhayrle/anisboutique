@@ -77,13 +77,6 @@ let selectedQuantity = 1;
 let currentPrice = 0;
 let discountedPrice = null;
 
-fetch("/html/header.html")
-  .then(res => res.text())
-  .then(html => {
-    const h = document.getElementById("header-placeholder");
-    if (h) h.innerHTML = html;
-  });
-
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
@@ -170,20 +163,42 @@ function addToCart(product) {
     name: product.name,
     category: product.category,
     image: product.image_url,
-
-    color: selectedColor || null, 
+    color: selectedColor || null,
     quality: selectedQuality || null,
-
     quantity: selectedQuantity,
     unit: product.quantity_unit,
-
     price: discountedPrice || currentPrice,
     base_price: currentPrice,
     discounted_price: discountedPrice
   });
 
   localStorage.setItem("cart", JSON.stringify(cart));
-  window.location.href = "/html/cart.html";
+
+  showCartPopup();        
+  updateCartCount();        
+}
+
+function showCartPopup() {
+
+  const popup = document.createElement("div");
+  popup.className = "cart-popup";
+  popup.innerHTML = `
+    <div class="cart-popup-content">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Product added to cart</span>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+    setTimeout(() => popup.remove(), 300);
+  }, 2000);
 }
 
 function renderQuantity(unit) {

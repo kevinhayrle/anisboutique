@@ -259,7 +259,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2147483647; /* max safe z-index */
+  z-index: 2147483647; 
 }
 
 .image-zoom-overlay img {
@@ -272,6 +272,36 @@ body {
 .main-image {
   cursor: zoom-in;
   pointer-events: auto;
+}
+
+.cart-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #111;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 6px;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.cart-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cart-popup-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-popup i {
+  color: #4CAF50;
+  font-size: 18px;
 }
 
 /* ================= PHONE ================= */
