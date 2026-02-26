@@ -11,23 +11,23 @@ const MATERIAL_CATEGORIES = [
 ];
 
 const MATERIAL_IMAGES = {
-  "Lining": "/assets/lining.jpeg",
-  "Two by Two": "/assets/2by2.png",
-  "Silk Cotton": "/assets/silkcotton.png",
-  "Plain Net": "/assets/plainnet.png",
-  "Poplin": "/assets/poplin.jpeg",
+  "Lining": "/assets/lining.webp",
+  "Two by Two": "/assets/2by2.webp",
+  "Silk Cotton": "/assets/silkcotton.webp",
+  "Plain Net": "/assets/plainnet.webp",
+  "Poplin": "/assets/poplin.webp",
   "Suncrepe": "/assets/suncrepe.webp",
-  "Inskirts": "/assets/inskirt.png",
-  "Falls": "/assets/falls.png",
-  "Satin": "/assets/satin.jpeg"
+  "Inskirts": "/assets/inskirt.webp",
+  "Falls": "/assets/falls.webp",
+  "Satin": "/assets/satin.webp"
 };
 
 const OTHER_MATERIAL_IMAGES = {
-  "Aari Materials": "/assets/aari.jpeg",
-  "Stitching Items": "/assets/stitchingitems.jpeg",
-  "Laces": "/assets/laces.WEBP",
-  "Knots": "/assets/hangingknot.WEBP",
-  "Others": "/assets/others.WEBP"
+  "Aari Materials": "/assets/aari.webp",
+  "Stitching Items": "/assets/stitchingitems.webp",
+  "Laces": "/assets/laces.webp",
+  "Knots": "/assets/hangingknot.webp",
+  "Others": "/assets/others.webp"
 };
 
 async function loadCategories() {
