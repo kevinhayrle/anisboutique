@@ -86,8 +86,6 @@ This is the frontend repository for *Anis Boutique*, a premium fashion and fabri
 - Razorpay Checkout.js
 - JSON-LD structured data
 
-# Project Structure
-
 # Security & Best Practices
 
 - No sensitive data stored on frontend
