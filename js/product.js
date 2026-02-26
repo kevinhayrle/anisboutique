@@ -162,8 +162,27 @@ function renderProduct(product) {
 
     extraImages.appendChild(img);
   });
+  
+const category = product.category?.trim().toLowerCase();
 
+const categoriesWithColors = [
+  "lining",
+  "two by two",
+  "silk cotton",
+  "plain net",
+  "poplin",
+  "suncrepe",
+  "inskirts",
+  "falls",
+  "satin"
+];
+
+if (categoriesWithColors.includes(category)) {
   renderColorPalette();
+} else {
+  document.getElementById("colorSection").style.display = "none";
+  selectedColor = null;
+}
 
   if (product.category === "Lining") {
     renderQualityOptions(product);
