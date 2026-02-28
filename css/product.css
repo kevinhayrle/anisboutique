@@ -460,6 +460,77 @@ body {
   width: 100%;
   justify-content: center; 
 }
+
+  .lens-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .lens-btn:active {
+    background: #e0e0e0;
+    transform: scale(0.95);
+  }
+
+  /* ---------- CLEAN MINIMAL CENTER CAMERA ---------- */
+
+.camera-modal {
+  position: fixed;
+
+  /* reset desktop positioning */
+  top: 50% !important;
+  left: 50% !important;
+  bottom: auto !important;
+  right: auto !important;
+
+  transform: translate(-50%, -50%);
+
+  background: white;
+  padding: 10px;
+  border-radius: 14px;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* small square */
+.camera-box {
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: black;
+}
+
+/* video perfectly cropped */
+.camera-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* minimal buttons */
+.camera-controls {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.camera-controls button {
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
   /* ---------- QUALITY ---------- */
 
   .quality-options {

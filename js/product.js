@@ -1423,8 +1423,14 @@ function addToCart(product) {
     price: discountedPrice || currentPrice
   });
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Product added to cart");
+localStorage.setItem("cart", JSON.stringify(cart));
+
+// 🔥 tell header that cart changed
+if (window.updateCartCount) {
+  window.updateCartCount();
+}
+
+alert("Product added to cart");
 }
 
 /* =========================================

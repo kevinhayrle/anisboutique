@@ -1,12 +1,15 @@
 const API = window.API_ENDPOINTS;
 
-function updateCartCount() {
+/* =========================================
+   GLOBAL CART COUNT FUNCTION
+   (Accessible from any page)
+========================================= */
+
+window.updateCartCount = function () {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.length;
 
-  const totalItems = cart.length; 
-
-  const badge = document.getElementById("cart-count");
-
+  const badge = document.querySelector("#cart-count");
   if (!badge) return;
 
   if (totalItems > 0) {
@@ -15,7 +18,12 @@ function updateCartCount() {
   } else {
     badge.style.display = "none";
   }
-}
+};
+
+
+/* =========================================
+   LOAD HEADER
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -25,11 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const headerPlaceholder =
         document.getElementById("header-placeholder");
+
       if (!headerPlaceholder) return;
 
       headerPlaceholder.innerHTML = html;
 
-      updateCartCount();
+      /* ===== Update Cart Immediately ===== */
+      window.updateCartCount();
+
+      /* =====================================
+         SIDEBAR / HAMBURGER
+      ===================================== */
 
       const sidebar = document.getElementById("sidebar");
       const hamburger = document.getElementById("hamburger-icon");
@@ -50,16 +64,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      if (categoryMenu) {
+      /* =====================================
+         LOAD CATEGORIES
+      ===================================== */
+
+      if (categoryMenu && API?.CATEGORIES) {
+
         fetch(API.CATEGORIES)
           .then(res => res.json())
           .then(categories => {
+
             categoryMenu.innerHTML = "";
 
             categories.forEach(cat => {
+
               const a = document.createElement("a");
               a.href =
                 `/html/category.html?cat=${encodeURIComponent(cat)}`;
+
               a.textContent = cat.toUpperCase();
               categoryMenu.appendChild(a);
             });
@@ -68,6 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("❌ Category fetch failed:", err)
           );
       }
+
+      /* =====================================
+         HEADER SCROLL EFFECT
+      ===================================== */
 
       window.addEventListener("scroll", () => {
         if (!header) return;
