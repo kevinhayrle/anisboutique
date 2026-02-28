@@ -351,6 +351,20 @@ section {
   margin-bottom: 30px;
 }
 
+.sub-slogan {
+  margin-top: 12px;
+  margin-bottom: 60px;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 650px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'sf';
+}
+
 .lux-btn {
   padding: 12px 100px;
   border: 1px solid #ffffff;

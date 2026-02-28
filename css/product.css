@@ -453,6 +453,13 @@ body {
     height: 28px;
   }
 
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  justify-content: center; 
+}
   /* ---------- QUALITY ---------- */
 
   .quality-options {
