@@ -5,7 +5,6 @@ const MATERIAL_CATEGORIES = [
   "Plain Net",
   "Poplin",
   "Suncrepe",
-  "Inskirts",
   "Falls",
   "Satin"
 ];
@@ -17,13 +16,13 @@ const MATERIAL_IMAGES = {
   "Plain Net": "/assets/plainnet.webp",
   "Poplin": "/assets/poplin.webp",
   "Suncrepe": "/assets/suncrepe.webp",
-  "Inskirts": "/assets/inskirt.webp",
   "Falls": "/assets/falls.webp",
   "Satin": "/assets/satin.webp"
 };
 
 const OTHER_MATERIAL_IMAGES = {
-  "Aari Materials": "/assets/aari.webp",
+  "Inskirts": "/assets/inskirt.webp",
+  "Aari Materials": "/assets/aari.webp",  
   "Stitching Items": "/assets/stitchingitems.webp",
   "Laces": "/assets/laces.webp",
   "Knots": "/assets/hangingknot.webp",

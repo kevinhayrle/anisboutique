@@ -172,7 +172,6 @@ const categoriesWithColors = [
   "plain net",
   "poplin",
   "suncrepe",
-  "inskirts",
   "falls",
   "satin"
 ];

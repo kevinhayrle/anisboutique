@@ -3,17 +3,15 @@ const API = window.API_ENDPOINTS;
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const totalQuantity = cart.reduce((total, item) => {
-    return total + (item.quantity || 1);
-  }, 0);
+  const totalItems = cart.length; 
 
   const badge = document.getElementById("cart-count");
 
   if (!badge) return;
 
-  if (totalQuantity > 0) {
+  if (totalItems > 0) {
     badge.style.display = "inline-block";
-    badge.textContent = totalQuantity;
+    badge.textContent = totalItems;
   } else {
     badge.style.display = "none";
   }
