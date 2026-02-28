@@ -135,16 +135,53 @@ body {
 
 /* ================= COLORS ================= */
 
+.color-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.color-title {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #444;
+}
+
+.lens-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+
+.lens-btn:hover {
+  color: #4169E1;
+}
+
+.lens-btn:focus {
+  outline: none;
+}
+
+#colorPalette {
+  margin-top: 20px;
+}
+
 .color-palette {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  width: 190%;        
 }
 
 .color-swatch {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
   cursor: pointer;
   border: 1px solid lightgrey;
   transition: 0.25s;
@@ -159,7 +196,42 @@ body {
   outline-offset: 3px;
 }
 
+.camera-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+.camera-box video {
+  width: 250px;
+  border-radius: 8px;
+}
+
+.camera-controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.camera-controls button {
+  padding: 6px 12px;
+  border: none;
+  background: #4169E1;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 /* ================= QUALITY ================= */
+
+#qualityOptions {
+  margin-top: 20px;
+}
 
 .quality-options {
   display: flex;
@@ -188,44 +260,38 @@ body {
 
 /* ================= QUANTITY ================= */
 
+#quantityControl {
+  margin-top: 30px;
+}
+
 .quantity-buttons {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  overflow: hidden;
+  gap: 20px;
+  margin-top: -100px;
 }
 
 .quantity-buttons button {
-  width: 38px;
-  height: 38px;
-  border: none;
-  background: none;
-  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: white;
   font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.quantity-buttons button:hover {
+  background: #f2f2f2;
 }
 
 .quantity-buttons span {
-  width: 40px;
+  min-width: 110px;
   text-align: center;
-}
-
-.quantity-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.quantity-input input {
-  width: 90px;
-  padding: 8px 10px;
-  border: 1px solid grey;
-  border-radius: 8px;
-}
-
-.unit-label {
-  font-size: 14px;
-  color: var(--muted);
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 /* ================= CTA ================= */
@@ -235,12 +301,14 @@ body {
   padding: 16px;
   border-radius: 40px;
   border: none;
+  align-items: center;
   background: #4169E1;
   color: white;
   font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
   transition: 0.3s;
+  width: 190px;
 }
 
 .add-to-cart-btn:hover {

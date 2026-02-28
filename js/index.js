@@ -1,3 +1,7 @@
+/* =========================================
+   MATERIAL DEFINITIONS
+========================================= */
+
 const MATERIAL_CATEGORIES = [
   "Lining",
   "Two by Two",
@@ -22,12 +26,16 @@ const MATERIAL_IMAGES = {
 
 const OTHER_MATERIAL_IMAGES = {
   "Inskirts": "/assets/inskirt.webp",
-  "Aari Materials": "/assets/aari.webp",  
+  "Aari Materials": "/assets/aari.webp",
   "Stitching Items": "/assets/stitchingitems.webp",
   "Laces": "/assets/laces.webp",
   "Knots": "/assets/hangingknot.webp",
   "Others": "/assets/others.webp"
 };
+
+/* =========================================
+   LOAD CATEGORIES
+========================================= */
 
 async function loadCategories() {
   try {
@@ -40,13 +48,18 @@ async function loadCategories() {
     materialsGrid.innerHTML = "";
     otherMaterials.innerHTML = "";
 
-    categories.forEach(category => {
-      const categoryUrl =
-        `/html/category.html?cat=${encodeURIComponent(category)}`;
+    /* ================================
+       MATERIALS (FIXED ORDER)
+    ================================= */
 
-      if (MATERIAL_CATEGORIES.includes(category)) {
+    MATERIAL_CATEGORIES.forEach(category => {
+      if (categories.includes(category)) {
+
+        const materialUrl =
+          `/html/product.html?material=${encodeURIComponent(category)}`;
+
         const card = document.createElement("a");
-        card.href = categoryUrl;
+        card.href = materialUrl;
         card.className = "material-card";
 
         card.innerHTML = `
@@ -55,41 +68,75 @@ async function loadCategories() {
         `;
 
         materialsGrid.appendChild(card);
-      } else if (OTHER_MATERIAL_IMAGES[category]) {
-        const card = document.createElement("a");
-        card.href = categoryUrl;
-        card.className = "material-card";
-
-        card.innerHTML = `
-          <img src="${OTHER_MATERIAL_IMAGES[category]}" alt="${category}">
-          <p>${category}</p>
-        `;
-
-        otherMaterials.appendChild(card);
       }
     });
+
+    /* ================================
+       OTHER MATERIALS (SORTED)
+       "Others" ALWAYS LAST
+    ================================= */
+
+    const otherCategories = categories
+      .filter(cat => OTHER_MATERIAL_IMAGES[cat])
+      .sort((a, b) => {
+
+        if (a === "Others") return 1;
+        if (b === "Others") return -1;
+
+        return a.localeCompare(b);
+      });
+
+    otherCategories.forEach(category => {
+
+      const categoryUrl =
+        `/html/category.html?cat=${encodeURIComponent(category)}`;
+
+      const card = document.createElement("a");
+      card.href = categoryUrl;
+      card.className = "material-card";
+
+      card.innerHTML = `
+        <img src="${OTHER_MATERIAL_IMAGES[category]}" alt="${category}">
+        <p>${category}</p>
+      `;
+
+      otherMaterials.appendChild(card);
+    });
+
   } catch (error) {
     console.error("Failed to load categories:", error);
   }
 }
 
+/* =========================================
+   DOM READY
+========================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
   loadCategories();
 
-const homeSearch = document.getElementById("homeSearch");
+  /* ================================
+     HOME SEARCH REDIRECT
+  ================================= */
 
-if (homeSearch) {
-  homeSearch.addEventListener("mousedown", e => {
-    e.preventDefault();
-    window.location.href = "/html/search.html";
-  });
+  const homeSearch = document.getElementById("homeSearch");
 
-  homeSearch.addEventListener("touchstart", e => {
-    e.preventDefault();
-    window.location.href = "/html/search.html";
-  });
-}
+  if (homeSearch) {
+    homeSearch.addEventListener("mousedown", e => {
+      e.preventDefault();
+      window.location.href = "/html/search.html";
+    });
+
+    homeSearch.addEventListener("touchstart", e => {
+      e.preventDefault();
+      window.location.href = "/html/search.html";
+    });
+  }
+
+  /* ================================
+     SLIDER LOGIC
+  ================================= */
 
   const slides = document.querySelectorAll(".slide");
   const prevBtn = document.querySelector(".nav.prev");
@@ -119,4 +166,5 @@ if (homeSearch) {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
   }, 5000);
+
 });

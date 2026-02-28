@@ -114,14 +114,6 @@
     margin-bottom: 18px;
   }
 
-  .footer-address {
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: #666;
-    line-height: 1.7;
-    margin-bottom: 32px;
-  }
-
   .footer-links {
     flex-direction: row;
     gap: 26px;

@@ -57,6 +57,25 @@ body {
   color: #555;
 }
 
+.cart-color {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+.color-ref {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .remove-btn {
   padding: 6px 14px;
   border: 1px solid #111;

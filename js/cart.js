@@ -73,18 +73,18 @@ document.addEventListener("DOMContentLoaded", () => {
       div.className = "cart-item";
 
       div.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
 
         <div class="cart-details">
           <h3>${item.name}</h3>
 
-          ${
-            item.color
-              ? `<div class="cart-color">
-                   <span class="color-dot" style="background:${item.color.hex}"></span>
-                 </div>`
-              : ""
-          }
+      ${
+  item.color
+    ? `<div class="cart-color">
+         <span class="color-dot" style="background:${item.color.hex}"></span>
+         <span class="color-ref">${item.color.name}</span>
+       </div>`
+    : ""
+}
 
           ${item.quality ? `<p>Quality: ${item.quality}</p>` : ""}
 

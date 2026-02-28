@@ -11,6 +11,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let allProducts = [];
 
+  /* =========================================
+     EXCLUDED CATEGORIES (NOT SEARCHABLE)
+  ========================================= */
+
+  const EXCLUDED_CATEGORIES = [
+    "Lining",
+    "Two by Two",
+    "Silk Cotton",
+    "Plain Net",
+    "Poplin",
+    "Suncrepe",
+    "Falls",
+    "Satin",
+    "Inskirts"
+  ];
+
+  /* =========================================
+     FETCH PRODUCTS
+  ========================================= */
+
   async function fetchProducts() {
     try {
       statusText.textContent = "Loading products...";
@@ -26,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       allProducts = Array.isArray(data) ? data : data.products || [];
 
+      // 🔥 REMOVE MATERIALS + INSKIRTS
+      allProducts = allProducts.filter(product =>
+        !EXCLUDED_CATEGORIES.includes(product.category)
+      );
+
       if (!allProducts.length) {
         statusText.textContent = "No products available";
         return;
@@ -39,6 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
       statusText.textContent = "Failed to load products";
     }
   }
+
+  /* =========================================
+     RENDER PRODUCTS
+  ========================================= */
 
   function renderProducts(products) {
     resultsGrid.innerHTML = "";
@@ -107,6 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
       resultsGrid.appendChild(section);
     });
   }
+
+  /* =========================================
+     SEARCH FILTER
+  ========================================= */
 
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();

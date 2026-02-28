@@ -61,7 +61,7 @@
     <section class="product-layout">
 
       <!-- LEFT : IMAGES -->
-      <div class="product-images">
+        <div id="imageSection" class="product-images">
         <div class="image-frame">
           <img id="mainImage" class="main-image" alt="Product Image">
         </div>
@@ -78,14 +78,7 @@
 
         <p id="productDescription" class="product-description"></p>
 
-        <!-- COLOR -->
-        <div id="colorSection" class="option-block">
-          <span class="option-label">OTHER AVAILABLE COLORS</span>
-          <span class="option-label2">*Image preview for colors is unavailable. You can still select the color and place the order.</span>
-          <div id="colorPalette" class="color-palette"></div>
-        </div>
-
-        <!-- QUALITY -->
+                <!-- QUALITY -->
         <div id="qualitySection" class="option-block">
           <span class="option-label">Quality</span>
           <div id="qualityOptions" class="quality-options"></div>
@@ -96,6 +89,33 @@
           <span class="option-label">Quantity</span>
           <div id="quantityControl"></div>
         </div>
+
+        <!-- COLOR -->
+<div id="colorSection" class="option-block">
+
+  <div class="color-header">
+    <span class="color-title">AVAILABLE COLORS</span>
+<button id="lensBtn" type="button" class="lens-btn" style="display:none;">
+  <i class="fa-solid fa-camera"></i>
+</button>
+  </div>
+
+  <div id="colorPalette" class="color-palette"></div>
+
+</div>
+
+<!-- LENS -->
+<div id="cameraModal" class="camera-modal" style="display:none;">
+  <video id="video" autoplay></video>
+  <canvas id="canvas" style="display:none;"></canvas>
+
+  <div class="camera-controls">
+    <button id="captureBtn">Capture</button>
+    <button id="closeCamera">Close</button>
+  </div>
+
+  <div id="colorResult"></div>
+</div>
 
         <!-- CTA -->
         <button id="addToCartBtn" class="add-to-cart-btn">
