@@ -29,7 +29,7 @@ const OTHER_MATERIAL_IMAGES = {
   "Aari Materials": "/assets/aari.webp",
   "Stitching Items": "/assets/stitchingitems.webp",
   "Laces": "/assets/laces.webp",
-  "Knots": "/assets/hangingknot.webp",
+  "Knots": "/assets/knot.webp",
   "Others": "/assets/others.webp"
 };
 
