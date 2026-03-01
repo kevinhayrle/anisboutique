@@ -28,9 +28,9 @@ const OTHER_MATERIAL_IMAGES = {
   "Inskirts": "/assets/inskirt.webp",
   "Aari Materials": "/assets/aari.webp",
   "Stitching Items": "/assets/stitchingitems.webp",
-  "Laces": "/assets/laces.webp",
+  "Laces": "/assets/lace.webp",
   "Knots": "/assets/knot.webp",
-  "Others": "/assets/others.webp"
+  "Others": "/assets/other.webp"
 };
 
 /* =========================================
