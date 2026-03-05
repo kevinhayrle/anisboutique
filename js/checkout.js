@@ -77,31 +77,38 @@ form.addEventListener("submit", async e => {
     description: "Order Payment",
     order_id: orderData.id,
 
-    handler: async function (response) {
-      const finalOrder = {
-        customer: { name, email, phone, address },
-        cart,
-        payment_id: response.razorpay_payment_id,
-        total_amount: totalInPaisa
-      };
+handler: async function (response) {
+  try {
+    const finalOrder = {
+      name,
+      email,
+      phone,
+      address,
+      cart,
+      payment: response.razorpay_payment_id, 
+      total_amount: totalInPaisa
+    };
 
-      const res = await fetch(
-        `${window.BASE_API}/checkout`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(finalOrder)
-        }
-      );
+    const res = await fetch(`${window.BASE_API}/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(finalOrder)
+    });
 
-      if (res.ok) {
-        localStorage.removeItem("cart");
-        localStorage.removeItem("finalAmount");
-        window.location.href = "/html/order-success.html";
-      } else {
-        alert("Payment done, but order saving failed.");
-      }
-    },
+    if (res.ok) {
+      localStorage.removeItem("cart");
+      localStorage.removeItem("finalAmount");
+      window.location.href = "/html/order-success.html";
+    } else {
+      const errText = await res.text();
+      console.error("Order save failed:", errText);
+      alert("Payment done but order saving failed. Share this with support: " + response.razorpay_payment_id);
+    }
+  } catch (err) {
+    console.error("Network error:", err);
+    alert("Payment done but a network error occurred. Share this with support: " + response.razorpay_payment_id);
+  }
+},
 
     prefill: { name, email, contact: phone },
     theme: { color: "#01381C" }
