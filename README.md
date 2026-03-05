@@ -113,7 +113,7 @@ Frontend can be deployed on any static hosting service:
 # Developer
 
 **Kevin Antony**  
-Full-Stack Developer & Creator of Anis Boutique
+Full-Stack Developer & System Architect of Anis Boutique
 
 # License
 
