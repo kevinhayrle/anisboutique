@@ -70,7 +70,7 @@ form.addEventListener("submit", async e => {
   const orderData = await orderRes.json();
 
   const options = {
-    key: "rzp_live_ypzGdjBX41LSWB",
+    key: "rzp_live_SNTsv89LwQC0zb",
     amount: orderData.amount,
     currency: "INR",
     name: "Anis Boutique",
