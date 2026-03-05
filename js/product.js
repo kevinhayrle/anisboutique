@@ -1224,7 +1224,7 @@ const COLOR_PALETTE = {
   ],
 };
 
-const LINING_QUALITIES = ["Rs.2", "Rs.45", "Rs.55", "Rs.65"];
+const LINING_QUALITIES = ["Rs.35", "Rs.45", "Rs.55", "Rs.65"];
 
 /* =========================================
    STATE
@@ -1425,7 +1425,6 @@ function addToCart(product) {
 
 localStorage.setItem("cart", JSON.stringify(cart));
 
-// 🔥 tell header that cart changed
 if (window.updateCartCount) {
   window.updateCartCount();
 }
@@ -1465,7 +1464,6 @@ function renderQuantity(unit) {
 
   const label = document.createElement("span");
 
-  // default start value
   selectedQuantity = unit === "meter" ? 0.5 : 1;
 
   function updateLabel() {
