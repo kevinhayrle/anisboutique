@@ -1224,7 +1224,7 @@ const COLOR_PALETTE = {
   ],
 };
 
-const LINING_QUALITIES = ["Rs.35", "Rs.45", "Rs.55", "Rs.65"];
+const LINING_QUALITIES = ["Rs.2", "Rs.45", "Rs.55", "Rs.65"];
 
 /* =========================================
    STATE
