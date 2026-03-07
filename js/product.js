@@ -1222,8 +1222,8 @@ const COLOR_PALETTE = {
 
 const PRIMARY_COLORS = [
   { name: "301",         displayName: "Red",          hex: "#851a22" },
-  { name: "324",         displayName: "White",         hex: "#cec8c8" },
-  { name: "325",         displayName: "Black",         hex: "#2c2b30" },
+  { name: "324",         displayName: "White",         hex: "#ffffff" },
+  { name: "325",         displayName: "Black",         hex: "#000000" },
   { name: "320",         displayName: "Chilli Red",    hex: "#b6110d" },
   { name: "478",         displayName: "Bottle Green",  hex: "#162f24" },
   { name: "603",         displayName: "Navy Blue",     hex: "#161e42" },
@@ -1537,7 +1537,7 @@ function renderColorPalette() {
   // ── Section 1: Colors (primary) ──────────────────────────
   const primaryHeading = document.createElement("p");
   primaryHeading.className = "color-section-heading";
-  primaryHeading.textContent = "Colors";
+  primaryHeading.textContent = "Primary Colors";
   palette.appendChild(primaryHeading);
 
   const primaryGrid = document.createElement("div");
