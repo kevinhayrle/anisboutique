@@ -7,7 +7,6 @@ const MATERIAL_CATEGORIES = [
   "Two by Two",
   "Silk Cotton",
   "Plain Net",
-  "Poplin",
   "Suncrepe",
   "Falls",
   "Satin"
@@ -18,7 +17,6 @@ const MATERIAL_IMAGES = {
   "Two by Two": "/assets/2by2.webp",
   "Silk Cotton": "/assets/silkcotton.webp",
   "Plain Net": "/assets/plainnet.webp",
-  "Poplin": "/assets/poplin.webp",
   "Suncrepe": "/assets/suncrepe.webp",
   "Falls": "/assets/falls.webp",
   "Satin": "/assets/satin.webp"

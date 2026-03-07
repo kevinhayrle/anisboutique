@@ -372,6 +372,176 @@ body {
   font-size: 18px;
 }
 
+/* ================= COLOR PALETTE ================= */
+
+#colorPalette {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.color-section-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 14px 0 8px 0;
+}
+
+.color-section-heading:first-child {
+  margin-top: 0;
+}
+
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.color-swatch-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.color-swatch-wrapper .color-swatch {
+  width: 70px;
+  height: 70px;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.color-swatch-wrapper .color-swatch:hover {
+  transform: scale(1.12);
+}
+
+.color-swatch-wrapper .color-swatch.active {
+  border-color: #333;
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+}
+
+.color-swatch-label {
+  font-size: 0.6rem;
+  color: #555;
+  text-align: center;
+  max-width: 42px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+
+#colorPalette {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  width: 100% !important;
+}
+
+.color-section-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 16px 0 10px 0;
+}
+
+.color-section-heading:first-child {
+  margin-top: 0;
+}
+
+.color-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, 60px) !important;
+  gap: 10px 0 !important;
+  width: 190% !important;
+}
+
+.color-swatch-wrapper {
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.color-swatch-wrapper .color-swatch {
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border: 2px solid transparent !important;
+  outline: none !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease;
+}
+
+.color-swatch-wrapper .color-swatch:hover {
+  transform: scale(1.12) !important;
+}
+
+.color-swatch-wrapper .color-swatch.active {
+  border: 2px solid #333 !important;
+  outline: 2px solid gold !important;
+  outline-offset: 2px !important;
+  transform: scale(1.1) !important;
+}
+
+.color-swatch-label {
+  font-size: 0.58rem;
+  color: #666;
+  text-align: center;
+  width: 52px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.quantity-manual {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -100px;
+}
+
+.quantity-input-field {
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'sf', sans-serif;
+  font-weight: 500;
+  text-align: center;
+  padding: 0 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  -moz-appearance: textfield;
+}
+
+.quantity-input-field:focus {
+  border-color: #4169E1;
+}
+
+.quantity-input-field::-webkit-outer-spin-button,
+.quantity-input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-unit-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
 /* ================= PHONE ================= */
 
 @media (max-width: 768px) {
@@ -483,24 +653,18 @@ body {
 
 .camera-modal {
   position: fixed;
-
-  /* reset desktop positioning */
   top: 50% !important;
   left: 50% !important;
   bottom: auto !important;
   right: auto !important;
-
   transform: translate(-50%, -50%);
-
   background: white;
   padding: 10px;
   border-radius: 14px;
-
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
   z-index: 9999;
 }
 
-/* small square */
 .camera-box {
   width: 170px;
   height: 170px;
@@ -509,14 +673,12 @@ body {
   background: black;
 }
 
-/* video perfectly cropped */
 .camera-box video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* minimal buttons */
 .camera-controls {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -556,7 +718,7 @@ body {
   }
 
   .quantity-input input {
-    width: 80px;
+  width: 190px;
   }
 
   /* ---------- CTA ---------- */
@@ -579,5 +741,33 @@ body {
     max-height: 94vh;
     border-radius: 10px;
   }
+
+  .color-grid {
+    grid-template-columns: repeat(auto-fill, 48px) !important;
+    gap: 10px 0px !important;
+  width:100% !important;
 }
 
+  .color-swatch-wrapper {
+    width: 48px;
+  }
+
+  .color-swatch-wrapper .color-swatch {
+  width: 45px !important;
+  height: 45px !important;
+  }
+  
+  .color-swatch-label {
+    width: 48px;
+  }
+
+  .quantity-manual {
+    margin-top: 0;
+  }
+
+  .quantity-input-field {
+    width: 100px;
+    height: 38px;
+    font-size: 15px;
+  }
+}

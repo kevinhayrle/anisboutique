@@ -1071,10 +1071,6 @@ const COLOR_PALETTE = {
   ],
   "black": [
     {
-      "name": "Pure Black",
-      "hex": "#000000"
-    },  
-    {
       "name": "308",
       "hex": "#14281f"
     },
@@ -1132,11 +1128,7 @@ const COLOR_PALETTE = {
     },
   ],
   "white": [
-    
-    {
-      "name": "Pure White",
-      "hex": "#ffffff"
-    },    
+  
     {
       "name": "324",
       "hex": "#cec8c8"
@@ -1224,6 +1216,23 @@ const COLOR_PALETTE = {
   ],
 };
 
+// =========================================
+// PRIMARY COLORS — shown with display names
+// =========================================
+
+const PRIMARY_COLORS = [
+  { name: "301",         displayName: "Red",          hex: "#851a22" },
+  { name: "324",         displayName: "White",         hex: "#cec8c8" },
+  { name: "325",         displayName: "Black",         hex: "#2c2b30" },
+  { name: "320",         displayName: "Chilli Red",    hex: "#b6110d" },
+  { name: "478",         displayName: "Bottle Green",  hex: "#162f24" },
+  { name: "603",         displayName: "Navy Blue",     hex: "#161e42" },
+  { name: "645",         displayName: "Off White",     hex: "#b9b9c1" },
+];
+
+// IDs of primary colors to exclude from the "other" section
+const PRIMARY_COLOR_IDS = new Set(PRIMARY_COLORS.map(c => c.name));
+
 const LINING_QUALITIES = ["Rs.35", "Rs.45", "Rs.55", "Rs.65"];
 
 /* =========================================
@@ -1276,14 +1285,8 @@ Cotton Linings are available at ₹55 and ₹65. Soft, breathable, and gentle on
   quantity_unit: "meter"
 },
 
-"Poplin": {
-  price: 110,
-  description: "Poplin is a lightweight, durable plain-weave fabric with a fine rib texture and crisp finish. Strong, breathable, and easy to maintain, it is ideal for shirts, dresses, and daily wear. Cotton poplin is soft and comfortable for warm weather.",
-  quantity_unit: "meter"
-},
-
 "Suncrepe": {
-  price: 50,
+  price: 55,
   description: "Sun Crepe is a lightweight fabric with a smooth texture and graceful drape. Commonly used for blouses, kurtis, skirts, dresses, and lining for formal garments. Easy to maintain and versatile for modern designs.",
   quantity_unit: "meter"
 },
@@ -1454,118 +1457,156 @@ function renderQuantity(unit) {
   container.innerHTML = "";
 
   const wrap = document.createElement("div");
-  wrap.className = "quantity-buttons";
+  wrap.className = "quantity-manual";
 
-  const minus = document.createElement("button");
-  minus.textContent = "−";
-
-  const plus = document.createElement("button");
-  plus.textContent = "+";
-
-  const label = document.createElement("span");
+  const input = document.createElement("input");
+  input.type = "number";
+  input.className = "quantity-input-field";
+  input.min = unit === "meter" ? "0.5" : "1";
+  input.step = unit === "meter" ? "0.5" : "1";
+  input.value = unit === "meter" ? "0.5" : "1";
 
   selectedQuantity = unit === "meter" ? 0.5 : 1;
 
-  function updateLabel() {
-if (unit === "meter") {
-  label.textContent =
-    selectedQuantity + (selectedQuantity <= 1 ? " meter" : " meters");
-}
+  const unitLabel = document.createElement("span");
+  unitLabel.className = "quantity-unit-label";
+  unitLabel.textContent = unit === "meter" ? "meter" : "unit";
 
-else {
-      label.textContent =
-        selectedQuantity + (selectedQuantity === 1 ? " unit" : " units");
+  input.oninput = () => {
+    const min = unit === "meter" ? 0.5 : 1;
+    let val = parseFloat(input.value);
+    if (!isNaN(val) && val >= min) {
+      selectedQuantity = val;
+      unitLabel.textContent = unit === "meter"
+        ? (val <= 1 ? "meter" : "meters")
+        : (val === 1 ? "unit" : "units");
     }
-  }
-
-  updateLabel();
-
-  minus.onclick = () => {
-
-    if (unit === "meter") {
-      if (selectedQuantity > 0.5) {
-        selectedQuantity -= 0.5;
-      }
-    } else {
-      if (selectedQuantity > 1) {
-        selectedQuantity -= 1;
-      }
-    }
-
-    updateLabel();
   };
 
-  plus.onclick = () => {
-
-    if (unit === "meter") {
-      selectedQuantity += 0.5;
+  input.onblur = () => {
+    const min = unit === "meter" ? 0.5 : 1;
+    let val = parseFloat(input.value);
+    if (isNaN(val) || val < min) {
+      input.value = min;
+      selectedQuantity = min;
     } else {
-      selectedQuantity += 1;
+      selectedQuantity = val;
     }
-
-    updateLabel();
+    unitLabel.textContent = unit === "meter"
+      ? (selectedQuantity <= 1 ? "meter" : "meters")
+      : (selectedQuantity === 1 ? "unit" : "units");
   };
 
-  wrap.append(minus, label, plus);
+  wrap.append(input, unitLabel);
   container.appendChild(wrap);
 }
 
 /* =========================================
-   COLOR PALETTE
+   COLOR PALETTE — TWO SECTIONS
 ========================================= */
 
-function renderColorPalette() {
+function createSwatch(color, labelText) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "color-swatch-wrapper";
 
+  const swatch = document.createElement("div");
+  swatch.className = "color-swatch";
+  swatch.style.background = color.hex;
+  swatch.title = labelText;
+
+  const nameLabel = document.createElement("span");
+  nameLabel.className = "color-swatch-label";
+  nameLabel.textContent = labelText;
+
+  swatch.onclick = () => {
+    document.querySelectorAll(".color-swatch")
+      .forEach(s => s.classList.remove("active"));
+    swatch.classList.add("active");
+    selectedColor = color;
+  };
+
+  wrapper.appendChild(swatch);
+  wrapper.appendChild(nameLabel);
+  return wrapper;
+}
+
+function renderColorPalette() {
   const palette = document.getElementById("colorPalette");
   palette.innerHTML = "";
 
-  Object.values(COLOR_PALETTE).flat().forEach(color => {
+  // ── Section 1: Colors (primary) ──────────────────────────
+  const primaryHeading = document.createElement("p");
+  primaryHeading.className = "color-section-heading";
+  primaryHeading.textContent = "Colors";
+  palette.appendChild(primaryHeading);
 
-    const swatch = document.createElement("div");
-    swatch.className = "color-swatch";
-    swatch.style.background = color.hex;
-    swatch.title = color.name;
+  const primaryGrid = document.createElement("div");
+  primaryGrid.className = "color-grid";
 
-    swatch.onclick = () => {
-      document.querySelectorAll(".color-swatch")
-        .forEach(s => s.classList.remove("active"));
-
-      swatch.classList.add("active");
-      selectedColor = color;
-    };
-
-    palette.appendChild(swatch);
+  PRIMARY_COLORS.forEach(color => {
+    primaryGrid.appendChild(createSwatch(color, color.displayName));
   });
+
+  palette.appendChild(primaryGrid);
+
+  // ── Section 2: Other Available Colors ────────────────────
+  const otherHeading = document.createElement("p");
+  otherHeading.className = "color-section-heading";
+  otherHeading.textContent = "Other Available Colors";
+  palette.appendChild(otherHeading);
+
+  const otherGrid = document.createElement("div");
+  otherGrid.className = "color-grid";
+
+  Object.values(COLOR_PALETTE).flat().forEach(color => {
+    if (!PRIMARY_COLOR_IDS.has(color.name)) {
+      otherGrid.appendChild(createSwatch(color, color.name));
+    }
+  });
+
+  palette.appendChild(otherGrid);
 }
 
 /* =========================================
    FILTER COLORS BY FAMILY
+   (used by the camera/lens feature)
 ========================================= */
 
 function filterColorsByFamily(colorFamily) {
-
   const palette = document.getElementById("colorPalette");
   palette.innerHTML = "";
 
   if (!COLOR_PALETTE[colorFamily]) return;
 
-  COLOR_PALETTE[colorFamily].forEach(color => {
+  // Re-render primary section (unchanged)
+  const primaryHeading = document.createElement("p");
+  primaryHeading.className = "color-section-heading";
+  primaryHeading.textContent = "Colors";
+  palette.appendChild(primaryHeading);
 
-    const swatch = document.createElement("div");
-    swatch.className = "color-swatch";
-    swatch.style.background = color.hex;
-    swatch.title = color.name;
-
-    swatch.onclick = () => {
-      document.querySelectorAll(".color-swatch")
-        .forEach(s => s.classList.remove("active"));
-
-      swatch.classList.add("active");
-      selectedColor = color;
-    };
-
-    palette.appendChild(swatch);
+  const primaryGrid = document.createElement("div");
+  primaryGrid.className = "color-grid";
+  PRIMARY_COLORS.forEach(color => {
+    primaryGrid.appendChild(createSwatch(color, color.displayName));
   });
+  palette.appendChild(primaryGrid);
+
+  // Filtered "other" section
+  const otherHeading = document.createElement("p");
+  otherHeading.className = "color-section-heading";
+  otherHeading.textContent = `Other Available Colors — ${colorFamily.charAt(0).toUpperCase() + colorFamily.slice(1)}`;
+  palette.appendChild(otherHeading);
+
+  const otherGrid = document.createElement("div");
+  otherGrid.className = "color-grid";
+
+  COLOR_PALETTE[colorFamily].forEach(color => {
+    if (!PRIMARY_COLOR_IDS.has(color.name)) {
+      otherGrid.appendChild(createSwatch(color, color.name));
+    }
+  });
+
+  palette.appendChild(otherGrid);
 }
 
 /* =========================================
