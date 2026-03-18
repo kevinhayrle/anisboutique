@@ -1,49 +1,43 @@
-const API = window.API_ENDPOINTS;
-
-/* =========================================
-   GLOBAL CART COUNT FUNCTION
-   (Accessible from any page)
-========================================= */
-
 window.updateCartCount = function () {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const totalItems = cart.length;
-
   const badge = document.querySelector("#cart-count");
   if (!badge) return;
-
-  if (totalItems > 0) {
+  if (cart.length > 0) {
     badge.style.display = "inline-block";
-    badge.textContent = totalItems;
+    badge.textContent = cart.length;
   } else {
     badge.style.display = "none";
   }
 };
 
-
-/* =========================================
-   LOAD HEADER
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
+
+  const API = window.API_ENDPOINTS;
+
+  const MATERIAL_CATEGORIES = [
+    "Lining",
+    "Two by Two",
+    "Silk Cotton",
+    "Plain Net",
+    "Suncrepe",
+    "Falls",
+    "Satin"
+  ];
+
+  const EXCLUDED_CATEGORIES = ["Poplin", "Inskirts"];
 
   fetch("/html/header.html")
     .then(res => res.text())
     .then(html => {
 
-      const headerPlaceholder =
-        document.getElementById("header-placeholder");
-
+      const headerPlaceholder = document.getElementById("header-placeholder");
       if (!headerPlaceholder) return;
 
       headerPlaceholder.innerHTML = html;
 
-      /* ===== Update Cart Immediately ===== */
       window.updateCartCount();
 
-      /* =====================================
-         SIDEBAR / HAMBURGER
-      ===================================== */
+      /* ===== SIDEBAR / HAMBURGER ===== */
 
       const sidebar = document.getElementById("sidebar");
       const hamburger = document.getElementById("hamburger-icon");
@@ -64,9 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      /* =====================================
-         LOAD CATEGORIES
-      ===================================== */
+      /* ===== LOAD CATEGORIES INTO SIDEBAR ===== */
 
       if (categoryMenu && API?.CATEGORIES) {
 
@@ -76,28 +68,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
             categoryMenu.innerHTML = "";
 
-            categories.forEach(cat => {
+            categories
+              .filter(cat => !EXCLUDED_CATEGORIES.includes(cat))
+              .forEach(cat => {
 
-              const a = document.createElement("a");
-              a.href =
-                `/html/category.html?cat=${encodeURIComponent(cat)}`;
+                const a = document.createElement("a");
 
-              a.textContent = cat.toUpperCase();
-              categoryMenu.appendChild(a);
-            });
+                if (MATERIAL_CATEGORIES.includes(cat)) {
+                  a.href = `/html/product.html?material=${encodeURIComponent(cat)}`;
+                } else {
+                  a.href = `/html/category.html?cat=${encodeURIComponent(cat)}`;
+                }
+
+                a.textContent = cat.toUpperCase();
+                categoryMenu.appendChild(a);
+              });
           })
-          .catch(err =>
-            console.error("❌ Category fetch failed:", err)
-          );
+          .catch(err => console.error("❌ Category fetch failed:", err));
       }
 
-      /* =====================================
-         HEADER SCROLL EFFECT
-      ===================================== */
+      /* ===== HEADER SCROLL EFFECT ===== */
 
       window.addEventListener("scroll", () => {
         if (!header) return;
-
         if (window.scrollY > 8) {
           header.classList.add("scrolled");
         } else {
@@ -106,7 +99,5 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
     })
-    .catch(err =>
-      console.error("❌ Header fetch failed:", err)
-    );
+    .catch(err => console.error("❌ Header fetch failed:", err));
 });

@@ -14,38 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
     ? rawCategory.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
     : null;
 
-if (selectedCategory) {
+  if (selectedCategory) {
+    const newTitle = `${selectedCategory} Collection | Anis Boutique Chennai`;
+    const newDescription = `Shop premium ${selectedCategory} materials at Anis Boutique Chennai. Explore our latest ${selectedCategory} collection.`;
 
-  const newTitle = `${selectedCategory} Collection | Anis Boutique Chennai`;
+    document.title = newTitle;
 
-  const newDescription =
-    `Shop premium ${selectedCategory} materials at Anis Boutique Chennai. Explore our latest ${selectedCategory} collection.`;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) metaDescription.setAttribute("content", newDescription);
 
-  document.title = newTitle;
+    const ogTitle = document.getElementById("ogTitle");
+    const ogDescription = document.getElementById("ogDescription");
+    const twitterTitle = document.getElementById("twitterTitle");
+    const twitterDescription = document.getElementById("twitterDescription");
+    const canonicalTag = document.getElementById("canonicalTag");
 
-  const metaDescription = document.querySelector('meta[name="description"]');
-  if (metaDescription) {
-    metaDescription.setAttribute("content", newDescription);
+    if (ogTitle) ogTitle.setAttribute("content", newTitle);
+    if (ogDescription) ogDescription.setAttribute("content", newDescription);
+    if (twitterTitle) twitterTitle.setAttribute("content", newTitle);
+    if (twitterDescription) twitterDescription.setAttribute("content", newDescription);
+    if (canonicalTag) {
+      canonicalTag.setAttribute(
+        "href",
+        `https://anisboutique.in/html/category.html?cat=${encodeURIComponent(selectedCategory)}`
+      );
+    }
   }
-
-  const ogTitle = document.getElementById("ogTitle");
-  const ogDescription = document.getElementById("ogDescription");
-  const twitterTitle = document.getElementById("twitterTitle");
-  const twitterDescription = document.getElementById("twitterDescription");
-  const canonicalTag = document.getElementById("canonicalTag");
-
-  if (ogTitle) ogTitle.setAttribute("content", newTitle);
-  if (ogDescription) ogDescription.setAttribute("content", newDescription);
-  if (twitterTitle) twitterTitle.setAttribute("content", newTitle);
-  if (twitterDescription) twitterDescription.setAttribute("content", newDescription);
-
-  if (canonicalTag) {
-    canonicalTag.setAttribute(
-      "href",
-      `https://anisboutique.in/html/category.html?cat=${encodeURIComponent(selectedCategory)}`
-    );
-  }
-}
 
   const titleEl = document.getElementById("categoryTitle");
   const gridEl = document.getElementById("productsGrid");
@@ -57,9 +51,7 @@ if (selectedCategory) {
     return;
   }
 
-  titleEl.textContent = selectedCategory
-    ? selectedCategory.toUpperCase()
-    : "NO CATEGORY";
+  titleEl.textContent = selectedCategory ? selectedCategory.toUpperCase() : "NO CATEGORY";
 
   if (camIcon) {
     camIcon.style.display = CAMERA_ENABLED_CATEGORIES.includes(selectedCategory)
@@ -67,22 +59,19 @@ if (selectedCategory) {
       : "none";
   }
 
+  // Holds only products for this category
   let CATEGORY_PRODUCTS = [];
 
   async function loadCategoryProducts() {
     try {
-      const res = await fetch(
-        window.API_ENDPOINTS.PRODUCTS
-      );
-
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
+      const res = await fetch(window.API_ENDPOINTS.PRODUCTS);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      const products = Array.isArray(data) ? data : data.products || [];
+      const allProducts = Array.isArray(data) ? data : data.products || [];
 
-      CATEGORY_PRODUCTS = products.filter(
+      // *** STRICT FILTER — only this category, nothing else ***
+      CATEGORY_PRODUCTS = allProducts.filter(
         p => p.category?.toLowerCase() === selectedCategory?.toLowerCase()
       );
 
@@ -90,8 +79,7 @@ if (selectedCategory) {
 
     } catch (err) {
       console.error("Failed to load products:", err);
-      gridEl.innerHTML =
-        `<p class="no-results">Failed to load products</p>`;
+      gridEl.innerHTML = `<p class="no-results">Failed to load products</p>`;
     }
   }
 
@@ -99,8 +87,7 @@ if (selectedCategory) {
     gridEl.innerHTML = "";
 
     if (!products.length) {
-      gridEl.innerHTML =
-        `<p class="no-results">No products found</p>`;
+      gridEl.innerHTML = `<p class="no-results">No products found</p>`;
       return;
     }
 
@@ -121,14 +108,11 @@ if (selectedCategory) {
 
       card.innerHTML = `
         <a href="/html/product.html?id=${product.id}" class="product-link">
-
           <div class="product-image">
             <img src="${imageUrl}" alt="${product.name}">
           </div>
-
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
-
             <div class="product-prices">
               ${
                 discountedPrice
@@ -138,7 +122,6 @@ if (selectedCategory) {
               }
             </div>
           </div>
-
         </a>
       `;
 
@@ -146,8 +129,14 @@ if (selectedCategory) {
     });
   }
 
+  // Search scoped strictly to this category's products only
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
+
+    if (!query) {
+      renderProducts(CATEGORY_PRODUCTS);
+      return;
+    }
 
     renderProducts(
       CATEGORY_PRODUCTS.filter(p =>
